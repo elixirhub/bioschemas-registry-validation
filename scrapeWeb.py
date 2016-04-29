@@ -76,7 +76,7 @@ class TagsReference:
         self.refTags["%s_thing" % kind] = type_list
 
     def writeJSON(self):
-        """Save all the Bioschemas properties into a JSON file."""
+        """Save all the Bioschemas properties as a JSON file."""
 
         print "Saving BioSchemas tags in bioschemasTags.json..."
         endfile = open('bioschemasTags.json', 'wb')
@@ -85,7 +85,7 @@ class TagsReference:
         print "Complete!"
 
     def writeCSV(self):
-        """Save all the Bioschemas properties into a CSV file."""
+        """Save all the Bioschemas properties as a CSV file."""
 
         print "Saving BioSchemas tags in bioschemasTags.csv..."
         endfile = open("bioschemasTags.csv", "wb")
@@ -99,22 +99,44 @@ class TagsReference:
 class WebsiteTags:
     """All properties scraped from the website."""
 
+
     def __init__(self, url):
         self.url = url
-        self.siteTags = {}
-        self.sharedTags = {}
-        self.tagsDescr = {}
+        self.siteTags = {}      # Dictionary containing all the property names and the count of their
+        #                       occurrences in the scraped website, in the format
+        #                       { 'name': 3, 'description': 9, 'sameAs': 4, etc }
+        self.tagsDescr = {}     # Dictionary containing all the property names and the related data as
+        #                       reported in the scraped website, in the format
+        #                       { 'name': ['Roberto Preste', 'Geddy Lee', 'Neil Peart'], etc }
+        self.sharedTags = {}  # Dictionary containing all the property names, count and related data
+        #                       for the properties compliant with Bioschemas tags, in the format
+        #                       { event_bioschemas: [ ('contact', 3), ('eventType', 4) ],
+        #                         event_schema: [ ('endDate', 2), ('location', 3) ],
+        #                         event_thing: [ ('description', 1), ('name', 4) ] }
 
+        self.checkFileList()
         self.checkWebsite()
 
+    def checkFileList(self):
+        """Check if the scrapedWebsites.csv file exists, otherwise it will be created."""
 
+        try:
+            sourcefile = open("scrapedWebsites.csv", "rb")
+        except IOError:
+            sourcefile = open("scrapedWebsites.csv", "wb")
+            siteWriter = csv.writer(sourcefile)
+            siteWriter.writerow(["website", "name"])
+        finally:
+            sourcefile.close()
 
     def checkWebsite(self):
         """Check if the website has already been scraped: in this case, the process stops and the previously collected data are shown; otherwise, the website will be saved into scrapedWebsites.csv and then scraped."""
+
         try:
             scrapedSites = open("scrapedWebsites.csv", "rb")
             siteReader = csv.reader(scrapedSites)
 
+            # If the website is not in the list yet, it will be added to the list
             for row in siteReader:
                 if row[0] == self.url:
                     self.updateWebsiteTags()
@@ -128,16 +150,19 @@ class WebsiteTags:
             self.saveWebsite()
 
     def saveWebsite(self):
+        """Save the current website URL and its name in the scrapedWebsites.csv file."""
+
         scrapedSites = open("scrapedWebsites.csv", "ab")
         siteWriter = csv.writer(scrapedSites)
 
-        siteWriter.writerow([self.url])
+        siteWriter.writerow(["%s" % self.url, "%s" % self.url.split("/")[2]])
         scrapedSites.close()
 
         self.newWebsiteTags()
 
     def newWebsiteTags(self):
         """Create a new directory named after the domain of the scraped website."""
+
         websiteComps = self.url.split("/")
         websiteName = "_".join(websiteComps[2:])
 
@@ -147,6 +172,8 @@ class WebsiteTags:
         self.compareProperties()
         self.writeJSON(websiteName)
         self.writeCSV(websiteName)
+
+    #   ^^^ vvv These two functions are essentially the same; need to fix this
 
     def updateWebsiteTags(self):
         """Update the data from previously scraped websites."""
