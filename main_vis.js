@@ -49,28 +49,21 @@ function createBarplot(sitename) {
             })
             .attr("width", x.rangeBand())
             .attr("fill", function (d) {
-                if (d["Type"].charAt(0) == "e") {
-                    return "#1B62E8";
-                }
-                else if (d["Type"].charAt(0) == "o") {
-                    return "#2AACFF";
-                }
-                else if (d["Type"].charAt(0) == "p") {
-                    return "#1BCEE8";
-                }
-                else if (d["Type"].charAt(0) == "t") {
-                    return "#1DFFDE";
-                }
+                return colorBarplot(d);
             })
             .on("mouseover", function (d) {
                 d3.select(this)
-                    .attr("fill", "brown")
+                    .attr("fill", "steelblue")
                     .append("title")
-                    .text(function (d) { return d["Type"]; })
+                    .text(function (d) { 
+                        return d["Type"].split("_")[0] + " tags, " + d["Type"].split("_")[1] + " type"; 
+                    })
             })
             .on("mouseout", function (d) {
                 d3.select(this)
-                    .attr("fill", "steelblue");
+                    .attr("fill", function (d) {
+                        return colorBarplot(d);
+                    });
             })
             .on("click", function (d) {
                 d3.select("#bubblechart")
@@ -114,6 +107,18 @@ function createBarplot(sitename) {
 function type(d) {
     d["Value"] = +d["Value"];
     return d;
+}
+
+function colorBarplot(d) {
+    if (d["Type"].charAt(0) == "e") {
+        return "#1B62E8";
+    } else if (d["Type"].charAt(0) == "o") {
+        return "#2AACFF";
+    } else if (d["Type"].charAt(0) == "p") {
+        return "#1BCEE8";
+    } else if (d["Type"].charAt(0) == "t") {
+        return "#1DFFDE";
+    }
 }
 
 function bubbleMaker(csvfile) {
