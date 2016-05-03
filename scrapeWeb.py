@@ -255,7 +255,8 @@ class WebsiteTags:
         writer.writerow(["Type", "Value"])
         sourcefile = open('bioschemasTags.json', 'rb')
         bsRef = json.load(sourcefile)
-        for el in bsRef.keys():
+        sorted_props = sorted(bsRef.keys())
+        for el in sorted_props:
             count = 0
             try:
                 for prop in self.sharedTags[el]:
