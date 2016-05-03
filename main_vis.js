@@ -2,98 +2,101 @@
  * Created by robertopreste on 29/04/2016.
  */
 
-var margin = {top: 30, right: 40, bottom: 160, left: 50},
-    width = 800 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+function createBarplot(sitename) {
+    // Create a barplot based on the properties found in the scraped website
 
-var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
+    var margin = {top: 30, right: 40, bottom: 160, left: 50},
+        width = 800 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
 
-var y = d3.scale.linear()
-    .range([height, 0]);
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+    var y = d3.scale.linear()
+        .range([height, 0]);
 
-var svg = d3.select("#barchart")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .append("g")
-    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
 
-//d3.csv(sitename + "/tagsFound.csv", type, function (error, data) {
-d3.csv("tagsFound.csv", type, function (error, data) {
+    var svg = d3.select("#barchart")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .append("g")
+        .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-    x.domain(data.map(function (d) { return d["Type"]; }));
-    y.domain([0, d3.max(data, function (d) { return d["Value"]; })]);
+    d3.csv(sitename + "/tagsFound.csv", type, function (error, data) {
+    //d3.csv("tagsFound.csv", type, function (error, data) {
 
-    var bar = svg.selectAll("g")
-        .data(data)
-        .enter().append("g")
-        .attr("transform", function (d, i) {
-            return "translate(" + x(d["Type"]) + ", 0)";
-        });
+        x.domain(data.map(function (d) { return d["Type"]; }));
+        y.domain([0, d3.max(data, function (d) { return d["Value"]; })]);
 
-    bar.append("rect")
-        .attr("y", function (d) {
-            return y(d["Value"]);
-        })
-        .attr("height", function (d) {
-            return height - y(d["Value"]);
-        })
-        .attr("width", x.rangeBand())
-        .attr("fill", "steelblue")
-        .on("mouseover", function (d) {
-            d3.select(this)
-                .attr("fill", "brown")
-                .append("title")
-                .text(function (d) { return d["Type"]; })
-        })
-        .on("mouseout", function (d) {
-            d3.select(this)
-                .attr("fill", "steelblue");
-        })
-        .on("click", function (d) {
-            d3.select("#bubblechart")
-                .selectAll(".bubble")
-                .remove();
-            bubbleMaker(d["Type"]);
-            d3.select("#bubbleinfo")
-                .selectAll("table")
-                .remove();
-            infoMaker(d["Type"]);
-        });
+        var bar = svg.selectAll("g")
+            .data(data)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "translate(" + x(d["Type"]) + ", 0)";
+            });
 
-    bar.append("text")
-        .attr("x", x.rangeBand() / 2)
-        .attr("y", function (d) {
-            return y(d["Value"]) + 10;
-        })
-        .attr("dy", ".75em")
-        .text(function (d) {
-            return d["Value"];
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "16px")
-        .attr("fill", "white")
-        .attr("text-anchor", "middle");
+        bar.append("rect")
+            .attr("y", function (d) {
+                return y(d["Value"]);
+            })
+            .attr("height", function (d) {
+                return height - y(d["Value"]);
+            })
+            .attr("width", x.rangeBand())
+            .attr("fill", "steelblue")
+            .on("mouseover", function (d) {
+                d3.select(this)
+                    .attr("fill", "brown")
+                    .append("title")
+                    .text(function (d) { return d["Type"]; })
+            })
+            .on("mouseout", function (d) {
+                d3.select(this)
+                    .attr("fill", "steelblue");
+            })
+            .on("click", function (d) {
+                d3.select("#bubblechart")
+                    .selectAll(".bubble")
+                    .remove();
+                bubbleMaker(d["Type"]);
+                d3.select("#bubbleinfo")
+                    .selectAll("table")
+                    .remove();
+                infoMaker(d["Type"]);
+            });
 
-    svg.append("g")
-        .attr("transform", "translate(0, " + height + ")")
-        .call(xAxis)
-        .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "14px")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)");
+        bar.append("text")
+            .attr("x", x.rangeBand() / 2)
+            .attr("y", function (d) {
+                return y(d["Value"]) + 10;
+            })
+            .attr("dy", ".75em")
+            .text(function (d) {
+                return d["Value"];
+            })
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "16px")
+            .attr("fill", "white")
+            .attr("text-anchor", "middle");
 
-});
-//}
+        svg.append("g")
+            .attr("transform", "translate(0, " + height + ")")
+            .call(xAxis)
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "14px")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+
+    });
+}
 
 function type(d) {
     d["Value"] = +d["Value"];
@@ -101,6 +104,8 @@ function type(d) {
 }
 
 function bubbleMaker(csvfile) {
+    // Create a bubblechart based on the specific property type selected in the barplot
+    
     var diameter = 400,
         color = d3.scale.category20c();
 
@@ -178,6 +183,7 @@ function bubbleMaker(csvfile) {
 }
 
 function infoMaker(csvfile) {
+    // Create a table that shows all the details about the properties shown in the bubblechart
 
     var table = d3.select("#bubbleinfo")
         .append("table");
