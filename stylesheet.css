@@ -6,12 +6,22 @@
     overflow: scroll;
 }
 
+#barcont {
+    margin: 0 auto;
+    width: 1200px;
+    text-align: center;
+}
+
 #barchart {
     text-align: center;
+    margin: auto;
+    width: 800px;
 }
 
 #barlegend {
     text-align: center;
+    margin: auto;
+    width: 200px;
 }
 
 #bubblechart {

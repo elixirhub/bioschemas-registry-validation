@@ -17,6 +17,9 @@ function createBarplot(sitename) {
 
     var xAxis = d3.svg.axis()
         .scale(x)
+        .tickFormat(function (d) {
+            return d.split("_")[1];
+        })
         .orient("bottom");
 
     var svg = d3.select("#barchart")
