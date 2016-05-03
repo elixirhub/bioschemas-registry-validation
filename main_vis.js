@@ -48,7 +48,20 @@ function createBarplot(sitename) {
                 return height - y(d["Value"]);
             })
             .attr("width", x.rangeBand())
-            .attr("fill", "steelblue")
+            .attr("fill", function (d) {
+                if (d["Type"].charAt(0) == "e") {
+                    return "#1B62E8";
+                }
+                else if (d["Type"].charAt(0) == "o") {
+                    return "#2AACFF";
+                }
+                else if (d["Type"].charAt(0) == "p") {
+                    return "#1BCEE8";
+                }
+                else if (d["Type"].charAt(0) == "t") {
+                    return "#1DFFDE";
+                }
+            })
             .on("mouseover", function (d) {
                 d3.select(this)
                     .attr("fill", "brown")
