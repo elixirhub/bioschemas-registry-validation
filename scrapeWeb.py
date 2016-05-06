@@ -31,6 +31,8 @@ class TagsReference:
     def getTags(self, kind):
         """Store all the Bioschemas, schema.org and schema.org/Thing tags for each type."""
 
+        print "Updating Bioschemas tags..."
+
         base_url = "http://bioschemas.org/groups"
         end_url = "%ss/full_%s.html" % (kind, kind)
         url = "%s/%s" % (base_url, end_url)
@@ -47,10 +49,12 @@ class TagsReference:
         for row in bioschemas_table.findAll('tr'):
             row_list = []
             for cell in row.findAll('td'):
-                row_list.append(cell)
+                row_list.append(cell.text.encode("utf-8"))
             td_list.append(row_list)
         for i in xrange(1, len(td_list)):
-            type_list.append(td_list[i][0].text.encode('utf-8'))
+            prop_dict = {}
+            prop_dict[td_list[i].pop(0)] = td_list[i]
+            type_list.append(prop_dict)
         self.refTags["%s_bioschemas" % kind] = type_list
 
         td_list = []
@@ -58,10 +62,12 @@ class TagsReference:
         for row in schema_table.findAll('tr'):
             row_list = []
             for cell in row.findAll('td'):
-                row_list.append(cell)
+                row_list.append(cell.text.encode("utf-8"))
             td_list.append(row_list)
         for i in xrange(1, len(td_list)):
-            type_list.append(td_list[i][0].text.encode('utf-8'))
+            prop_dict = {}
+            prop_dict[td_list[i].pop(0)] = td_list[i]
+            type_list.append(prop_dict)
         self.refTags["%s_schema" % kind] = type_list
 
         td_list = []
@@ -69,16 +75,19 @@ class TagsReference:
         for row in thing_table.findAll('tr'):
             row_list = []
             for cell in row.findAll('td'):
-                row_list.append(cell)
+                row_list.append(cell.text.encode("utf-8"))
             td_list.append(row_list)
         for i in xrange(1, len(td_list)):
-            type_list.append(td_list[i][0].text.encode('utf-8'))
+            prop_dict = {}
+            prop_dict[td_list[i].pop(0)] = td_list[i]
+            type_list.append(prop_dict)
         self.refTags["%s_thing" % kind] = type_list
 
     def writeJSON(self):
         """Save all the Bioschemas properties as a JSON file."""
 
         print "Saving BioSchemas tags in bioschemasTags.json..."
+
         endfile = open('bioschemasTags.json', 'wb')
         json.dump(self.refTags, endfile, indent=4, sort_keys=True)
         endfile.close()
@@ -88,12 +97,31 @@ class TagsReference:
         """Save all the Bioschemas properties as a CSV file."""
 
         print "Saving BioSchemas tags in bioschemasTags.csv..."
-        endfile = open("bioschemasTags.csv", "wb")
+
+        sourcefile = open("bioschemas/bioschemasTags.json", "rb")
+        biojson = json.load(sourcefile)
+        sorted_props = sorted(biojson.keys())
+
+        for el in sorted_props:
+            f = open("bioschemas/%s.csv" % el, "wb")
+            writer = csv.writer(f)
+            writer.writerow(["Property", "Type", "Descr", "Cardin", "Guideline", "Vocab"])
+            for prop in biojson[el]:
+                newlist = []
+                for key in prop:
+                    newlist.append(key.encode("utf-8"))
+                    for value in prop[key]:
+                        newlist.append(value.encode("utf-8"))
+                writer.writerow(newlist)
+            f.close()
+
+        endfile = open("bioschemas/bioschemasTags.csv", "wb")
         writer = csv.writer(endfile)
         writer.writerow(["Type", "Value", "Property"])
         for el in self.refTags:
             writer.writerow([el, len(self.refTags[el]), self.refTags[el]])
         endfile.close()
+        sourcefile.close()
 
 
 class WebsiteTags:
@@ -218,43 +246,53 @@ class WebsiteTags:
         """Check if any of the properties found in the website belongs to the BioSchemas types."""
 
         print "Comparing properties found in %s with reference tags..." % self.url
-        sourcefile = open('bioschemasTags.json', 'rb')
+
+        sourcefile = open('bioschemas/bioschemasTags.json', 'rb')
         bsRef = json.load(sourcefile)
         for prop in self.siteTags:
             for tag_type in bsRef.keys():
-                for i in range(len(bsRef[tag_type])):
-                    if prop == bsRef[tag_type][i]:
-                        try:
-                            self.sharedTags[tag_type] += [(prop, self.siteTags[prop])]
-                        except KeyError:
-                            self.sharedTags[tag_type] = [(prop, self.siteTags[prop])]
+                for el in bsRef[tag_type]:
+                    for key in el:
+                        if prop == key:
+                            try:
+                                self.sharedTags[tag_type] += [(prop, self.siteTags[prop])]
+                            except KeyError:
+                                self.sharedTags[tag_type] = [(prop, self.siteTags[prop])]
         sourcefile.close()
 
     def writeJSON(self, sitename):
         """Write the result of the scraping into a JSON file."""
 
         print "Saving all information in tagsFound.json..."
+
         endfile = open('%s/tagsFound.json' % sitename, 'wb')
         json.dump(self.sharedTags, endfile, indent=4, sort_keys=True)
         endfile.close()
+
         print "Complete!"
 
     def writeCSV(self, sitename):
         """Write the result of the scraping into a CSV file."""
 
         print "Saving all information in tagsFound.csv..."
+
+        sourcefile = open('bioschemas/bioschemasTags.json', 'rb')
+        bsRef = json.load(sourcefile)
         for el in self.sharedTags:
             f = open("%s/%s.csv" % (sitename, el), "wb")
             writer = csv.writer(f)
-            writer.writerow(["Property", "Value", "Data"])
+            writer.writerow(["Property", "Type", "Cardinality", "Guideline", "Vocab", "Count", "Descr", "Data"])
             for prop in self.sharedTags[el]:
-                writer.writerow([prop[0], prop[1], self.tagsDescr[prop[0]]])
+                for i in range(len(bsRef[el])):
+                    try:
+                        writer.writerow([prop[0], bsRef[el][i][prop[0]][0], bsRef[el][i][prop[0]][2], bsRef[el][i][prop[0]][3], bsRef[el][i][prop[0]][4], prop[1], bsRef[el][i][prop[0]][1], self.tagsDescr[prop[0]]])
+                        break
+                    except KeyError:
+                        continue
             f.close()
         endfile = open("%s/tagsFound.csv" % sitename, "wb")
         writer = csv.writer(endfile)
         writer.writerow(["Type", "Value"])
-        sourcefile = open('bioschemasTags.json', 'rb')
-        bsRef = json.load(sourcefile)
         sorted_props = sorted(bsRef.keys())
         for el in sorted_props:
             count = 0
@@ -269,6 +307,7 @@ class WebsiteTags:
             writer.writerow([el, count])
         endfile.close()
         sourcefile.close()
+
         print "Complete!"
 
 

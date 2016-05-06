@@ -156,7 +156,7 @@ function bubbleMaker(csvfile) {
 
     d3.csv(csvfile + ".csv", function (error, data) {
         data = data.map(function (d) {
-            d.value = +d["Value"];
+            d.value = +d["Count"];
             return d;
         });
 
@@ -210,7 +210,7 @@ function infoMaker(csvfile) {
         .append("table");
     var thead = table.append("thead");
     var tbody = table.append("tbody");
-    var columns = ["Property", "Value", "Data"];
+    var columns = ["Property", "Type", "Cardinality", "Guideline", "Contr Vocab", "Count"];
 
     thead.append("tr")
         .selectAll("th")
@@ -224,7 +224,7 @@ function infoMaker(csvfile) {
 
     d3.csv(csvfile + ".csv", function (error, data) {
         data = data.map(function (d) {
-            d.value = +d["Value"];
+            d.value = +d["Count"];
             return d;
         });
 
