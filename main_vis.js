@@ -251,3 +251,24 @@ function infoMaker(csvfile) {
     return table;
 
 }
+
+var dropbutton = d3.select(".dropdown-content")
+    .append("a");
+d3.csv("scrapedWebsites.csv", function (error, data) {
+    dropbutton.selectAll("a")
+        .data(data)
+        .enter()
+        .append("a")
+        .on("click", function (d) {
+            d3.select("#barchart")
+                .selectAll("svg")
+                .remove();
+            var websiteList = d["website"].split("/");
+            websiteList.splice(0, 2);
+            createBarplot(websiteList.join("_"));
+        })
+        .html(function (d) {
+            return d["name"];
+        });
+
+});
