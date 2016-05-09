@@ -119,7 +119,17 @@ class TagsReference:
         writer = csv.writer(endfile)
         writer.writerow(["Type", "Value", "Property"])
         for el in self.refTags:
-            writer.writerow([el, len(self.refTags[el]), self.refTags[el]])
+            countMin = 0
+            countRec = 0
+            countOpt = 0
+            for prop in self.refTags[el]:
+                if prop.values()[0][3] == "Minimum":
+                    countMin += 1
+                elif prop.values()[0][3] == "Recommended":
+                    countRec += 1
+                elif prop.values()[0][3] == "Optional":
+                    countOpt += 1
+            writer.writerow([el, len(self.refTags[el]), self.refTags[el], countMin, countRec, countOpt])
         endfile.close()
         sourcefile.close()
 
@@ -200,6 +210,7 @@ class WebsiteTags:
         self.compareProperties()
         self.writeJSON(websiteName)
         self.writeCSV(websiteName)
+        self.complianceCalc(websiteName)
 
     #   ^^^ vvv These two functions are essentially the same; need to fix this
 
@@ -213,6 +224,7 @@ class WebsiteTags:
         self.compareProperties()
         self.writeJSON(websiteName)
         self.writeCSV(websiteName)
+        self.complianceCalc(websiteName)
 
     def scrapeTags(self):
         """Scrape all the tags found in the website."""
@@ -276,9 +288,13 @@ class WebsiteTags:
 
         print "Saving all information in tagsFound.csv..."
 
+        complDict = {}
         sourcefile = open('bioschemas/bioschemasTags.json', 'rb')
         bsRef = json.load(sourcefile)
         for el in self.sharedTags:
+            complMin = 0
+            complRec = 0
+            complOpt = 0
             f = open("%s/%s.csv" % (sitename, el), "wb")
             writer = csv.writer(f)
             writer.writerow(["Property", "Type", "Cardinality", "Guideline", "Vocab", "Count", "Descr", "Data"])
@@ -286,27 +302,93 @@ class WebsiteTags:
                 for i in range(len(bsRef[el])):
                     try:
                         writer.writerow([prop[0], bsRef[el][i][prop[0]][0], bsRef[el][i][prop[0]][2], bsRef[el][i][prop[0]][3], bsRef[el][i][prop[0]][4], prop[1], bsRef[el][i][prop[0]][1], self.tagsDescr[prop[0]]])
+                        if bsRef[el][i][prop[0]][3] == "Minimum":
+                            complMin += 1
+                        elif bsRef[el][i][prop[0]][3] == "Recommended":
+                            complRec += 1
+                        elif bsRef[el][i][prop[0]][3] == "Optional":
+                            complOpt += 1
                         break
                     except KeyError:
                         continue
             f.close()
+            complDict[el] = [complMin, complRec, complOpt]
         endfile = open("%s/tagsFound.csv" % sitename, "wb")
         writer = csv.writer(endfile)
-        writer.writerow(["Type", "Value"])
+        writer.writerow(["Type", "Value", "Min", "Rec", "Opt"])
         sorted_props = sorted(bsRef.keys())
         for el in sorted_props:
             count = 0
+            countMin = 0
+            countRec = 0
+            countOpt = 0
             try:
                 for prop in self.sharedTags[el]:
                     try:
                         count += prop[1]
+                        countMin = complDict[el][0]
+                        countRec = complDict[el][1]
+                        countOpt = complDict[el][2]
                     except KeyError:
                         count = 0
+                        countMin = 0
+                        countRec = 0
+                        countOpt = 0
             except KeyError:
                 count = 0
-            writer.writerow([el, count])
+            writer.writerow([el, count, countMin, countRec, countOpt])
         endfile.close()
         sourcefile.close()
+        print "Complete!"
+
+    def complianceCalc(self, sitename):
+        """Calculate the rate of compliance of a specific website with the Bioschemas tags."""
+
+        print "Calculating website-Bioschemas compliance and saving data to complRate.csv..."
+
+        bioSource = open("bioschemas/bioschemasTags.csv", "rb")
+        bioReader = csv.reader(bioSource)
+        webSource = open("%s/tagsFound.csv" % sitename, "rb")
+        webReader = csv.reader(webSource)
+        propDict = {}
+
+        for row in webReader:
+            prop = row[0]
+            if prop == "Type":
+                pass
+            else:
+                propDict[prop] = [[row[2], row[3], row[4]]]
+
+        for row in bioReader:
+            prop = row[0]
+            if prop == "Type":
+                pass
+            else:
+                propDict[prop] += [[row[3], row[4], row[5]]]
+
+        complFile = open("%s/complRate.csv" % sitename, "wv")
+        writer = csv.writer(complFile)
+        writer.writerow(["Type", "MinScore", "RecScore", "OptScore"])
+
+        sorted_props = sorted(propDict.keys())
+        for el in sorted_props:
+            foundScores = propDict[el][0]
+            baseScores = propDict[el][1]
+
+            try:
+                minScore = (100.0 / int(baseScores[0])) * int(foundScores[0])
+            except ZeroDivisionError:
+                minScore = 0.0
+            try:
+                recScore = (100.0 / int(baseScores[1])) * int(foundScores[1])
+            except ZeroDivisionError:
+                recScore = 0.0
+            try:
+                optScore = (100.0 / int(baseScores[2])) * int(foundScores[2])
+            except ZeroDivisionError:
+                optScore = 0.0
+
+            writer.writerow([el, "%.2f" % minScore, "%.2f" % recScore, "%.2f" % optScore])
 
         print "Complete!"
 
