@@ -390,6 +390,9 @@ class WebsiteTags:
 
             writer.writerow([el, "%.2f" % minScore, "%.2f" % recScore, "%.2f" % optScore])
 
+        webSource.close()
+        bioSource.close()
+        complFile.close()
         print "Complete!"
 
 
