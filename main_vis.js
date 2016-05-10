@@ -31,7 +31,6 @@ function createBarplot(sitename) {
         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
     d3.csv(sitename + "/tagsFound.csv", type, function (error, data) {
-    //d3.csv("tagsFound.csv", type, function (error, data) {
 
         x.domain(data.map(function (d) { return d["Type"]; }));
         y.domain([0, d3.max(data, function (d) { return d["Value"]; })]);
@@ -252,7 +251,7 @@ function infoMaker(csvfile) {
 
 }
 
-function circleProgress(el) {
+function circleProgress(el, sitename) {
     // Create a visualization of compliance for each Bioschemas type
     
     var colors = {
@@ -270,7 +269,7 @@ function circleProgress(el) {
     var persMean = 0;
     var trainMean = 0;
 
-    d3.csv("complRate.csv", function (error, data) {
+    d3.csv(sitename + "/complRate.csv", function (error, data) {
         data = data.map(function (d) {
             d.minScore = +d["MinScore"];
             d.recScore = +d["RecScore"];
@@ -417,9 +416,26 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
             d3.select("#barchart")
                 .selectAll("svg")
                 .remove();
+            d3.select("#event_radial")
+                .selectAll("svg")
+                .remove();
+            d3.select("#organization_radial")
+                .selectAll("svg")
+                .remove();
+            d3.select("#person_radial")
+                .selectAll("svg")
+                .remove();
+            d3.select("#training_radial")
+                .selectAll("svg")
+                .remove();
             var websiteList = d["website"].split("/");
             websiteList.splice(0, 2);
-            createBarplot(websiteList.join("_"));
+            var websiteName = websiteList.join("_");
+            createBarplot(websiteName);
+            circleProgress("event", websiteName);
+            circleProgress("organization", websiteName);
+            circleProgress("person", websiteName);
+            circleProgress("training", websiteName);
         })
         .html(function (d) {
             return d["name"];

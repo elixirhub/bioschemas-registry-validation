@@ -366,7 +366,7 @@ class WebsiteTags:
             else:
                 propDict[prop] += [[row[3], row[4], row[5]]]
 
-        complFile = open("%s/complRate.csv" % sitename, "wv")
+        complFile = open("%s/complRate.csv" % sitename, "wb")
         writer = csv.writer(complFile)
         writer.writerow(["Type", "MinScore", "RecScore", "OptScore"])
 
