@@ -252,8 +252,162 @@ function infoMaker(csvfile) {
 
 }
 
+function circleProgress(el) {
+    // Create a visualization of compliance for each Bioschemas type
+    
+    var colors = {
+        'pink': '#E1499A',
+        'yellow': '#f0ff08',
+        'green': '#47e495',
+        "event": "#1B62E8",
+        "organization": "#2AACFF",
+        "person": "#1BCEE8",
+        "training": "#1DFFDE"
+    };
+    
+    var eventMean = 0;
+    var organMean = 0;
+    var persMean = 0;
+    var trainMean = 0;
+
+    d3.csv("complRate.csv", function (error, data) {
+        data = data.map(function (d) {
+            d.minScore = +d["MinScore"];
+            d.recScore = +d["RecScore"];
+            d.optScore = +d["OptScore"];
+            d.meanScore = (d.minScore + d.recScore + d.optScore) / 3;
+
+            if (d["Type"].startsWith("event")) {
+                eventMean += d.meanScore;
+            } else if (d["Type"].startsWith("organization")) {
+                organMean += d.meanScore;
+            } else if (d["Type"].startsWith("person")) {
+                persMean += d.meanScore;
+            } else if (d["Type"].startsWith("training")) {
+                trainMean += d.meanScore;
+            }
+
+            return d;
+        });
+
+        eventMean /= 3;
+        organMean /= 3;
+        persMean /= 3;
+        trainMean /= 3;
+        
+        var endVal, endPar, color;
+
+        if (el == "event") {
+            endVal = eventMean;
+            endPar = "#event_radial";
+            color = colors.event;
+        } else if (el == "organization") {
+            endVal = organMean;
+            endPar = "#organization_radial";
+            color = colors.organization;
+        } else if (el == "person") {
+            endVal = persMean;
+            endPar = "#person_radial";
+            color = colors.person;
+        } else if (el == "training") {
+            endVal = trainMean;
+            endPar = "#training_radial";
+            color = colors.training;
+        }
+
+        var radius = 100;
+        var border = 10;
+        var padding = 30;
+        var startPercent = 0;
+        var endPercent = endVal / 100;
+
+
+        var twoPi = Math.PI * 2;
+        var formatPercent = d3.format('.0%');
+        var boxSize = (radius + padding) * 2;
+
+
+        var count = Math.abs((endPercent - startPercent) / 0.01);
+        var step = endPercent < startPercent ? -0.01 : 0.01;
+
+        var arc = d3.svg.arc()
+            .startAngle(0)
+            .innerRadius(radius)
+            .outerRadius(radius - border);
+
+        var parent = d3.select(endPar);
+
+        var svg = parent.append('svg')
+            .attr('width', boxSize)
+            .attr('height', boxSize);
+
+        var defs = svg.append('defs');
+
+        var filter = defs.append('filter')
+            .attr('id', 'blur');
+
+        filter.append('feGaussianBlur')
+            .attr('in', 'SourceGraphic')
+            .attr('stdDeviation', '7');
+
+        var g = svg.append('g')
+            .attr('transform', 'translate(' + boxSize / 2 + ',' + boxSize / 2 + ')');
+
+        var meter = g.append('g')
+            .attr('class', 'progress-meter');
+
+        meter.append('path')
+            .attr('class', 'background')
+            .attr('fill', '#ccc')
+            .attr('fill-opacity', 0.5)
+            .attr('d', arc.endAngle(twoPi));
+
+        var foreground = meter.append('path')
+            .attr('class', 'foreground')
+            .attr('fill', color)
+            .attr('fill-opacity', 1)
+            .attr('stroke', color)
+            .attr('stroke-width', 5)
+            .attr('stroke-opacity', 1)
+            .attr('filter', 'url(#blur)');
+
+        var front = meter.append('path')
+            .attr('class', 'foreground')
+            .attr('fill', color)
+            .attr('fill-opacity', 1);
+
+        var numberText = meter.append('text')
+            .attr('fill', '#666')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.35em');
+
+        function updateProgress(progress) {
+            foreground.attr('d', arc.endAngle(twoPi * progress));
+            front.attr('d', arc.endAngle(twoPi * progress));
+            numberText.text(formatPercent(progress));
+        }
+
+        var progress = startPercent;
+
+        (function loops() {
+            updateProgress(progress);
+
+            if (count > 0) {
+                count--;
+                progress += step;
+                setTimeout(loops, 10);
+            }
+        })();
+
+    });
+
+}
+
+// Dropdown menu for all the scraped websites
+
 var dropbutton = d3.select(".dropdown-content")
     .append("a");
+
 d3.csv("scrapedWebsites.csv", function (error, data) {
     dropbutton.selectAll("a")
         .data(data)
