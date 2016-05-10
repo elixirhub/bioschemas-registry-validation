@@ -3,12 +3,14 @@
     position: relative;
     width: 100%;
     vertical-align: middle;
-    overflow: scroll;
+    /*overflow: scroll;*/
 }
 
 #barcont {
     margin: 0 auto;
-    width: 1200px;
+    width: 100%;
+    height: 600px;
+    margin-top: -50px;
     text-align: center;
 }
 
@@ -36,14 +38,17 @@
 #bubblechart {
     text-align: center;
     float: left;
-    width: 500px;
+    width: auto;
+    height: auto;
+    margin-left: 20px;
 }
 
 #bubbleinfo {
     text-align: center;
     float: right;
-    width: 700px;
+    width: auto;
     margin-top: 100px;
+    margin-right: 20px;
 }
 
 table {
@@ -76,6 +81,8 @@ tbody tr:nth-child(odd) {
 .dropdown {
     position: relative;
     display: inline-block;
+    vertical-align: top;
+    margin-top: 50px;
 }
 
 .dropdown-content {
@@ -146,4 +153,8 @@ tbody tr:nth-child(odd) {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 24px;
     font-weight: bold;
+}
+
+hide {
+    display: none;
 }

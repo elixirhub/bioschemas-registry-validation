@@ -5,9 +5,9 @@
 function createBarplot(sitename) {
     // Create a barplot based on the properties found in the scraped website
 
-    var margin = {top: 30, right: 40, bottom: 160, left: 50},
+    var margin = {top: 30, right: 40, bottom: 100, left: 50},
         width = 800 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1);
@@ -126,7 +126,7 @@ function colorBarplot(d) {
 function bubbleMaker(sitename, csvfile) {
     // Create a bubblechart based on the specific property type selected in the barplot
     
-    var diameter = 400,
+    var diameter = 300,
         color = d3.scale.category20c();
 
     var bubble = d3.layout.pack()
@@ -336,6 +336,9 @@ function circleProgress(el, sitename) {
 
         var parent = d3.select(endPar);
 
+        parent.append("h2")
+            .text(el);
+
         var svg = parent.append('svg')
             .attr('width', boxSize)
             .attr('height', boxSize);
@@ -432,6 +435,7 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
             websiteList.splice(0, 2);
             var websiteName = websiteList.join("_");
             createBarplot(websiteName);
+            document.getElementById("barlegendsvg").classList.remove("hide");
             circleProgress("event", websiteName);
             circleProgress("organization", websiteName);
             circleProgress("person", websiteName);
