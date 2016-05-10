@@ -117,7 +117,7 @@ function colorBarplot(d) {
     } else if (d["Type"].charAt(0) == "o") {
         return "#2AACFF";
     } else if (d["Type"].charAt(0) == "p") {
-        return "#1BCEE8";
+        return "#81CDFE";
     } else if (d["Type"].charAt(0) == "t") {
         return "#1DFFDE";
     }
@@ -260,7 +260,7 @@ function circleProgress(el, sitename) {
         'green': '#47e495',
         "event": "#1B62E8",
         "organization": "#2AACFF",
-        "person": "#1BCEE8",
+        "person": "#81CDFE",
         "training": "#1DFFDE"
     };
     
