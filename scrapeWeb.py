@@ -88,7 +88,12 @@ class TagsReference:
 
         print "Saving BioSchemas tags in bioschemasTags.json..."
 
-        endfile = open('bioschemasTags.json', 'wb')
+        try:
+            endfile = open('bioschemas/bioschemasTags.json', 'wb')
+        except IOError:
+            os.system("mkdir bioschemas")
+            endfile = open('bioschemas/bioschemasTags.json', 'wb')
+
         json.dump(self.refTags, endfile, indent=4, sort_keys=True)
         endfile.close()
         print "Complete!"
