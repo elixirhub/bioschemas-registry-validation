@@ -71,11 +71,11 @@ function createBarplot(sitename) {
                 d3.select("#bubblechart")
                     .selectAll(".bubble")
                     .remove();
-                bubbleMaker(d["Type"]);
+                bubbleMaker(sitename, d["Type"]);
                 d3.select("#bubbleinfo")
                     .selectAll("table")
                     .remove();
-                infoMaker(d["Type"]);
+                infoMaker(sitename, d["Type"]);
             });
 
         bar.append("text")
@@ -123,7 +123,7 @@ function colorBarplot(d) {
     }
 }
 
-function bubbleMaker(csvfile) {
+function bubbleMaker(sitename, csvfile) {
     // Create a bubblechart based on the specific property type selected in the barplot
     
     var diameter = 400,
@@ -153,7 +153,7 @@ function bubbleMaker(csvfile) {
         .style("font-size", "16px")
         .style("text-align", "center");
 
-    d3.csv(csvfile + ".csv", function (error, data) {
+    d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
         data = data.map(function (d) {
             d.value = +d["Count"];
             return d;
@@ -202,7 +202,7 @@ function bubbleMaker(csvfile) {
     })
 }
 
-function infoMaker(csvfile) {
+function infoMaker(sitename, csvfile) {
     // Create a table that shows all the details about the properties shown in the bubblechart
 
     var table = d3.select("#bubbleinfo")
@@ -221,7 +221,7 @@ function infoMaker(csvfile) {
                 "font-size": "18px"
         });
 
-    d3.csv(csvfile + ".csv", function (error, data) {
+    d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
         data = data.map(function (d) {
             d.value = +d["Count"];
             return d;
