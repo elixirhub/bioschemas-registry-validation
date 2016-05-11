@@ -236,15 +236,21 @@ function infoMaker(sitename, csvfile) {
         rows.selectAll("td")
             .data(function (row) {
                 return columns.map(function (column) {
-                    return {column: column, value: row[column]};
+                    return {column: column, value: row[column], descr: row["Descr"], props: row["Property"]};
                 });
             })
             .enter()
             .append("td")
             .style("font-family", "Helvetica Neue, Helvetica, Arial, sans-serif")
-            .html(function (d) {
+            .html(function (d, i) {
+                if (i == 0) {
+                    return "<a href='https://schema.org/" + d.props + "' target='_blank'>" + d.value + "</a>";
+                }
                 return d.value;
             })
+            .attr("title", function (d) {
+                return d.descr;
+            });
     });
 
     return table;
