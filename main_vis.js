@@ -422,29 +422,31 @@ function circleProgress(el, sitename) {
 
 // Dropdown menu for all the scraped websites
 
-var dropbutton = d3.select(".dropdown-content")
-    .append("a");
-
+var dropbutton = d3.select(".dropdown-content");
 d3.csv("scrapedWebsites.csv", function (error, data) {
     dropbutton.selectAll("a")
         .data(data)
         .enter()
         .append("a")
+        .html(function (d) {
+            return d["name"];
+        })
+        .attr("class", "drop_hover")
         .on("click", function (d) {
             d3.select("#barchart")
                 .selectAll("svg")
                 .remove();
-            d3.select("#event_radial")
+            d3.select("#compliance")
                 .selectAll("svg")
                 .remove();
-            d3.select("#organization_radial")
+            d3.select("#bubbletitle")
+                .selectAll("h2")
+                .remove();
+            d3.select("#bubblechart")
                 .selectAll("svg")
                 .remove();
-            d3.select("#person_radial")
-                .selectAll("svg")
-                .remove();
-            d3.select("#training_radial")
-                .selectAll("svg")
+            d3.select("#bubbleinfo")
+                .selectAll("table")
                 .remove();
             var websiteList = d["website"].split("/");
             websiteList.splice(0, 2);
@@ -455,9 +457,6 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
             circleProgress("organization", websiteName);
             circleProgress("person", websiteName);
             circleProgress("training", websiteName);
-        })
-        .html(function (d) {
-            return d["name"];
         });
 
 });
