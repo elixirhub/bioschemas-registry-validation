@@ -33,7 +33,7 @@ function createBarplot(sitename) {
     d3.csv(sitename + "/tagsFound.csv", type, function (error, data) {
 
         x.domain(data.map(function (d) { return d["Type"]; }));
-        y.domain([0, d3.max(data, function (d) { return d["Value"]; })]);
+        y.domain([0, d3.max(data, function (d) { return d["Value"]; }) + 20]);
 
         var bar = svg.selectAll("g")
             .data(data)
@@ -68,6 +68,9 @@ function createBarplot(sitename) {
                     });
             })
             .on("click", function (d) {
+                d3.select("#bubbletitle")
+                    .selectAll("h2")
+                    .remove();
                 d3.select("#bubblechart")
                     .selectAll(".bubble")
                     .remove();
@@ -81,15 +84,17 @@ function createBarplot(sitename) {
         bar.append("text")
             .attr("x", x.rangeBand() / 2)
             .attr("y", function (d) {
-                return y(d["Value"]) + 10;
+                return y(d["Value"]) - 20;
             })
             .attr("dy", ".75em")
             .text(function (d) {
-                return d["Value"];
+                if (d["Value"] != 0) {
+                    return (d["Value"]);
+                }
             })
             .attr("font-family", "sans-serif")
             .attr("font-size", "16px")
-            .attr("fill", "white")
+            .attr("fill", "#666")
             .attr("text-anchor", "middle");
 
         svg.append("g")
@@ -144,13 +149,13 @@ function bubbleMaker(sitename, csvfile) {
         .style("margin", "10px")
         .style("background-color", "#fff");
 
-    d3.select("#" + csvfile)
-        .append("text")
-        .text(csvfile)
-        .attr("x", diameter / 3)
-        .attr("y", -10)
-        .style("font-weight", "bold")
-        .style("font-size", "16px")
+    d3.select("#bubbletitle")
+        .append("h2")
+        .html(csvfile.split("_")[0].charAt(0).toUpperCase() + csvfile.split("_")[0].slice(1) + " (" + csvfile.split("_")[1] + " type)")
+        //.attr("x", diameter / 3)
+        //.attr("y", -10)
+        //.style("font-weight", "bold")
+        //.style("font-size", "16px")
         .style("text-align", "center");
 
     d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
@@ -193,7 +198,7 @@ function bubbleMaker(sitename, csvfile) {
             })
             .attr("text-anchor", "middle")
             .text(function (d) {
-                return d["Property"] + " (" + d["Value"] + ")";
+                return d["Property"];
             })
             .style({"fill": "black",
                     "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
