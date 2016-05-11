@@ -55,17 +55,21 @@ function createBarplot(sitename) {
             })
             .on("mouseover", function (d) {
                 d3.select(this)
-                    .attr("fill", "steelblue")
-                    .append("title")
-                    .text(function (d) { 
-                        return d["Type"].split("_")[0] + " tags, " + d["Type"].split("_")[1] + " type"; 
-                    })
+                    .attr("fill", "steelblue");
+                d3.select(this.parentNode)
+                    .selectAll("text")
+                    .attr("fill", "#000")
+                    .style("font-weight", "bold");
             })
             .on("mouseout", function (d) {
                 d3.select(this)
                     .attr("fill", function (d) {
                         return colorBarplot(d);
                     });
+                d3.select(this.parentNode)
+                    .selectAll("text")
+                    .attr("fill", "#666")
+                    .style("font-weight", "normal");
             })
             .on("click", function (d) {
                 d3.select("#bubbletitle")
@@ -92,7 +96,7 @@ function createBarplot(sitename) {
                     return (d["Value"]);
                 }
             })
-            .attr("font-family", "sans-serif")
+            .attr("font-family", "Helvetica Neue, Helvetica, Arial, sans-serif")
             .attr("font-size", "16px")
             .attr("fill", "#666")
             .attr("text-anchor", "middle");
@@ -102,11 +106,11 @@ function createBarplot(sitename) {
             .call(xAxis)
             .selectAll("text")
             .style("text-anchor", "end")
-            .attr("font-family", "sans-serif")
+            .attr("font-family", "Helvetica Neue, Helvetica, Arial, sans-serif")
             .attr("font-size", "14px")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)");
+            .attr("transform", "rotate(-50)");
 
     });
 }
