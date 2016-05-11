@@ -4,6 +4,7 @@
 
 import requests, sys, json, csv, os
 from bs4 import BeautifulSoup
+from random import randint
 
 allTags = {}
 foundTags = {}
@@ -403,7 +404,13 @@ class WebsiteTags:
 
 
 if __name__ == '__main__':
-    TagsReference()
+
+    # Just to save some time and web traffic, perform the update of Bioschemas properties just once in a while
+
+    onceInAWhile = randint(0, 9)
+    if onceInAWhile == 3:
+        TagsReference()
+
     WebsiteTags(sys.argv[1])
 
 
