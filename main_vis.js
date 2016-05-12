@@ -82,6 +82,8 @@ function createBarplot(sitename) {
                 d3.select("#bubbleinfo")
                     .selectAll("table")
                     .remove();
+                pieMaker(sitename, d["Type"]);
+                document.getElementById("changeChart").classList.remove("hide");
                 infoMaker(sitename, d["Type"]);
             });
 
@@ -132,86 +134,9 @@ function colorBarplot(d) {
     }
 }
 
-function pieMaker(sitename, csvfile) {
-    // Create a piechart based on the specific property type selected in the barplot
-    
-    var width = 300,
-        height = 300,
-        radius = 150;
-
-    var color;
-
-    if (csvfile.charAt(0) == "e") {
-        color = d3.scale.ordinal().range(["#7DA7F3", "#528BF3", "#1B62E8", "#3B63AE", "#093B97"]);
-    } else if (csvfile.charAt(0) == "o") {
-        color = d3.scale.ordinal().range(["#8AD1FF", "#5FC0FF", "#2AACFF", "#4790BF", "#0E6AA6"]);
-    } else if (csvfile.charAt(0) == "p") {
-        color = d3.scale.ordinal().range(["#BAE3FF", "#A1DAFF", "#81CDFE", "#78A3BF", "#2A75A5"]);
-    } else if (csvfile.charAt(0) == "t") {
-        color = d3.scale.ordinal().range(["#83FFEE", "#56FFE8", "#1DFFDE", "#40BFAE", "#09A690"]);
-    }
-
-    var arc = d3.svg.arc()
-        .outerRadius(radius - 10)
-        .innerRadius(0);
-
-    var labelArc = d3.svg.arc()
-        .outerRadius(radius + 5)
-        .innerRadius(radius + 5);
-
-    var pie = d3.layout.pie()
-        .sort(null)
-        .value(function (d) { return d.value; });
-
-    var svg = d3.select("#bubblechart")
-        .append("svg")
-        .attr({"width": width * 1.3,
-                "height": height * 1.5,
-                "id": csvfile})
-        .attr("class", "bubble")
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-    d3.select("#bubbletitle")
-        .append("h2")
-        .html(csvfile.split("_")[0].charAt(0).toUpperCase() + csvfile.split("_")[0].slice(1) + " (" + csvfile.split("_")[1] + " type)")
-        .style("text-align", "center");
-
-    d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
-        data = data.map(function (d) {
-            d.value = +d["Count"];
-            return d;
-        });
-
-        var g = svg.selectAll(".arc")
-            .data(pie(data))
-            .enter()
-            .append("g")
-            .attr("class", "arc");
-
-        g.append("path")
-            .attr("d", arc)
-            .style({"fill": function (d) { return color(d.data.value); },
-                    "stroke": "#fff"});
-
-        g.insert("text")
-            .attr({"transform": function (d) { return "translate(" + labelArc.centroid(d) + ")"; },
-                    "dy": ".35em",
-                    "text-anchor": "start"})
-            .text(function (d) {
-                return d.data["Property"];
-            })
-            .style({"fill": "black",
-                    "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    "font-size": "12px",
-                    "font-weight": "bold"});
-
-    });
-}
-
 function bubbleMaker(sitename, csvfile) {
     // Create a bubblechart based on the specific property type selected in the barplot
-    
+
     var diameter = 300;
     var color;
 
@@ -291,11 +216,90 @@ function bubbleMaker(sitename, csvfile) {
             .text(function (d) {
                 return d["Property"];
             })
-            .style({"fill": "black",
+            .style({"fill": "#333",
                     "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
-                    "font-size": "12px",
+                    "font-size": "14px",
                     "font-weight": "bold"});
     })
+}
+
+function pieMaker(sitename, csvfile) {
+    // Create a piechart based on the specific property type selected in the barplot
+    
+    var width = 200,
+        height = 200,
+        radius = 100;
+
+    var color;
+
+    if (csvfile.charAt(0) == "e") {
+        color = d3.scale.ordinal().range(["#7DA7F3", "#528BF3", "#1B62E8", "#3B63AE", "#093B97"]);
+    } else if (csvfile.charAt(0) == "o") {
+        color = d3.scale.ordinal().range(["#8AD1FF", "#5FC0FF", "#2AACFF", "#4790BF", "#0E6AA6"]);
+    } else if (csvfile.charAt(0) == "p") {
+        color = d3.scale.ordinal().range(["#BAE3FF", "#A1DAFF", "#81CDFE", "#78A3BF", "#2A75A5"]);
+    } else if (csvfile.charAt(0) == "t") {
+        color = d3.scale.ordinal().range(["#83FFEE", "#56FFE8", "#1DFFDE", "#40BFAE", "#09A690"]);
+    }
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+
+    var labelArc = d3.svg.arc()
+        .outerRadius(radius + 5)
+        .innerRadius(radius + 5);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function (d) { return d.value; });
+
+    var svg = d3.select("#bubblechart")
+        .append("svg")
+        .attr({"width": width * 2,
+                "height": height * 2,
+                "id": csvfile})
+        .attr("class", "bubble hide")
+        .append("g")
+        .attr("transform", "translate(" + width + "," + height + ")");
+
+    /*
+    d3.select("#bubbletitle")
+        .append("h2")
+        .html(csvfile.split("_")[0].charAt(0).toUpperCase() + csvfile.split("_")[0].slice(1) + " (" + csvfile.split("_")[1] + " type)")
+        .style("text-align", "center");
+    */
+
+    d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
+        data = data.map(function (d) {
+            d.value = +d["Count"];
+            return d;
+        });
+
+        var g = svg.selectAll(".arc")
+            .data(pie(data))
+            .enter()
+            .append("g")
+            .attr("class", "arc");
+
+        g.append("path")
+            .attr("d", arc)
+            .style({"fill": function (d) { return color(d.data.value); },
+                    "stroke": "#fff"});
+
+        g.insert("text")
+            .attr({"transform": function (d) { return "translate(" + labelArc.centroid(d) + ")"; },
+                    "dy": ".35em",
+                    "text-anchor": "start"})
+            .text(function (d) {
+                return d.data["Property"];
+            })
+            .style({"fill": "#333",
+                    "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    "font-size": "14px",
+                    "font-weight": "bold"});
+
+    });
 }
 
 function infoMaker(sitename, csvfile) {
@@ -305,7 +309,7 @@ function infoMaker(sitename, csvfile) {
         .append("table");
     var thead = table.append("thead");
     var tbody = table.append("tbody");
-    var columns = ["Property", "Type", "Cardinality", "Guideline", "Contr Vocab", "Count"];
+    var columns = ["Property", "Type", "Cardinality", "Guideline", "Vocab", "Count"];
 
     thead.append("tr")
         .selectAll("th")
@@ -327,7 +331,6 @@ function infoMaker(sitename, csvfile) {
             .data(data)
             .enter()
             .append("tr");
-
 
         rows.selectAll("td")
             .data(function (row) {
@@ -438,8 +441,8 @@ function circleProgress(el, sitename) {
 
         var parent = d3.select(endPar);
 
-        parent.append("h2")
-            .text(el);
+        /*parent.append("h2")
+            .text(el);*/
 
         var svg = parent.append('svg')
             .attr('width', boxSize)
@@ -510,6 +513,7 @@ function circleProgress(el, sitename) {
 // Dropdown menu for all the scraped websites
 
 var dropbutton = d3.select(".dropdown-content");
+
 d3.csv("scrapedWebsites.csv", function (error, data) {
     dropbutton.selectAll("a")
         .data(data)
@@ -546,4 +550,17 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
             circleProgress("training", websiteName);
         });
 
+});
+
+var bubbleButt = d3.select("#bubbleButt");
+var pieButt = d3.select("#pieButt");
+
+bubbleButt.on("click", function () {
+    document.getElementById("bubblechart").childNodes[1].classList.remove("hide");
+    document.getElementById("bubblechart").childNodes[2].classList.add("hide");
+});
+
+pieButt.on("click", function () {
+    document.getElementById("bubblechart").childNodes[2].classList.remove("hide");
+    document.getElementById("bubblechart").childNodes[1].classList.add("hide");
 });
