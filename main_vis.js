@@ -135,8 +135,18 @@ function colorBarplot(d) {
 function bubbleMaker(sitename, csvfile) {
     // Create a bubblechart based on the specific property type selected in the barplot
     
-    var diameter = 300,
-        color = d3.scale.category20c();
+    var diameter = 300;
+    var color;
+
+    if (csvfile.charAt(0) == "e") {
+        color = d3.scale.ordinal().range(["#7DA7F3", "#528BF3", "#1B62E8", "#3B63AE", "#093B97"]);
+    } else if (csvfile.charAt(0) == "o") {
+        color = d3.scale.ordinal().range(["#8AD1FF", "#5FC0FF", "#2AACFF", "#4790BF", "#0E6AA6"]);
+    } else if (csvfile.charAt(0) == "p") {
+        color = d3.scale.ordinal().range(["#BAE3FF", "#A1DAFF", "#81CDFE", "#78A3BF", "#2A75A5"]);
+    } else if (csvfile.charAt(0) == "t") {
+        color = d3.scale.ordinal().range(["#83FFEE", "#56FFE8", "#1DFFDE", "#40BFAE", "#09A690"]);
+    }
 
     var bubble = d3.layout.pack()
         .sort(null)
