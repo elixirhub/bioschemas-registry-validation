@@ -132,6 +132,83 @@ function colorBarplot(d) {
     }
 }
 
+function pieMaker(sitename, csvfile) {
+    // Create a piechart based on the specific property type selected in the barplot
+    
+    var width = 300,
+        height = 300,
+        radius = 150;
+
+    var color;
+
+    if (csvfile.charAt(0) == "e") {
+        color = d3.scale.ordinal().range(["#7DA7F3", "#528BF3", "#1B62E8", "#3B63AE", "#093B97"]);
+    } else if (csvfile.charAt(0) == "o") {
+        color = d3.scale.ordinal().range(["#8AD1FF", "#5FC0FF", "#2AACFF", "#4790BF", "#0E6AA6"]);
+    } else if (csvfile.charAt(0) == "p") {
+        color = d3.scale.ordinal().range(["#BAE3FF", "#A1DAFF", "#81CDFE", "#78A3BF", "#2A75A5"]);
+    } else if (csvfile.charAt(0) == "t") {
+        color = d3.scale.ordinal().range(["#83FFEE", "#56FFE8", "#1DFFDE", "#40BFAE", "#09A690"]);
+    }
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+
+    var labelArc = d3.svg.arc()
+        .outerRadius(radius + 5)
+        .innerRadius(radius + 5);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function (d) { return d.value; });
+
+    var svg = d3.select("#bubblechart")
+        .append("svg")
+        .attr({"width": width * 1.3,
+                "height": height * 1.5,
+                "id": csvfile})
+        .attr("class", "bubble")
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    d3.select("#bubbletitle")
+        .append("h2")
+        .html(csvfile.split("_")[0].charAt(0).toUpperCase() + csvfile.split("_")[0].slice(1) + " (" + csvfile.split("_")[1] + " type)")
+        .style("text-align", "center");
+
+    d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
+        data = data.map(function (d) {
+            d.value = +d["Count"];
+            return d;
+        });
+
+        var g = svg.selectAll(".arc")
+            .data(pie(data))
+            .enter()
+            .append("g")
+            .attr("class", "arc");
+
+        g.append("path")
+            .attr("d", arc)
+            .style({"fill": function (d) { return color(d.data.value); },
+                    "stroke": "#fff"});
+
+        g.insert("text")
+            .attr({"transform": function (d) { return "translate(" + labelArc.centroid(d) + ")"; },
+                    "dy": ".35em",
+                    "text-anchor": "start"})
+            .text(function (d) {
+                return d.data["Property"];
+            })
+            .style({"fill": "black",
+                    "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
+                    "font-size": "12px",
+                    "font-weight": "bold"});
+
+    });
+}
+
 function bubbleMaker(sitename, csvfile) {
     // Create a bubblechart based on the specific property type selected in the barplot
     
