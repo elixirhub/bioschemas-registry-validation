@@ -626,6 +626,10 @@ var listButt = d3.select("#listButton");
 
 listButt.on("click", function () {
     if (document.getElementById("websitetable").classList.contains("hide")) {
+        // This removes everything from the page to show the ratings list
+        
+        d3.select("#maincnt").attr("class", null);
+        d3.select("#maincnt").selectAll("a").attr("class", "hide");
         d3.select("#barchart").selectAll("svg").remove();
         document.getElementById("barlegendsvg").classList.add("hide");
         d3.select("#event_radial").selectAll("svg").remove();
@@ -639,6 +643,10 @@ listButt.on("click", function () {
         document.getElementById("websitetable").classList.remove("hide");
         websiteList();
     } else {
+        // This removes the ratings list and allows to select a website to inspect data
+
+        d3.select("#maincnt").attr("class", "dropdown-content");
+        d3.select("#maincnt").selectAll("a").attr("class", null).attr("class", "drop_hover");
         d3.select("#websitetable").selectAll("table").remove();
         document.getElementById("websitetable").classList.add("hide");
     }
