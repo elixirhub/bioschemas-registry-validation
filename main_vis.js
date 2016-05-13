@@ -552,6 +552,62 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
 
 });
 
+// List of all the scraped websites and their compliance ratings
+
+function websiteList() {
+    // Create a table that shows all the scraped websites and their compliance rate
+
+    var table = d3.select("#websitetable")
+        .append("table");
+    var thead = table.append("thead");
+    var tbody = table.append("tbody");
+    var columns = ["Website", "Rating", "Category", "LastCheck"];
+
+    thead.append("tr")
+        .selectAll("th")
+        .data(columns)
+        .enter()
+        .append("th")
+        .text(function (columns) { return columns; })
+        .style({"font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
+                "font-size": "18px"});
+
+    // Change this to source the scrapedRatings.csv file and show the ratings as stars
+
+    d3.csv("scrapedRatings.csv", function (error, data) {
+        data = data.map(function (d) {
+            d.value = +d["Rating"];
+            return d;
+        });
+        
+        var rows = tbody.selectAll("tr")
+            .data(data)
+            .enter()
+            .append("tr");
+
+        rows.selectAll("td")
+            .data(function (row) {
+                return columns.map(function (column) {
+                    return { column: column, value: row[column], name: row["Website"], rating: row["Rating"], categ: row["Category"], lastch: row["LastCheck"] };
+                });
+            })
+            .enter()
+            .append("td")
+            .style("font-family", "Helvetica Neue, Helvetica, Arial, sans-serif")
+            .html(function (d, i) {
+                if (i == 0) {
+
+                } else if (i == 1) {
+                    return "<div class='rating_bar'><div class='rating' style='width: " + d.rating + "%'></div></div>";
+                }
+
+                return d.value;
+            });
+
+    });
+
+}
+
 var bubbleButt = d3.select("#bubbleButt");
 var pieButt = d3.select("#pieButt");
 

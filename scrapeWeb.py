@@ -160,6 +160,7 @@ class WebsiteTags:
 
         self.checkFileList()
         self.checkWebsite()
+        self.ratingCalc()
 
     def checkFileList(self):
         """Check if the scrapedWebsites.csv file exists, otherwise it will be created."""
@@ -399,8 +400,96 @@ class WebsiteTags:
         webSource.close()
         bioSource.close()
         complFile.close()
+
         print "Complete!"
 
+    def ratingCalc(self):
+        """Calculate the rating of compliance for each website so that it can be displayed in a table."""
+
+        print "Calculating the compliance ratings for all the scraped websites..."
+
+        websiteSource = open("scrapedWebsites.csv", "rb")
+        websiteReader = csv.reader(websiteSource)
+
+        ratingFile = open("scrapedRatings.csv", "wb")
+        ratingWriter = csv.writer(ratingFile)
+        ratingWriter.writerow(["Website", "Rating", "Category", "LastCheck"])
+
+        for row in websiteReader:
+            websiteData = []
+            if row[0] != "website":
+                webList = row[0].split("/")
+                websiteUrl = "_".join(webList[2:])
+                webName = row[1]
+                websiteData.append(webName)
+
+                thisSource = open("%s/complRate.csv" % websiteUrl, "rb")
+                thisReader = csv.reader(thisSource)
+
+                for riga in thisReader:
+                    if riga[0] != "Type":
+                        if riga[0] == "event_bioschemas":
+                            eventBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "event_schema":
+                            eventSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "event_thing":
+                            eventThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "organization_bioschemas":
+                            orgBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "organization_schema":
+                            orgSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "organization_thing":
+                            orgThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "person_bioschemas":
+                            persBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "person_schema":
+                            persSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "person_thing":
+                            persThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "training_bioschemas":
+                            trainBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "training_schema":
+                            trainSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                        elif riga[0] == "training_thing":
+                            trainThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
+                    else:
+                        pass
+
+                eventMean = "%.2f" % ((float(eventBioMean) + float(eventSchMean) + float(eventThiMean)) / 3)
+                orgMean = "%.2f" % ((float(orgBioMean) + float(orgSchMean) + float(orgThiMean)) / 3)
+                persMean = "%.2f" % ((float(persBioMean) + float(persSchMean) + float(persThiMean)) / 3)
+                trainMean = "%.2f" % ((float(trainBioMean) + float(trainSchMean) + float(trainThiMean)) / 3)
+
+                totRating = "%.2f" % ((float(eventMean) + float(orgMean) + float(persMean) + float(trainMean)) / 4)
+                websiteData.append(totRating)
+
+                websiteMax = max(float(eventMean), float(orgMean), float(persMean), float(trainMean))
+                if websiteMax == float(eventMean):
+                    websiteType = "Event"
+                elif websiteMax == float(orgMean):
+                    websiteType = "Organization"
+                elif websiteMax == float(persMean):
+                    websiteType = "Person"
+                elif websiteMax == float(trainMean):
+                    websiteType = "Training"
+                websiteData.append(websiteType)
+                today = date.today()
+                websiteData.append(str(today))
+
+                thisSource.close()
+
+            else:
+                pass
+
+            if len(websiteData) != 0:
+                ratingWriter.writerow(websiteData)
+            else:
+                pass
+
+        print "Complete!"
+
+        websiteSource.close()
+        ratingFile.close()
 
 
 if __name__ == '__main__':

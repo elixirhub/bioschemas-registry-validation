@@ -202,6 +202,22 @@ tbody tr:nth-child(odd) {
     font-weight: bold;
 }
 
-hide {
+.hide {
     display: none;
+}
+
+.rating_bar {
+    width: 80px;
+    height: 16px;
+    background: url("http://webcodingeasy.com/images/stars.png");
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    text-align: left;
+}
+
+.rating {
+    height: 16px;
+    background: url("http://webcodingeasy.com/images/stars.png");
+    background-position: 0 -16px;
+    background-repeat: repeat-x;
 }
