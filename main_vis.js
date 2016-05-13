@@ -510,51 +510,6 @@ function circleProgress(el, sitename) {
 
 }
 
-// Dropdown menu for all the scraped websites
-
-var dropbutton = d3.select(".dropdown-content");
-
-d3.csv("scrapedWebsites.csv", function (error, data) {
-    dropbutton.selectAll("a")
-        .data(data)
-        .enter()
-        .append("a")
-        .html(function (d) {
-            return d["name"];
-        })
-        .attr("class", "drop_hover")
-        .on("click", function (d) {
-            d3.select("#barchart")
-                .selectAll("svg")
-                .remove();
-            d3.select("#compliance")
-                .selectAll("svg")
-                .remove();
-            d3.select("#bubbletitle")
-                .selectAll("h2")
-                .remove();
-            d3.select("#bubblechart")
-                .selectAll("svg")
-                .remove();
-            d3.select("#bubbleinfo")
-                .selectAll("table")
-                .remove();
-            var websiteList = d["website"].split("/");
-            websiteList.splice(0, 2);
-            var websiteName = websiteList.join("_");
-            createBarplot(websiteName);
-            document.getElementById("barlegendsvg").classList.remove("hide");
-            document.getElementById("changeChart").classList.add("hide");
-            circleProgress("event", websiteName);
-            circleProgress("organization", websiteName);
-            circleProgress("person", websiteName);
-            circleProgress("training", websiteName);
-        });
-
-});
-
-// List of all the scraped websites and their compliance ratings
-
 function websiteList() {
     // Create a table that shows all the scraped websites and their compliance rate
 
@@ -607,6 +562,51 @@ function websiteList() {
 
 }
 
+// Dropdown menu for all the scraped websites
+
+var dropbutton = d3.select(".dropdown-content");
+
+d3.csv("scrapedWebsites.csv", function (error, data) {
+    dropbutton.selectAll("a")
+        .data(data)
+        .enter()
+        .append("a")
+        .html(function (d) {
+            return d["name"];
+        })
+        .attr("class", "drop_hover")
+        .on("click", function (d) {
+            d3.select("#barchart")
+                .selectAll("svg")
+                .remove();
+            d3.select("#compliance")
+                .selectAll("svg")
+                .remove();
+            d3.select("#bubbletitle")
+                .selectAll("h2")
+                .remove();
+            d3.select("#bubblechart")
+                .selectAll("svg")
+                .remove();
+            d3.select("#bubbleinfo")
+                .selectAll("table")
+                .remove();
+            var websiteList = d["website"].split("/");
+            websiteList.splice(0, 2);
+            var websiteName = websiteList.join("_");
+            createBarplot(websiteName);
+            document.getElementById("barlegendsvg").classList.remove("hide");
+            document.getElementById("changeChart").classList.add("hide");
+            circleProgress("event", websiteName);
+            circleProgress("organization", websiteName);
+            circleProgress("person", websiteName);
+            circleProgress("training", websiteName);
+        });
+
+});
+
+// Buttons to toggle between bubble chart and pie chart visualization
+
 var bubbleButt = d3.select("#bubbleButt");
 var pieButt = d3.select("#pieButt");
 
@@ -618,4 +618,29 @@ bubbleButt.on("click", function () {
 pieButt.on("click", function () {
     document.getElementById("bubblechart").childNodes[2].classList.remove("hide");
     document.getElementById("bubblechart").childNodes[1].classList.add("hide");
+});
+
+// Button to show/hide the list of all the scraped websites and their compliance ratings
+
+var listButt = d3.select("#listButton");
+
+listButt.on("click", function () {
+    if (document.getElementById("websitetable").classList.contains("hide")) {
+        d3.select("#barchart").selectAll("svg").remove();
+        document.getElementById("barlegendsvg").classList.add("hide");
+        d3.select("#event_radial").selectAll("svg").remove();
+        d3.select("#organization_radial").selectAll("svg").remove();
+        d3.select("#person_radial").selectAll("svg").remove();
+        d3.select("#training_radial").selectAll("svg").remove();
+        document.getElementById("bubbletitle").classList.add("hide");
+        document.getElementById("changeChart").classList.add("hide");
+        d3.select("#bubblechart").selectAll("svg").remove();
+        d3.select("#bubbleinfo").selectAll("table").remove();
+        document.getElementById("websitetable").classList.remove("hide");
+        websiteList();
+    } else {
+        d3.select("#websitetable").selectAll("table").remove();
+        document.getElementById("websitetable").classList.add("hide");
+    }
+    
 });
