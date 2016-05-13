@@ -165,34 +165,35 @@ tbody tr:nth-child(odd) {
     vertical-align: middle;
     overflow: scroll;
     margin: 0 auto;
+    text-align: center;
 }
 
 #event_radial {
+    display: inline-block;
     margin: 0 auto;
     text-align: center;
-    width: 300px;
-    float: left;
+    width: 250px;
 }
 
 #organization_radial {
+    display: inline-block;
     margin: auto;
     text-align: center;
-    width: 300px;
-    float: left;
+    width: 250px;
 }
 
 #person_radial {
+    display: inline-block;
     margin: auto;
     text-align: center;
-    width: 300px;
-    float: left;
+    width: 250px;
 }
 
 #training_radial {
+    display: inline-block;
     margin: auto;
     text-align: center;
-    width: 300px;
-    float: left;
+    width: 250px;
 }
 
 .progress-meter text {

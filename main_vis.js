@@ -419,9 +419,9 @@ function circleProgress(el, sitename) {
             color = colors.training;
         }
 
-        var radius = 100;
+        var radius = 80;
         var border = 10;
-        var padding = 30;
+        var padding = 50;
         var startPercent = 0;
         var endPercent = endVal / 100;
 
@@ -455,7 +455,7 @@ function circleProgress(el, sitename) {
 
         filter.append('feGaussianBlur')
             .attr('in', 'SourceGraphic')
-            .attr('stdDeviation', '7');
+            .attr('stdDeviation', '5');
 
         var g = svg.append('g')
             .attr('transform', 'translate(' + boxSize / 2 + ',' + boxSize / 2 + ')');
