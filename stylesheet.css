@@ -132,25 +132,7 @@ tbody tr:nth-child(odd) {
     vertical-align: top;
 }
 
-.dropdown2-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown2-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
-}
-
-.dropdown2-content a:hover {background-color: #f1f1f1}
-
-.dropdown2:hover .dropdown2-content {
+.dropdown2:hover {
     display: block;
 }
 

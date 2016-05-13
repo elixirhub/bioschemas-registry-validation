@@ -544,6 +544,7 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
             var websiteName = websiteList.join("_");
             createBarplot(websiteName);
             document.getElementById("barlegendsvg").classList.remove("hide");
+            document.getElementById("changeChart").classList.add("hide");
             circleProgress("event", websiteName);
             circleProgress("organization", websiteName);
             circleProgress("person", websiteName);
@@ -572,14 +573,12 @@ function websiteList() {
         .style({"font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
                 "font-size": "18px"});
 
-    // Change this to source the scrapedRatings.csv file and show the ratings as stars
-
     d3.csv("scrapedRatings.csv", function (error, data) {
         data = data.map(function (d) {
             d.value = +d["Rating"];
             return d;
         });
-        
+
         var rows = tbody.selectAll("tr")
             .data(data)
             .enter()
