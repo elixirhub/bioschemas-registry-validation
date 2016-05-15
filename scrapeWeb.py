@@ -3,6 +3,7 @@
 # Created by Roberto Preste
 
 import requests, sys, json, csv, os
+from datetime import date
 from bs4 import BeautifulSoup
 from random import randint
 
