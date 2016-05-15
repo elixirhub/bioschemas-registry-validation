@@ -1,0 +1,19 @@
+Property,Type,Descr,Cardin,Guideline,Vocab
+about,Thing,The subject matter of the content.,One,Minimum,
+audience,Audience,"An intended audience, i.e. a group for whom something was created.",Many,Minimum,Yes
+dateModified,Date or DateTime,The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed.,One,Minimum,
+genre,Text or URL,Genre of the creative work or group.,Many,Minimum,Yes
+author,Person or Organization,The author of this content.,Many,Recommended,
+contributor,Person or Organization,A secondary contributor to the CreativeWork.,Many,Recommended,
+keywords,Text,Keywords or tags used to describe this content. Multiple entries in a keywords list are typically delimited by commas.,Many,Recommended,
+license,URL or CreativeWork,"A license document that applies to this content, typically indicated by URL.",One,Recommended,Yes
+aggregateRating,AggregateRating,"The overall rating, based on a collection of reviews or ratings, of the item.",One,Optional,
+dateCreated,Date or DateTime,The date on which the CreativeWork was created or the item was added to a DataFeed.,One,Optional,
+hasPart,CreativeWork,Indicates a CreativeWork that is (in some sense) a part of this CreativeWork.,Many,Optional,
+inLanguage,Text or Language,"The language of the content or performance or used in an action, using one of the language codes from the IETF BCP 47 standard.",One,Optional,Yes
+isPartOf,CreativeWork,Indicates a CreativeWork that this CreativeWork is (in some sense) part of.,Many,Optional,
+learningResourceType,Text,"The predominant type or kind characterizing the learning resource (e.g. presentation, handout).",Many,Optional,Yes
+mentions,Thing,"Indicates that the CreativeWork contains a reference to, but is not necessarily about a concept.",Many,Optional,
+review,Review,A review of the item.,Many,Optional,
+timeRequired,Duration,"Approximate or typical time it takes to work with or through this learning resource for the typical intended target audience (e.g. ""P30M"", ""P1H25M"").",One,Optional,Yes
+version,Number,The version of the CreativeWork embodied by a specified resource.,One,Optional,

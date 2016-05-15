@@ -1,0 +1,32 @@
+{
+    "event_thing": [
+        [
+            "name", 
+            1
+        ]
+    ], 
+    "organization_schema": [
+        [
+            "logo", 
+            1
+        ]
+    ], 
+    "organization_thing": [
+        [
+            "name", 
+            1
+        ]
+    ], 
+    "person_thing": [
+        [
+            "name", 
+            1
+        ]
+    ], 
+    "training_thing": [
+        [
+            "name", 
+            1
+        ]
+    ]
+}

@@ -1,0 +1,2 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+email,Text,One,Recommended,,1,Email address.,['ferro.carlacristine@gmail.com']

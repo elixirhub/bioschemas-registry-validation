@@ -1,0 +1,13 @@
+Property,Type,Descr,Cardin,Guideline,Vocab
+type,CV,"The type of the organization selected from a controlled vocabulary: single-company corporation, multinational, not-for-profit, alliance, consortium, institute, department, working party, project, etc.",Many,Minimum,Yes
+topic,CV and/or Text,"Scientific topics that describe the organization and its activities, using a scientific ontology term from EDAM topics.",Many,Minimum,Yes
+status,CV and/or Text,"To record if the organization is still active, and if it were a project or alliance, what the outcome was, or if it has closed down or merged, why and when.",One,Recommended,Yes
+fundingModel,CV and/or Text,A description of how the organization is funded.,One,Recommended,Yes
+membershipCategory,Offer,"Defines a membership category and associated fees (for projects and alliances, etc).",Many,Recommended,
+keywords,CV and/or Text,Keywords to describe the organization. Use term which are not available in EDAM Scientific Topic; use text keywords or ontology terms from other ontologies which could complement EDAM topics.,Many,Recommended,
+dateFounded,Date,"The date the organization was originally founded. If created through a merger, this should be the foundation date of the purchasing organization.",One,Optional,
+founderMember,Person or Organization,"For an alliance or collaboration or project, the founding members.",Many,Optional,
+budget,PriceSpecification,The annual (or total - for a project) budget for the organization.,One,Optional,
+attachment,URL,"Any files or related websites which give more information about this organization (e.g. flyers, third party sites, etc).",Many,Optional,
+socialMedia,URL,Link to social media websites like Twitter or Facebook.,Many,Optional,
+lastUpdate,Date,Date when the organization information was last modified.,One,Optional,

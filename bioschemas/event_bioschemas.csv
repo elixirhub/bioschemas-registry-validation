@@ -1,0 +1,20 @@
+Property,Type,Descr,Cardin,Guideline,Vocab
+contact,Organization or Person,Main point of contact that can be contacted for general queries. This would be an event organizer or an administrator.,Many,Minimum,
+eventType,Text,Enumeration value for a type of event following one of the categories defined by SASI.,Many,Minimum,Yes
+topic,Text,"In the context of Life Science, the scientific topics that describe the content of the event (e.g. statistics), using one or more of the scientific ontology terms for class Topic from EDAM ontology.",Many,Minimum,Yes
+hostInstitution,Organization,The organization or institution responsible for hosting the event (not necessarily responsible for organizing).,Many,Minimum,
+prerequisite,Text,A list of prerequisites to be able to attend the event.,Many,Recommended,
+accreditation,Organization or Text,Type of accreditation or organization that accredits the event.,One,Recommended,
+eligibility,Text,Defines the type of eligibility to attend this event (e.g. first-come first-served).,Many,Recommended,Yes
+capacity,Integer,Available number of spaces.,One,Recommended,
+deadline,Text,"Deadlines dates for this event (e.g. application deadline, poster submission, paper submission, early registration).",Many,Recommended,
+acceptanceNotificationDate,Date,Date for the host to confirm accaptance to applicants.,Many,Recommended,
+keywords,CV and/or Text,"Keywords to describe the event. In Life Science, use terms that are not available in topic or targetAudience. Use text keywords or ontology terms from other ontologies that could complement EDAM topics.",Many,Recommended,
+targetAudience,Audience,"In Life Science, use Scientific topics that describe the research field of audience members (e.g. computer scientists). Use one of the scientific ontology terms for class Topic from EDAM ontology.",Many,Recommended,Yes
+spotlight,Boolean,Event highlighted by the event provider. Whether or not the event provider wishes to highlight this event as very important/significant.,One,Recommended,
+programme,Text or URL,A plan or schedule of activities or procedures to be followed.,One,Recommended,
+attachment,URL,"Any files or related websites which give more information about this event (e.g. flyers, third party sites handling tickets).",Many,Optional,
+socialMedia,URL,Link to social media websites like Twitter or Facebook.,Many,Optional,
+lastUpdate,Date,Date when the event was last modified.,One,Optional,
+sponsor,Organization,The organization or institutions providing sponsorship for the event.,Many,Optional,
+registrationStatus,Registration Status,Enumerative type displaying the status of registration for an event.,One,Optional,Yes

@@ -1,0 +1,3 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+name,Text,One,Minimum,,2,The name of the item.,"['Carla Ferro', 'GAMA']"
+image,URL or ImageObject,One,Recommended,,1,An image of the item. This can be a URL or a fully described ImageObject.,['http://doulas.club/carla-ferro/foto.jpg']

@@ -1,0 +1,2 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+name,Text,One,Minimum,,1,The name of the item.,['Marwan Saifi']

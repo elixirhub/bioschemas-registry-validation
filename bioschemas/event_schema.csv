@@ -1,0 +1,10 @@
+Property,Type,Descr,Cardin,Guideline,Vocab
+endDate,Date,The end date and time of the item (in ISO 8601 date format).,One,Minimum,
+location,Place or Postal Address,"The location of the event, organization or action.",One,Minimum,
+startDate,Date,The start date and time of the item (in ISO 8601 date format).,One,Minimum,
+organizer,Organization or Person,An organizer of an Event.,Many,Recommended,
+offers,Offer,"An offer to provide this item (e.g. an offer to sell a product, rent the DVD of a movie, or give away tickets to an event). Can use eligibleCustomerType and eligibleDuration properties to express any special offers.",One,Optional,
+performer,Organization or Person,"A performer at the event (e.g. a presenter, musician, musical group or actor).",Many,Optional,
+review,Review,A review of the item.,Many,Optional,
+subEvent,Event,"An Event that is part of this event (e.g. a conference event includes many presentations, each of which is a subEvent of the conference).",Many,Optional,
+superEvent,Event,An Event that this event is a part of (e.g. a collection of individual music performances might each have a music festival as their superEvent).,One,Optional,

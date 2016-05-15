@@ -1,0 +1,4 @@
+Property,Type,Descr,Cardin,Guideline,Vocab
+email,Text,Email address.,One,Recommended,
+homeLocation,Place or ContactPoint,A contact location for a person's residence.,One,Recommended,
+memberOf,ProgramMembership or Organization,An Organization (or ProgramMembership) to which this Person belongs.,Many,Recommended,
