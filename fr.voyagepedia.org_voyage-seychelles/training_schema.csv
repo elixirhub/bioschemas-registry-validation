@@ -1,0 +1,2 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+aggregateRating,AggregateRating,One,Optional,,1,"The overall rating, based on a collection of reviews or ratings, of the item.",['Moyenne : 4.5\xc2\xa0 (4 votes)']

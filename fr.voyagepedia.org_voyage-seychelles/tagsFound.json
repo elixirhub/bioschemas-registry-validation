@@ -1,0 +1,80 @@
+{
+    "event_schema": [
+        [
+            "startDate", 
+            2
+        ], 
+        [
+            "location", 
+            2
+        ]
+    ], 
+    "event_thing": [
+        [
+            "description", 
+            2
+        ], 
+        [
+            "name", 
+            6
+        ], 
+        [
+            "url", 
+            8
+        ]
+    ], 
+    "organization_schema": [
+        [
+            "location", 
+            2
+        ]
+    ], 
+    "organization_thing": [
+        [
+            "description", 
+            2
+        ], 
+        [
+            "name", 
+            6
+        ], 
+        [
+            "url", 
+            8
+        ]
+    ], 
+    "person_thing": [
+        [
+            "image", 
+            2
+        ], 
+        [
+            "description", 
+            2
+        ], 
+        [
+            "name", 
+            6
+        ]
+    ], 
+    "training_schema": [
+        [
+            "aggregateRating", 
+            1
+        ]
+    ], 
+    "training_thing": [
+        [
+            "description", 
+            2
+        ], 
+        [
+            "name", 
+            6
+        ], 
+        [
+            "url", 
+            8
+        ]
+    ]
+}
