@@ -611,13 +611,13 @@ var bubbleButt = d3.select("#bubbleButt");
 var pieButt = d3.select("#pieButt");
 
 bubbleButt.on("click", function () {
-    document.getElementById("bubblechart").childNodes[1].classList.remove("hide");
-    document.getElementById("bubblechart").childNodes[2].classList.add("hide");
+    document.getElementById("bubblechart").childNodes[0].classList.remove("hide");
+    document.getElementById("bubblechart").childNodes[1].classList.add("hide");
 });
 
 pieButt.on("click", function () {
-    document.getElementById("bubblechart").childNodes[2].classList.remove("hide");
-    document.getElementById("bubblechart").childNodes[1].classList.add("hide");
+    document.getElementById("bubblechart").childNodes[1].classList.remove("hide");
+    document.getElementById("bubblechart").childNodes[0].classList.add("hide");
 });
 
 // Button to show/hide the list of all the scraped websites and their compliance ratings
