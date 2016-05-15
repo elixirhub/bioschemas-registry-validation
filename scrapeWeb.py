@@ -3,6 +3,7 @@
 # Created by Roberto Preste
 
 import requests, sys, json, csv, os
+from datetime import date
 from bs4 import BeautifulSoup
 from random import randint
 
@@ -496,10 +497,10 @@ if __name__ == '__main__':
 
     # Just to save some time and web traffic, perform the update of Bioschemas properties just once in a while
 
-    onceInAWhile = randint(0, 9)
-    if onceInAWhile == 3:
-        TagsReference()
-
+    #onceInAWhile = randint(0, 9)
+    #if onceInAWhile == 3:
+    #    TagsReference()
+    TagsReference()
     WebsiteTags(sys.argv[1])
 
 
