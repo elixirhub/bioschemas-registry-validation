@@ -1,0 +1,3 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+name,Text,One,Minimum,,2,The name of the item.,"['CTS Wholesale Sunglasses', 'Wholesale sunglasses']"
+description,Text,Many,Minimum,,1,A short description of the item.,"['Supplier of wholesale sunglasses. You can shop for aviator sunglasses, mens sunglasses, womens sunglasses and many others. Bulk sunglasses qualify for additional discounts.']"

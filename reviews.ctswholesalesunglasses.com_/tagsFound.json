@@ -1,0 +1,48 @@
+{
+    "event_thing": [
+        [
+            "name", 
+            2
+        ], 
+        [
+            "description", 
+            1
+        ]
+    ], 
+    "organization_thing": [
+        [
+            "name", 
+            2
+        ], 
+        [
+            "description", 
+            1
+        ]
+    ], 
+    "person_thing": [
+        [
+            "name", 
+            2
+        ], 
+        [
+            "description", 
+            1
+        ]
+    ], 
+    "training_schema": [
+        [
+            "aggregateRating", 
+            1
+        ]
+    ], 
+    "training_thing": [
+        [
+            "name", 
+            2
+        ], 
+        [
+            "description", 
+            1
+        ]
+    ]
+}
