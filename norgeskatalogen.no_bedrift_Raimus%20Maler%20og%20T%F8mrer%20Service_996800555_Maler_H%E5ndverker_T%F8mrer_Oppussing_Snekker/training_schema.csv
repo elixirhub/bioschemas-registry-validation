@@ -1,0 +1,3 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+aggregateRating,AggregateRating,One,Optional,,1,"The overall rating, based on a collection of reviews or ratings, of the item.",['']
+author,Person or Organization,Many,Recommended,,2,The author of this content.,"['Anonym', 'Anonym']"

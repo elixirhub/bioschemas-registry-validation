@@ -1,0 +1,108 @@
+{
+    "event_bioschemas": [
+        [
+            "keywords", 
+            7
+        ]
+    ], 
+    "event_schema": [
+        [
+            "startDate", 
+            1
+        ]
+    ], 
+    "event_thing": [
+        [
+            "description", 
+            6
+        ], 
+        [
+            "name", 
+            15
+        ], 
+        [
+            "url", 
+            14
+        ]
+    ], 
+    "organization_bioschemas": [
+        [
+            "keywords", 
+            7
+        ]
+    ], 
+    "organization_schema": [
+        [
+            "logo", 
+            1
+        ]
+    ], 
+    "organization_thing": [
+        [
+            "description", 
+            6
+        ], 
+        [
+            "name", 
+            15
+        ], 
+        [
+            "url", 
+            14
+        ]
+    ], 
+    "person_thing": [
+        [
+            "image", 
+            1
+        ], 
+        [
+            "description", 
+            6
+        ], 
+        [
+            "name", 
+            15
+        ]
+    ], 
+    "training_schema": [
+        [
+            "keywords", 
+            7
+        ], 
+        [
+            "isPartOf", 
+            1
+        ], 
+        [
+            "dateModified", 
+            1
+        ], 
+        [
+            "dateCreated", 
+            1
+        ], 
+        [
+            "genre", 
+            2
+        ], 
+        [
+            "about", 
+            1
+        ]
+    ], 
+    "training_thing": [
+        [
+            "description", 
+            6
+        ], 
+        [
+            "name", 
+            15
+        ], 
+        [
+            "url", 
+            14
+        ]
+    ]
+}

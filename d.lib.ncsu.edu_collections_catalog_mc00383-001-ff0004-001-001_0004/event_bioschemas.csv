@@ -1,0 +1,2 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+keywords,CV and/or Text,Many,Recommended,,7,"Keywords to describe the event. In Life Science, use terms that are not available in topic or targetAudience. Use text keywords or ontology terms from other ontologies that could complement EDAM topics.","['Architecture', 'Renderings (drawings)', 'Perspective views', 'Commercial buildings', 'Government buildings', 'Arcades (Architecture)', 'Historic buildings']"

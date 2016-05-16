@@ -1,0 +1,4 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+description,Text,One,Minimum,,1,A short description of the item.,"['Alt innenfor maling og t\xc3\xb8mring.    Raimundas Mansevicius, Daglig leder']"
+url,URL,Many,Recommended,,3,URL of the item.,"['http://norgeskatalogen.no/', 'http://norgeskatalogen.no/sok/Raimus%20Maler%20og%20T%F8mrer%20Service/firmanavn/1', 'http://norgeskatalogen.no/bedrift/Raimus%20Maler%20og%20T%F8mrer%20Service/996800555/Maler_H%E5ndverker_T%F8mrer_Oppussing_Snekker/']"
+name,Text,One,Minimum,,3,The name of the item.,"['Raimus Maler Og T\xc3\xb8mrer Service Raimundas Mansevicius', 'Helt perfekt!!!!', 'Helt greit']"

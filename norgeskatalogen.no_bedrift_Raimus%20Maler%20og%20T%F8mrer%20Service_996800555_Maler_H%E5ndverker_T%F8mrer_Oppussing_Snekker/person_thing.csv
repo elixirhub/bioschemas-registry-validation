@@ -1,0 +1,4 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+description,Text,Many,Minimum,,1,A short description of the item.,"['Alt innenfor maling og t\xc3\xb8mring.    Raimundas Mansevicius, Daglig leder']"
+image,URL or ImageObject,One,Recommended,,1,An image of the item. This can be a URL or a fully described ImageObject.,[None]
+name,Text,One,Minimum,,3,The name of the item.,"['Raimus Maler Og T\xc3\xb8mrer Service Raimundas Mansevicius', 'Helt perfekt!!!!', 'Helt greit']"

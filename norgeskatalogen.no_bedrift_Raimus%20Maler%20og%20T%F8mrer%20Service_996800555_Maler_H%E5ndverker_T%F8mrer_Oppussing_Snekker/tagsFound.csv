@@ -1,0 +1,13 @@
+Type,Value,Min,Rec,Opt
+event_bioschemas,0,0,0,0
+event_schema,0,0,0,0
+event_thing,7,2,1,0
+organization_bioschemas,0,0,0,0
+organization_schema,0,0,0,0
+organization_thing,7,2,1,0
+person_bioschemas,0,0,0,0
+person_schema,0,0,0,0
+person_thing,5,2,1,0
+training_bioschemas,0,0,0,0
+training_schema,3,0,1,1
+training_thing,7,1,2,0
