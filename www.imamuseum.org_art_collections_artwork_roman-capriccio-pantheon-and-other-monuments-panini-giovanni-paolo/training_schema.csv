@@ -1,0 +1,2 @@
+Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
+dateCreated,Date or DateTime,One,Optional,,1,The date on which the CreativeWork was created or the item was added to a DataFeed.,['1735']

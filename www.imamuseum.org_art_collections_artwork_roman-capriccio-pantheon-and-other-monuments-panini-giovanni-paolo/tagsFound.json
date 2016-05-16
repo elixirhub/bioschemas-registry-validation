@@ -1,0 +1,64 @@
+{
+    "event_thing": [
+        [
+            "description", 
+            4
+        ], 
+        [
+            "url", 
+            1
+        ], 
+        [
+            "name", 
+            1
+        ]
+    ], 
+    "organization_thing": [
+        [
+            "description", 
+            4
+        ], 
+        [
+            "url", 
+            1
+        ], 
+        [
+            "name", 
+            1
+        ]
+    ], 
+    "person_thing": [
+        [
+            "description", 
+            4
+        ], 
+        [
+            "image", 
+            1
+        ], 
+        [
+            "name", 
+            1
+        ]
+    ], 
+    "training_schema": [
+        [
+            "dateCreated", 
+            1
+        ]
+    ], 
+    "training_thing": [
+        [
+            "description", 
+            4
+        ], 
+        [
+            "url", 
+            1
+        ], 
+        [
+            "name", 
+            1
+        ]
+    ]
+}
