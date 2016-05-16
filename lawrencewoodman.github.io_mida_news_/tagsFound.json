@@ -1,0 +1,44 @@
+{
+    "event_thing": [
+        [
+            "name", 
+            16
+        ], 
+        [
+            "url", 
+            8
+        ]
+    ], 
+    "organization_thing": [
+        [
+            "name", 
+            16
+        ], 
+        [
+            "url", 
+            8
+        ]
+    ], 
+    "person_thing": [
+        [
+            "name", 
+            16
+        ]
+    ], 
+    "training_schema": [
+        [
+            "author", 
+            8
+        ]
+    ], 
+    "training_thing": [
+        [
+            "name", 
+            16
+        ], 
+        [
+            "url", 
+            8
+        ]
+    ]
+}
