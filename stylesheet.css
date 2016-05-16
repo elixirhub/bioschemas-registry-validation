@@ -51,7 +51,7 @@ body {
     text-align: center;
     float: right;
     width: auto;
-    margin-top: 100px;
+    margin-top: 80px;
     margin-right: 20px;
 }
 
@@ -202,4 +202,10 @@ tbody tr:nth-child(odd) {
     background: url("stars.png");
     background-position: 0 -16px;
     background-repeat: repeat-x;
+}
+
+
+
+#rawinfo {
+    text-align: center;
 }
