@@ -72,18 +72,14 @@ function createBarplot(sitename) {
                     .style("font-weight", "normal");
             })
             .on("click", function (d) {
-                d3.select("#bubbletitle")
-                    .selectAll("h2")
-                    .remove();
-                d3.select("#bubblechart")
-                    .selectAll(".bubble")
-                    .remove();
+                d3.select("#bubbletitle").selectAll("h2").remove();
+                d3.select("#bubblechart").selectAll(".bubble").remove();
                 bubbleMaker(sitename, d["Type"]);
-                d3.select("#bubbleinfo")
-                    .selectAll("table")
-                    .remove();
+                d3.select("#bubbleinfo").selectAll("table").remove();
+                d3.select("#rawinfo").selectAll("table").remove();
                 pieMaker(sitename, d["Type"]);
                 document.getElementById("changeChart").classList.remove("hide");
+                document.getElementById("rawButt").classList.remove("hide");
                 infoMaker(sitename, d["Type"]);
             });
 
@@ -113,7 +109,6 @@ function createBarplot(sitename) {
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-50)");
-
     });
 }
 
@@ -137,7 +132,7 @@ function colorBarplot(d) {
 function bubbleMaker(sitename, csvfile) {
     // Create a bubblechart based on the specific property type selected in the barplot
 
-    var diameter = 300;
+    var diameter = 320;
     var color;
 
     if (csvfile.charAt(0) == "e") {
@@ -192,30 +187,16 @@ function bubbleMaker(sitename, csvfile) {
             .enter();
 
         bubbles.append("circle")
-            .attr("r", function (d) {
-                return d.r;
-            })
-            .attr("cx", function (d) {
-                return d.x;
-            })
-            .attr("cy", function (d) {
-                return d.y;
-            })
-            .style("fill", function (d) {
-                return color(d.value);
-            });
+            .attr("r", function (d) { return d.r; })
+            .attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; })
+            .style("fill", function (d) { return color(d.value); });
 
         bubbles.insert("text")
-            .attr("x", function (d) {
-                return d.x;
-            })
-            .attr("y", function (d) {
-                return d.y + 5;
-            })
+            .attr("x", function (d) { return d.x; })
+            .attr("y", function (d) { return d.y + 5; })
             .attr("text-anchor", "middle")
-            .text(function (d) {
-                return d["Property"];
-            })
+            .text(function (d) { return d["Property"]; })
             .style({"fill": "#333",
                     "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
                     "font-size": "14px",
@@ -225,7 +206,7 @@ function bubbleMaker(sitename, csvfile) {
 
 function pieMaker(sitename, csvfile) {
     // Create a piechart based on the specific property type selected in the barplot
-    
+
     var width = 200,
         height = 200,
         radius = 100;
@@ -263,13 +244,6 @@ function pieMaker(sitename, csvfile) {
         .append("g")
         .attr("transform", "translate(" + width + "," + height + ")");
 
-    /*
-    d3.select("#bubbletitle")
-        .append("h2")
-        .html(csvfile.split("_")[0].charAt(0).toUpperCase() + csvfile.split("_")[0].slice(1) + " (" + csvfile.split("_")[1] + " type)")
-        .style("text-align", "center");
-    */
-
     d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
         data = data.map(function (d) {
             d.value = +d["Count"];
@@ -291,22 +265,18 @@ function pieMaker(sitename, csvfile) {
             .attr({"transform": function (d) { return "translate(" + labelArc.centroid(d) + ")"; },
                     "dy": ".35em",
                     "text-anchor": "start"})
-            .text(function (d) {
-                return d.data["Property"];
-            })
+            .text(function (d) { return d.data["Property"]; })
             .style({"fill": "#333",
                     "font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
                     "font-size": "14px",
                     "font-weight": "bold"});
-
     });
 }
 
 function infoMaker(sitename, csvfile) {
     // Create a table that shows all the details about the properties shown in the bubblechart
 
-    var table = d3.select("#bubbleinfo")
-        .append("table");
+    var table = d3.select("#bubbleinfo").insert("table", ":first-child");
     var thead = table.append("thead");
     var tbody = table.append("tbody");
     var columns = ["Property", "Type", "Cardinality", "Guideline", "Vocab", "Count"];
@@ -316,7 +286,7 @@ function infoMaker(sitename, csvfile) {
         .data(columns)
         .enter()
         .append("th")
-        .text(function (columns) {return columns;})
+        .text(function (columns) { return columns; })
         .style({"font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
                 "font-size": "18px"
         });
@@ -352,13 +322,59 @@ function infoMaker(sitename, csvfile) {
             });
     });
 
+    rawDataShow(sitename, csvfile);
     return table;
+}
 
+function rawDataShow(sitename, csvfile) {
+    // Create a table that shows all the raw data found within the tags
+
+    var table = d3.select("#rawinfo")
+        .append("table");
+    var thead = table.append("thead");
+    var tbody = table.append("tbody");
+    var columns = ["Property", "Count", "Data"];
+
+    thead.append("tr")
+        .selectAll("th")
+        .data(columns)
+        .enter()
+        .append("th")
+        .text(function (columns) { return columns; })
+        .style({"font-family": "Helvetica Neue, Helvetica, Arial, sans-serif",
+                "font-size": "18px"});
+
+    d3.csv(sitename + "/" + csvfile + ".csv", function (error, data) {
+        data = data.map(function (d) {
+            d.value = +d["Count"];
+            return d;
+        });
+
+        var rows = tbody.selectAll("tr")
+            .data(data)
+            .enter()
+            .append("tr");
+
+        rows.selectAll("td")
+            .data(function (row) {
+                return columns.map(function (column) {
+                    return {column: column, value: row[column], props: row["Property"], count: row["Count"], raw: row["Data"]};
+                });
+            })
+            .enter()
+            .append("td")
+            .style("font-family", "Helvetica Neue, Helvetica, Arial, sans-serif")
+            .html(function (d) {
+                return d.value;
+            });
+    });
+
+    return table;
 }
 
 function circleProgress(el, sitename) {
     // Create a visualization of compliance for each Bioschemas type
-    
+
     var colors = {
         'pink': '#E1499A',
         'yellow': '#f0ff08',
@@ -368,7 +384,7 @@ function circleProgress(el, sitename) {
         "person": "#81CDFE",
         "training": "#1DFFDE"
     };
-    
+
     var eventMean = 0;
     var organMean = 0;
     var persMean = 0;
@@ -398,7 +414,7 @@ function circleProgress(el, sitename) {
         organMean /= 3;
         persMean /= 3;
         trainMean /= 3;
-        
+
         var endVal, endPar, color;
 
         if (el == "event") {
@@ -425,11 +441,9 @@ function circleProgress(el, sitename) {
         var startPercent = 0;
         var endPercent = endVal / 100;
 
-
         var twoPi = Math.PI * 2;
         var formatPercent = d3.format('.0%');
         var boxSize = (radius + padding) * 2;
-
 
         var count = Math.abs((endPercent - startPercent) / 0.01);
         var step = endPercent < startPercent ? -0.01 : 0.01;
@@ -505,9 +519,7 @@ function circleProgress(el, sitename) {
                 setTimeout(loops, 10);
             }
         })();
-
     });
-
 }
 
 function websiteList() {
@@ -557,9 +569,7 @@ function websiteList() {
 
                 return d.value;
             });
-
     });
-
 }
 
 // Dropdown menu for all the scraped websites
@@ -571,26 +581,15 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
         .data(data)
         .enter()
         .append("a")
-        .html(function (d) {
-            return d["name"];
-        })
+        .html(function (d) { return d["name"]; })
         .attr("class", "drop_hover")
         .on("click", function (d) {
-            d3.select("#barchart")
-                .selectAll("svg")
-                .remove();
-            d3.select("#compliance")
-                .selectAll("svg")
-                .remove();
-            d3.select("#bubbletitle")
-                .selectAll("h2")
-                .remove();
-            d3.select("#bubblechart")
-                .selectAll("svg")
-                .remove();
-            d3.select("#bubbleinfo")
-                .selectAll("table")
-                .remove();
+            d3.select("#barchart").selectAll("svg").remove();
+            d3.select("#compliance").selectAll("svg").remove();
+            d3.select("#bubbletitle").selectAll("h2").remove();
+            d3.select("#bubblechart").selectAll("svg").remove();
+            d3.select("#bubbleinfo").selectAll("table").remove();
+            d3.select("#rawinfo").selectAll("table").remove();
             var websiteList = d["website"].split("/");
             websiteList.splice(0, 2);
             var websiteName = websiteList.join("_");
@@ -602,7 +601,6 @@ d3.csv("scrapedWebsites.csv", function (error, data) {
             circleProgress("person", websiteName);
             circleProgress("training", websiteName);
         });
-
 });
 
 // Buttons to toggle between bubble chart and pie chart visualization
@@ -620,6 +618,16 @@ pieButt.on("click", function () {
     document.getElementById("bubblechart").childNodes[0].classList.add("hide");
 });
 
+var rawButt = d3.select("#rawButt");
+
+rawButt.on("click", function () {
+    if (document.getElementById("rawinfo").classList.contains("hide")) {
+        document.getElementById("rawinfo").classList.remove("hide");
+    } else {
+        document.getElementById("rawinfo").classList.add("hide");
+    }
+});
+
 // Button to show/hide the list of all the scraped websites and their compliance ratings
 
 var listButt = d3.select("#listButton");
@@ -627,7 +635,7 @@ var listButt = d3.select("#listButton");
 listButt.on("click", function () {
     if (document.getElementById("websitetable").classList.contains("hide")) {
         // This removes everything from the page to show the ratings list
-        
+
         d3.select("#maincnt").attr("class", null);
         d3.select("#maincnt").selectAll("a").attr("class", "hide");
         d3.select("#barchart").selectAll("svg").remove();
@@ -640,6 +648,8 @@ listButt.on("click", function () {
         document.getElementById("changeChart").classList.add("hide");
         d3.select("#bubblechart").selectAll("svg").remove();
         d3.select("#bubbleinfo").selectAll("table").remove();
+        document.getElementById("rawButt").classList.add("hide");
+        d3.select("#rawinfo").selectAll("table").remove();
         document.getElementById("websitetable").classList.remove("hide");
         websiteList();
     } else {
@@ -650,5 +660,4 @@ listButt.on("click", function () {
         d3.select("#websitetable").selectAll("table").remove();
         document.getElementById("websitetable").classList.add("hide");
     }
-    
 });
