@@ -78,6 +78,7 @@ function createBarplot(sitename) {
                 d3.select("#bubbleinfo").selectAll("table").remove();
                 d3.select("#rawinfo").selectAll("table").remove();
                 pieMaker(sitename, d["Type"]);
+                document.getElementById("bubbletitle").classList.remove("hide");
                 document.getElementById("changeChart").classList.remove("hide");
                 document.getElementById("rawButt").classList.remove("hide");
                 infoMaker(sitename, d["Type"]);
@@ -206,7 +207,7 @@ function bubbleMaker(sitename, csvfile) {
 
 function pieMaker(sitename, csvfile) {
     // Create a piechart based on the specific property type selected in the barplot
-    
+
     var width = 200,
         height = 200,
         radius = 100;
@@ -374,7 +375,7 @@ function rawDataShow(sitename, csvfile) {
 
 function circleProgress(el, sitename) {
     // Create a visualization of compliance for each Bioschemas type
-    
+
     var colors = {
         'pink': '#E1499A',
         'yellow': '#f0ff08',
@@ -384,7 +385,7 @@ function circleProgress(el, sitename) {
         "person": "#81CDFE",
         "training": "#1DFFDE"
     };
-    
+
     var eventMean = 0;
     var organMean = 0;
     var persMean = 0;
@@ -414,7 +415,7 @@ function circleProgress(el, sitename) {
         organMean /= 3;
         persMean /= 3;
         trainMean /= 3;
-        
+
         var endVal, endPar, color;
 
         if (el == "event") {
@@ -635,7 +636,7 @@ var listButt = d3.select("#listButton");
 listButt.on("click", function () {
     if (document.getElementById("websitetable").classList.contains("hide")) {
         // This removes everything from the page to show the ratings list
-        
+
         d3.select("#maincnt").attr("class", null);
         d3.select("#maincnt").selectAll("a").attr("class", "hide");
         d3.select("#barchart").selectAll("svg").remove();
