@@ -78,6 +78,7 @@ function createBarplot(sitename) {
                 d3.select("#bubbleinfo").selectAll("table").remove();
                 d3.select("#rawinfo").selectAll("table").remove();
                 pieMaker(sitename, d["Type"]);
+                document.getElementById("bubbletitle").classList.remove("hide");
                 document.getElementById("changeChart").classList.remove("hide");
                 document.getElementById("rawButt").classList.remove("hide");
                 infoMaker(sitename, d["Type"]);
