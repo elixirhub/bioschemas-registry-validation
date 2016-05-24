@@ -28,8 +28,19 @@ def validateRDFa(url):
         websiteTypesList.append(webtype)
         websiteTypesSet.add(webtype)
 
+# Need to find a way to scrape json-ld data, this is not working
+def validateJSONLD(url):
+    """Validate the JSON-LD content of a website."""
+
+    response = requests.get(url)
+    html = response.content
+    soup = BeautifulSoup(html, "lxml")
+
+    print soup.findAll('script', type='application/ld+json')
+
 
 
 
 #validateMicrodata("http://doulas.club/carla-ferro")
-validateRDFa("http://www.booking.com/hotel/ru/radisson-slavyanskaya-business-center.en-gb.html")
+#validateRDFa("http://www.booking.com/hotel/ru/radisson-slavyanskaya-business-center.en-gb.html")
+#validateJSONLD("https://github.com/mcollina/levelgraph")
