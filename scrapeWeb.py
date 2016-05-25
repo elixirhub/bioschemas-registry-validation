@@ -83,7 +83,7 @@ class TagsReference:
             prop_dict = {}
             prop_dict[td_list[i].pop(0)] = td_list[i]
             type_list.append(prop_dict)
-        self.refTags["%s_thing" % kind] = type_list
+        self.refTags["%s_schema" % kind] += type_list
 
     def writeJSON(self):
         """Save all the Bioschemas properties as a JSON file."""
@@ -158,6 +158,7 @@ class WebsiteTags:
         #                       { event_bioschemas: [ ('contact', 3), ('eventType', 4) ],
         #                         event_schema: [ ('endDate', 2), ('location', 3) ],
         #                         event_thing: [ ('description', 1), ('name', 4) ] }
+        self.websiteTypes = set()   # Set containing all the Types found in the website
 
         self.checkFileList()
         self.checkWebsite()
@@ -214,7 +215,8 @@ class WebsiteTags:
 
         os.system("mkdir %s" % websiteName)
 
-        self.scrapeTags()
+        #self.scrapeMicrodata()
+        self.scrapeRDFa()
         self.compareProperties()
         self.writeJSON(websiteName)
         self.writeCSV(websiteName)
@@ -228,19 +230,25 @@ class WebsiteTags:
         websiteComps = self.url.split("/")
         websiteName = "_".join(websiteComps[2:])
 
-        self.scrapeTags()
+        #self.scrapeMicrodata()
+        self.scrapeRDFa()
         self.compareProperties()
         self.writeJSON(websiteName)
         self.writeCSV(websiteName)
         self.complianceCalc(websiteName)
 
-    def scrapeTags(self):
-        """Scrape all the tags found in the website."""
+    def scrapeMicrodata(self):
+        """Scrape all the microdata tags found in the website."""
 
         print "Connecting to %s..." % self.url
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")
+
+        print "Getting the Types belonging to %s..." % self.url
+        for el in soup.findAll(itemtype=True):
+            webtype = el.get("itemtype").split("/")[3]
+            self.websiteTypes.add(webtype)
 
         print "Scraping data from %s..." % self.url
         for el in soup.findAll(itemprop=True):
@@ -257,10 +265,46 @@ class WebsiteTags:
                 cont = el.get("href")
             else:
                 cont = el.text.strip().replace("\n", " ").replace("\r", " ").encode('utf-8')
+
             if prop in self.tagsDescr:
                 self.tagsDescr[prop] += [cont]
             else:
                 self.tagsDescr[prop] = [cont]
+
+    def scrapeRDFa(self):
+        """Scrape all the RDFa tags found in the website."""
+
+        print "Connecting to %s..." % self.url
+        response = requests.get(self.url)
+        html = response.content
+        soup = BeautifulSoup(html, "lxml")
+
+        print "Getting the Types belonging to %s..." % self.url
+        for el in soup.findAll(typeof=True):
+            webtype = el.get("typeof")
+            self.websiteTypes.add(webtype)
+
+        print "Scraping data from %s..." % self.url
+        for el in soup.findAll(property=True):
+            prop = el.get("property")
+
+            if len(prop.split(":")) > 1:
+                prop = prop.split(":")[-1]
+            else:
+                prop = prop.strip()
+
+            if prop in self.siteTags:
+                self.siteTags[prop] += 1
+            else:
+                self.siteTags[prop] = 1
+
+            cont = el.text.strip().replace("\n", " ").replace("\r", " ").encode("utf-8")
+
+            if prop in self.tagsDescr:
+                self.tagsDescr[prop] += [cont]
+            else:
+                self.tagsDescr[prop] = [cont]
+
 
     def compareProperties(self):
         """Check if any of the properties found in the website belongs to the BioSchemas types."""
@@ -496,10 +540,10 @@ class WebsiteTags:
 if __name__ == '__main__':
 
     # Just to save some time and web traffic, perform the update of Bioschemas properties just once in a while
-
     onceInAWhile = randint(0, 9)
     if onceInAWhile == 3:
         TagsReference()
+
     WebsiteTags(sys.argv[1])
 
 
