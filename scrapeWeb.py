@@ -215,8 +215,8 @@ class WebsiteTags:
 
         os.system("mkdir %s" % websiteName)
 
-        #self.scrapeMicrodata()
-        self.scrapeRDFa()
+        self.scrapeMicrodata()
+        #self.scrapeRDFa()
         self.compareProperties()
         self.writeJSON(websiteName)
         self.writeCSV(websiteName)
@@ -230,8 +230,8 @@ class WebsiteTags:
         websiteComps = self.url.split("/")
         websiteName = "_".join(websiteComps[2:])
 
-        #self.scrapeMicrodata()
-        self.scrapeRDFa()
+        self.scrapeMicrodata()
+        #self.scrapeRDFa()
         self.compareProperties()
         self.writeJSON(websiteName)
         self.writeCSV(websiteName)
@@ -477,33 +477,25 @@ class WebsiteTags:
                             eventBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                         elif riga[0] == "event_schema":
                             eventSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
-                        elif riga[0] == "event_thing":
-                            eventThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                         elif riga[0] == "organization_bioschemas":
                             orgBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                         elif riga[0] == "organization_schema":
                             orgSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
-                        elif riga[0] == "organization_thing":
-                            orgThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                         elif riga[0] == "person_bioschemas":
                             persBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                         elif riga[0] == "person_schema":
                             persSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
-                        elif riga[0] == "person_thing":
-                            persThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                         elif riga[0] == "training_bioschemas":
                             trainBioMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                         elif riga[0] == "training_schema":
                             trainSchMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
-                        elif riga[0] == "training_thing":
-                            trainThiMean = "%.2f" % ((float(riga[1]) + float(riga[2]) + float(riga[3])) / 3)
                     else:
                         pass
 
-                eventMean = "%.2f" % ((float(eventBioMean) + float(eventSchMean) + float(eventThiMean)) / 3)
-                orgMean = "%.2f" % ((float(orgBioMean) + float(orgSchMean) + float(orgThiMean)) / 3)
-                persMean = "%.2f" % ((float(persBioMean) + float(persSchMean) + float(persThiMean)) / 3)
-                trainMean = "%.2f" % ((float(trainBioMean) + float(trainSchMean) + float(trainThiMean)) / 3)
+                eventMean = "%.2f" % ((float(eventBioMean) + float(eventSchMean)) / 2)
+                orgMean = "%.2f" % ((float(orgBioMean) + float(orgSchMean)) / 2)
+                persMean = "%.2f" % ((float(persBioMean) + float(persSchMean)) / 2)
+                trainMean = "%.2f" % ((float(trainBioMean) + float(trainSchMean)) / 2)
 
                 totRating = "%.2f" % ((float(eventMean) + float(orgMean) + float(persMean) + float(trainMean)) / 4)
                 websiteData.append(totRating)
@@ -540,10 +532,10 @@ class WebsiteTags:
 if __name__ == '__main__':
 
     # Just to save some time and web traffic, perform the update of Bioschemas properties just once in a while
-    onceInAWhile = randint(0, 9)
-    if onceInAWhile == 3:
-        TagsReference()
-
+    #onceInAWhile = randint(0, 9)
+    #if onceInAWhile == 3:
+    #    TagsReference()
+    TagsReference()
     WebsiteTags(sys.argv[1])
 
 
