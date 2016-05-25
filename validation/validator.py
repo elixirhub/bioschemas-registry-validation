@@ -102,7 +102,9 @@ def validateMicrodata(url):
         else:
             websiteProps[prop] = [cont]
 
-    # Compare each Property with the ones found in the Bioschemas website
+def compareProperties():
+    """Compare the found properties with the ones in Bioschemas."""
+
     for prop in websiteTags:
         for tag in referenceProps:
             for el in referenceProps[tag]:
@@ -113,7 +115,32 @@ def validateMicrodata(url):
                         except KeyError:
                             sharedProps[tag] = [(prop, websiteTags[prop])]
 
-    print sharedProps
+def checkCardinality():
+    """Check if the website Properties have the recommended cardinality."""
+
+    for prop in websiteProps:
+        for type in referenceProps:
+            for key in referenceProps[type]:
+                for el in key:
+                    if prop == el:
+                        # Print the Property, count (of what?), Cardinality
+                        print prop, len(websiteProps[prop]), key[el][2]
+
+def checkContentGuideline():
+    """Check if the website contains the minimum Properties."""
+
+    minProps = set()
+    for type in referenceProps:
+        for key in referenceProps[type]:
+            for el in key:
+                if key[el][3] == "Minimum":
+                    minProps.add(el)
+
+    for prop in websiteProps:
+        if prop in minProps:
+            print prop
+
+    # Check the specific type
 
 def validateRDFa(url):
     """Validate the RDFa content of a website."""
@@ -174,3 +201,9 @@ validateMicrodata("http://d.lib.ncsu.edu/collections/catalog/mc00383-001-ff0004-
 #validateMicrodata("http://doulas.club/carla-ferro")
 #validateRDFa("http://www.booking.com/hotel/ru/radisson-slavyanskaya-business-center.en-gb.html")
 #validateJSONLD("https://github.com/mcollina/levelgraph")
+
+compareProperties()
+#checkCardinality()
+checkContentGuideline()
+
+
