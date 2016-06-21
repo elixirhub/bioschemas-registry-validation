@@ -560,7 +560,7 @@ class UpdateRegistry:
         for line in r:
             for el in prop_list:
                 if line[0] != el:
-                    to_add.ael)
+                    to_add.add(el)
 
         source.close()
 
