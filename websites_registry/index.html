@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Properties Visualization</title>
+    <!-- d3.js framework -->
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../stylesheet.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+    <h2>Browse by Website</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Website</th>
+                <th>Type</th>
+                <th>Properties</th>
+            </tr>
+        </thead>
+        <tbody id="types_table">
+
+        </tbody>
+    </table>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="../visualizator.js"></script>
+    <script type="text/javascript">
+
+        var tableBody = document.getElementById("types_table");
+
+        d3.json("../registry.json", function (data) {
+
+            var siti = Object.keys(data);
+            for (var i in siti) {
+                var proprieta = [];
+                var row = tableBody.insertRow(),
+                    cell1 = row.insertCell(0),
+                    cell2 = row.insertCell(1),
+                    cell3 = row.insertCell(2);
+                var primaCella = siti[i];
+                var cellText1 = document.createTextNode(primaCella);
+                var typeDict = data[primaCella][0];
+
+                var tipi = Object.keys(typeDict);
+                var cellText2 = document.createTextNode(tipi);
+                for (var j in tipi) {
+                    var secondaCella = tipi[j];
+                    var toPush = data[primaCella][0][secondaCella];
+
+                    proprieta.push("[" + toPush.toString() + "]");
+                }
+                proprieta = proprieta.toString();
+                var cellText3 = document.createTextNode(proprieta);
+
+                cell1.appendChild(cellText1);
+                cell2.appendChild(cellText2);
+                cell3.appendChild(cellText3);
+            }
+        })
+
+    </script>
+
+</body>
+</html>
