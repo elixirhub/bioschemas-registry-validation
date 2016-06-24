@@ -29,7 +29,7 @@ class TagsReference:
     def getTags(self):
         """Get the latest properties from the Bioschemas website."""
 
-        #print "Updating Bioschemas properties..."
+        print "Updating Bioschemas properties..."
 
         kinds = ["event", "organization", "person", "training"]
 
@@ -88,7 +88,7 @@ class TagsReference:
     def writeCSV(self):
         """Save all the Bioschemas properties in a CSV file."""
 
-        #print "Saving Bioschemas properties in bioschemasTags.csv..."
+        print "Saving Bioschemas properties in bioschemasTags.csv..."
 
         # For each type, save their properties in a specific CSV file
 
@@ -230,9 +230,6 @@ class WebsiteTags:
             self.scrapeRDFa(websiteName)
             self.validateWebsiteRDFa(websiteName)
 
-        UpdateRegistry().updateWebsites(websiteName)
-        UpdateRegistry().updateProps(self.validProps)
-
     def updateWebsiteTags(self):
         """Update the data from previously scraped websites."""
 
@@ -250,20 +247,17 @@ class WebsiteTags:
             self.scrapeRDFa(websiteName)
             self.validateWebsiteRDFa(websiteName)
 
-        UpdateRegistry().updateWebsites(websiteName)
-        UpdateRegistry().updateProps(self.validProps)
-
     def scrapeMicrodata(self, sitename):
         """Get the microdata from the website and save them into a JSON file."""
 
         reference = TagsReference()
-        #print "Connecting to %s..." % self.url
+        print "Connecting to %s..." % self.url
 
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")
 
-        #print "Getting the Types found in %s..." % self.url
+        print "Getting the Types found in %s..." % self.url
 
         for el in soup.findAll(itemtype=True):
             webtype = el.get("itemtype").split("/")[3]
@@ -274,7 +268,7 @@ class WebsiteTags:
             endfile.write(el + "\n")
         endfile.close()
 
-        #print "Scraping microdata from %s..." % self.url
+        print "Scraping microdata from %s..." % self.url
 
         for typeProp in reference.refTags:
             prop_dict = {}
@@ -315,6 +309,9 @@ class WebsiteTags:
         w_rep = csv.writer(report)
         w_rep.writerow(["Report"])
 
+        typesToAdd = []
+        propsToAdd = []
+
         for line in found_types:
 
             miss = open("%s/missingMin.csv" % sitename, "ab")  # Required props missing in the website
@@ -327,8 +324,7 @@ class WebsiteTags:
             if line == "Event" or line == "Organization" or line == "Person" or line == "Training":
                 subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
-                UpdateRegistry().updateTypes(line)
-
+                typeProps = set()
                 # Found Bioschemas type
 
                 for ref_key in ref:
@@ -348,15 +344,21 @@ class WebsiteTags:
                                         w_miss.writerow([ref_prop, ref_key])
                                     elif guideline == "Minimum" and ref_prop in k:
                                         self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
                                     elif guideline == "Recommended" and ref_prop in k:
                                         w_prov.writerow([ref_prop, ref_key])
                                         self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
                                     elif guideline == "Optional" and ref_prop in k:
                                         self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
 
                                     if ref_prop in k:
                                         self.allProps.append(ref_prop)
                                         self.tagsData[ref_key].append(ref_prop)
+
+                typesToAdd.append(line)
+                propsToAdd.append(list(typeProps))
 
                 miss.close()
                 prov.close()
@@ -383,20 +385,19 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
-    # Validare anche RDFa con la stessa procedura
-    # Integrare tutto con la visualizzazione in d3.js
+        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd)
 
     def scrapeRDFa(self, sitename):
         """Get the RDFa data from the website and save them into a JSON file."""
 
         reference = TagsReference()
-        #print "Connecting to %s..." % self.url
+        print "Connecting to %s..." % self.url
 
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")
 
-        #print "Getting the Types found in %s..." % self.url
+        print "Getting the Types found in %s..." % self.url
 
         for el in soup.findAll(typeof=True):
             webtype = el.get("typeof")
@@ -407,7 +408,7 @@ class WebsiteTags:
             endfile.write(el + "\n")
         endfile.close()
 
-        #print "Scraping microdata from %s..." % self.url
+        print "Scraping microdata from %s..." % self.url
 
         for typeProp in reference.refTags:
             prop_dict = {}
@@ -453,6 +454,9 @@ class WebsiteTags:
         w_rep = csv.writer(report)
         w_rep.writerow(["Report"])
 
+        typesToAdd = []
+        propsToAdd = []
+
         for line in found_types:
 
             miss = open("%s/missingMin.csv" % sitename, "ab")
@@ -465,8 +469,7 @@ class WebsiteTags:
             if line == "Event" or line == "Organization" or line == "Person" or line == "Training":
                 subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
-                UpdateRegistry().updateTypes(line)
-
+                typeProps = set()
                 # Found Bioschemas type
 
                 for ref_key in ref:
@@ -486,15 +489,21 @@ class WebsiteTags:
                                         w_miss.writerow([ref_prop, ref_key])
                                     elif guideline == "Minimum" and ref_prop in k:
                                         self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
                                     elif guideline == "Recommended" and ref_prop in k:
                                         w_prov.writerow([ref_prop, ref_key])
                                         self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
                                     elif guideline == "Optional" and ref_prop in k:
                                         self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
 
                                     if ref_prop in k:
                                         self.allProps.append(ref_prop)
                                         self.tagsData[ref_key].append(ref_prop)
+
+                typesToAdd.append(line)
+                propsToAdd.append(list(typeProps))
 
                 miss.close()
                 prov.close()
@@ -521,6 +530,7 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
+        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd)
 
 class UpdateRegistry:
     """Update the registry file every time a new website is added to the scraped websites file."""
@@ -549,6 +559,23 @@ class UpdateRegistry:
         prop_reg.close()
         type_reg.close()
 
+    def updateRegistryFile(self, website, type_bs, props):
+        """Create and update the registry file."""
+
+        finDict = {}
+        elDict = {}
+        for i in range(len(type_bs)):
+            elDict[type_bs[i]] = props[i]
+        finDict[website] = [elDict]
+
+        with open("registry.json", "rb") as f:
+            data = json.load(f)
+
+        data.update(finDict)
+
+        with open("registry.json", "wb") as f:
+            json.dump(data, f, indent=4)
+        
     def updateProps(self, prop_list):
         """Update the props_reg.csv file."""
 

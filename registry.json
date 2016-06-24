@@ -1,0 +1,28 @@
+{
+    "www.wdl.org": [
+        {
+            "Person": [
+                "image", 
+                "description", 
+                "name"
+            ], 
+            "Organization": [
+                "url", 
+                "logo", 
+                "description", 
+                "keywords", 
+                "name"
+            ]
+        }
+    ], 
+    "ephesusbreeze.com": [
+        {
+            "Person": [
+                "image", 
+                "email", 
+                "name", 
+                "description"
+            ]
+        }
+    ]
+}
