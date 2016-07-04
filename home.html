@@ -30,6 +30,49 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="../visualizator.js"></script>
     <script type="text/javascript">
+
+        window.onload = function () {
+            var tot_props = document.getElementById("tot_props");
+            var tot_web = document.getElementById("tot_websites");
+            var tot_type = document.getElementById("tot_types");
+            var last_up = document.getElementById("last_update");
+
+            var typeSet = new Set();
+            var propSet = new Set();
+
+            d3.json("registry.json", function (data) {
+                var siti = Object.keys(data);
+                tot_web.innerHTML = siti.length;
+                for (var i in siti) {
+                    var proprieta = [];
+                    var primaCella = siti[i];
+                    var typeDict = data[primaCella][0];
+                    var tipi = Object.keys(typeDict);
+                    for (var j in tipi) {
+                        var secondaCella = tipi[j];
+                        typeSet.add(secondaCella);
+                        var toPush = data[primaCella][0][secondaCella];
+                        for (var k in toPush) {
+                            propSet.add(toPush[k]);
+                        }
+                    }
+                }
+                tot_type.innerHTML = Array.from(typeSet).length;
+                tot_props.innerHTML = Array.from(propSet).length;
+            });
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) { dd = '0'+dd; }
+            if (mm < 10) { mm = '0'+mm; }
+
+            today = mm + '/' + dd + '/' + yyyy;
+            last_up.innerHTML = today;
+        };
+
+        /**
         window.onload = function () {
             var tot_props = document.getElementById("tot_props");
             var tot_web = document.getElementById("tot_websites");
@@ -58,6 +101,7 @@
             today = mm + '/' + dd + '/' + yyyy;
             last_up.innerHTML = today;
         }
+        */
     </script>
 
 </body>
