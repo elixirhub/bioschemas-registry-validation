@@ -34,31 +34,46 @@
 
             var siti = Object.keys(data);
             for (var i in siti) {
-                var proprieta = [];
                 var row = tableBody.insertRow(),
-                    cell1 = row.insertCell(0),
-                    cell2 = row.insertCell(1),
-                    cell3 = row.insertCell(2);
+                    cell1 = row.insertCell(0);
+
                 var primaCella = siti[i];
                 var cellText1 = document.createTextNode(primaCella);
                 var typeDict = data[primaCella][0];
 
                 var tipi = Object.keys(typeDict);
-                var cellText2 = document.createTextNode(tipi);
+                var rowSpan = 1;
+                if (tipi.length > 1) {
+                    rowSpan = tipi.length;
+                }
+
+                cell1.appendChild(cellText1);
+                cell1.setAttribute("rowspan", rowSpan);
+
                 for (var j in tipi) {
+                    if (j < 1) {
+                        var cell2 = row.insertCell(1),
+                            cell3 = row.insertCell(2);
+                    } else {
+                        var newRow = tableBody.insertRow(),
+                            //cell1 = newRow.insertCell(0),
+                            cell2 = newRow.insertCell(0),
+                            cell3 = newRow.insertCell(1);
+                    }
+
+                    var proprieta = [];
+                    var cellText2 = document.createTextNode(tipi[j]);
                     var secondaCella = tipi[j];
                     var toPush = data[primaCella][0][secondaCella];
 
-                    proprieta.push("[" + toPush.toString() + "]");
-                }
-                proprieta = proprieta.toString();
-                var cellText3 = document.createTextNode(proprieta);
+                    proprieta.push(toPush.toString());
+                    var cellText3 = document.createTextNode(proprieta);
 
-                cell1.appendChild(cellText1);
-                cell2.appendChild(cellText2);
-                cell3.appendChild(cellText3);
+                    cell2.appendChild(cellText2);
+                    cell3.appendChild(cellText3);
+                }
             }
-        })
+        });
 
     </script>
 
