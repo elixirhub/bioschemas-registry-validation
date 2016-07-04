@@ -14,8 +14,8 @@
     <table>
         <thead>
             <tr>
-                <th>Website</th>
                 <th>Type</th>
+                <th>Website</th>
                 <th>Properties</th>
             </tr>
         </thead>
@@ -29,7 +29,84 @@
     <script type="text/javascript">
 
         var tableBody = document.getElementById("types_table");
+        var event_webs = [];
+        var event_props = [];
+        var organ_webs = [];
+        var organ_props = [];
+        var pers_webs = [];
+        var pers_props = [];
+        var train_webs = [];
+        var train_props = [];
 
+        d3.json("../registry.json", function (data) {
+
+            var siti = Object.keys(data);
+            for (var i in siti) {
+                var selector = data[siti[i]][0];
+                for (var j in Object.keys(selector)) {
+                    var properts = data[siti[i]][0][Object.keys(selector)[j]];
+
+                    if (Object.keys(selector)[j] == "Event") {
+                        event_webs.push(siti[i]);
+                        for (var k in properts) {
+                            event_props.push(properts[k]);
+                        }
+                    } else if (Object.keys(selector)[j] == "Organization") {
+                        organ_webs.push(siti[i]);
+                        for (var k in properts) {
+                            organ_props.push(properts[k]);
+                        }
+                    } else if (Object.keys(selector)[j] == "Person") {
+                        pers_webs.push(siti[i]);
+                        for (var k in properts) {
+                            pers_props.push(properts[k]);
+                        }
+                    } else if (Object.keys(selector)[j] == "Training") {
+                        train_webs.push(siti[i]);
+                        for (var k in properts) {
+                            train_props.push(properts[k]);
+                        }
+                    }
+                }
+            }
+
+            var typeList = ["Event", "Organization", "Person", "Training"];
+
+            for (var i = 0; i < typeList.length; i++) {
+                var row = tableBody.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+
+                var cellText1 = document.createTextNode(typeList[i]);
+                var cellText2,
+                        cellText3;
+                if (typeList[i] == "Event") {
+                    cellText2 = document.createTextNode(event_webs.length);
+                    cellText3 = document.createTextNode(event_props.length);
+                } else if (typeList[i] == "Organization") {
+                    cellText2 = document.createTextNode(organ_webs.length);
+                    cellText3 = document.createTextNode(organ_props.length);
+                } else if (typeList[i] == "Person") {
+                    cellText2 = document.createTextNode(pers_webs.length);
+                    cellText3 = document.createTextNode(pers_props.length);
+                } else if (typeList[i] == "Training") {
+                    cellText2 = document.createTextNode(train_webs.length);
+                    cellText3 = document.createTextNode(train_props.length);
+                }
+                cell1.appendChild(cellText1);
+                cell2.appendChild(cellText2);
+                cell3.appendChild(cellText3);
+
+            }
+
+        });
+
+
+
+
+
+        /**
         d3.json("../registry.json", function (data) {
 
             var siti = Object.keys(data);
@@ -59,6 +136,7 @@
                 cell3.appendChild(cellText3);
             }
         })
+        */
 
     </script>
 
