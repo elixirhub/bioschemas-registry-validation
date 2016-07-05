@@ -121,17 +121,11 @@
                     var cellText5 = document.createTextNode(Math.round((foundOpt * 100) / totOpt) + "%");
 
                     cell3.appendChild(cellText3);
+                    cell3.style.backgroundColor = colorTable(Math.round((foundMin * 100) / totMin));
                     cell4.appendChild(cellText4);
+                    cell4.style.backgroundColor = colorTable(Math.round((foundRec * 100) / totRec));
                     cell5.appendChild(cellText5);
-
-
-
-                    //var toPush = data[primaCella][0][secondaCella];
-                    //var details = data[primaCella][0][secondaCella][0];
-
-                    //proprieta.push(toPush.toString());
-                    //var cellText3 = document.createTextNode(proprieta);
-                    //var cellText3 = document.createTextNode(details[0]);
+                    cell5.style.backgroundColor = colorTable(Math.round((foundOpt * 100) / totOpt));
 
                 }
             }
@@ -139,7 +133,17 @@
 
         setTimeout(function(){ $("#web_table").tablesorter(); }, 1000);
 
-
+        function colorTable(val) {
+            if (val < 25) {
+                return "#FF3333";
+            } else if (val >= 25 && val < 50) {
+                return "#FF9933";
+            } else if (val >= 50 && val < 75) {
+                return "#99FF66";
+            } else if (val >= 75) {
+                return "#33CC66";
+            }
+        }
 
     </script>
 
