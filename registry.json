@@ -2,6 +2,11 @@
     "doulas.club": [
         {
             "Person": [
+                [
+                    1, 
+                    2, 
+                    0
+                ], 
                 "image", 
                 "email", 
                 "name"
@@ -11,11 +16,21 @@
     "www.wdl.org": [
         {
             "Person": [
+                [
+                    2, 
+                    1, 
+                    0
+                ], 
                 "image", 
                 "description", 
                 "name"
             ], 
             "Organization": [
+                [
+                    2, 
+                    3, 
+                    0
+                ], 
                 "url", 
                 "logo", 
                 "description", 
@@ -27,17 +42,16 @@
     "ephesusbreeze.com": [
         {
             "Person": [
+                [
+                    2, 
+                    2, 
+                    0
+                ], 
                 "image", 
                 "email", 
                 "name", 
                 "description"
             ]
         }
-    ], 
-    "www.qomun.com": [
-        {}
-    ], 
-    "southernafricatravel.com": [
-        {}
     ]
 }

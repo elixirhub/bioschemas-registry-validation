@@ -311,6 +311,7 @@ class WebsiteTags:
 
         typesToAdd = []
         propsToAdd = []
+        details = []
 
         for line in found_types:
 
@@ -325,6 +326,10 @@ class WebsiteTags:
                 subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
                 typeProps = set()
+                this_detail = []
+                foundMin = 0
+                foundRec = 0
+                foundOpt = 0
                 # Found Bioschemas type
 
                 for ref_key in ref:
@@ -345,13 +350,16 @@ class WebsiteTags:
                                     elif guideline == "Minimum" and ref_prop in k:
                                         self.validProps.append(ref_prop)
                                         typeProps.add(ref_prop)
+                                        foundMin += 1
                                     elif guideline == "Recommended" and ref_prop in k:
                                         w_prov.writerow([ref_prop, ref_key])
                                         self.validProps.append(ref_prop)
                                         typeProps.add(ref_prop)
+                                        foundRec += 1
                                     elif guideline == "Optional" and ref_prop in k:
                                         self.validProps.append(ref_prop)
                                         typeProps.add(ref_prop)
+                                        foundOpt += 1
 
                                     if ref_prop in k:
                                         self.allProps.append(ref_prop)
@@ -359,6 +367,8 @@ class WebsiteTags:
 
                 typesToAdd.append(line)
                 propsToAdd.append(list(typeProps))
+                this_detail.append([foundMin, foundRec, foundOpt])
+                details.append(this_detail)
 
                 miss.close()
                 prov.close()
@@ -385,7 +395,7 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
-        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd)
+        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd, details)
 
     def scrapeRDFa(self, sitename):
         """Get the RDFa data from the website and save them into a JSON file."""
@@ -456,6 +466,7 @@ class WebsiteTags:
 
         typesToAdd = []
         propsToAdd = []
+        details = []
 
         for line in found_types:
 
@@ -470,6 +481,10 @@ class WebsiteTags:
                 subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
                 typeProps = set()
+                this_detail = []
+                foundMin = 0
+                foundRec = 0
+                foundOpt = 0
                 # Found Bioschemas type
 
                 for ref_key in ref:
@@ -490,13 +505,16 @@ class WebsiteTags:
                                     elif guideline == "Minimum" and ref_prop in k:
                                         self.validProps.append(ref_prop)
                                         typeProps.add(ref_prop)
+                                        foundMin += 1
                                     elif guideline == "Recommended" and ref_prop in k:
                                         w_prov.writerow([ref_prop, ref_key])
                                         self.validProps.append(ref_prop)
                                         typeProps.add(ref_prop)
+                                        foundRec += 1
                                     elif guideline == "Optional" and ref_prop in k:
                                         self.validProps.append(ref_prop)
                                         typeProps.add(ref_prop)
+                                        foundOpt += 1
 
                                     if ref_prop in k:
                                         self.allProps.append(ref_prop)
@@ -504,6 +522,8 @@ class WebsiteTags:
 
                 typesToAdd.append(line)
                 propsToAdd.append(list(typeProps))
+                this_detail.append([foundMin, foundRec, foundOpt])
+                details.append(this_detail)
 
                 miss.close()
                 prov.close()
@@ -530,7 +550,7 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
-        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd)
+        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd, details)
 
 class UpdateRegistry:
     """Update the registry file every time a new website is added to the scraped websites file."""
@@ -559,13 +579,14 @@ class UpdateRegistry:
         prop_reg.close()
         type_reg.close()
 
-    def updateRegistryFile(self, website, type_bs, props):
+    def updateRegistryFile(self, website, type_bs, props, details):
         """Create and update the registry file."""
 
         finDict = {}
         elDict = {}
         for i in range(len(type_bs)):
-            elDict[type_bs[i]] = props[i]
+            elDict[type_bs[i]] = details[i]
+            elDict[type_bs[i]] += props[i]
         finDict[website] = [elDict]
 
         with open("registry.json", "rb") as f:
@@ -639,8 +660,6 @@ class UpdateRegistry:
             w.writerow([el])
 
         endfile.close()
-
-
 
 
 WebsiteTags(sys.argv[1])
