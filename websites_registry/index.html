@@ -11,12 +11,19 @@
 
     <h2>Browse by Website</h2>
 
-    <table>
+    <table id="web_table" class="tablesorter">
         <thead>
             <tr>
-                <th>Website</th>
-                <th>Type</th>
-                <th>Properties</th>
+                <th rowspan="2">Website</th>
+                <th rowspan="2">Type</th>
+                <th colspan="3">Properties</th>
+                <th rowspan="2">CV</th>
+                <th rowspan="2">Cardinality</th>
+            </tr>
+            <tr>
+                <th>Min</th>
+                <th>Rec</th>
+                <th>Opt</th>
             </tr>
         </thead>
         <tbody id="types_table">
@@ -25,8 +32,12 @@
     </table>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <!-- TableSorter.js -->
+    <script type="text/javascript" src="../tablesorter-master/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="../visualizator.js"></script>
     <script type="text/javascript">
+
+
 
         var tableBody = document.getElementById("types_table");
 
@@ -35,7 +46,8 @@
             var siti = Object.keys(data);
             for (var i in siti) {
                 var row = tableBody.insertRow(),
-                    cell1 = row.insertCell(0);
+                    cell1 = row.insertCell(0),
+                    cell2, cell3, cell4, cell5, cell6, cell7;
 
                 var primaCella = siti[i];
                 var cellText1 = document.createTextNode(primaCella);
@@ -52,28 +64,82 @@
 
                 for (var j in tipi) {
                     if (j < 1) {
-                        var cell2 = row.insertCell(1),
-                            cell3 = row.insertCell(2);
+                        cell2 = row.insertCell(1);
+                        cell3 = row.insertCell(2);
+                        cell4 = row.insertCell(3);
+                        cell5 = row.insertCell(4);
+                        cell6 = row.insertCell(5);
+                        cell7 = row.insertCell(6);
                     } else {
-                        var newRow = tableBody.insertRow(),
-                            //cell1 = newRow.insertCell(0),
-                            cell2 = newRow.insertCell(0),
-                            cell3 = newRow.insertCell(1);
+                        var newRow = tableBody.insertRow();
+                        cell2 = newRow.insertCell(0);
+                        cell3 = newRow.insertCell(1);
+                        cell4 = newRow.insertCell(2);
+                        cell5 = newRow.insertCell(3);
+                        cell6 = newRow.insertCell(4);
+                        cell7 = newRow.insertCell(5);
                     }
 
                     var proprieta = [];
                     var cellText2 = document.createTextNode(tipi[j]);
                     var secondaCella = tipi[j];
-                    var toPush = data[primaCella][0][secondaCella];
-
-                    proprieta.push(toPush.toString());
-                    var cellText3 = document.createTextNode(proprieta);
-
                     cell2.appendChild(cellText2);
+
+                    if (tipi[j] == "Event") {
+
+                        var totMin = 9;
+                        var totRec = 13;
+                        var totOpt = 11;
+
+                    } else if (tipi[j] == "Organization") {
+
+                        var totMin = 6;
+                        var totRec = 11;
+                        var totOpt = 11;
+
+                    } else if (tipi[j] == "Person") {
+
+                        var totMin = 2;
+                        var totRec = 8;
+                        var totOpt = 9;
+
+                    } else if (tipi[j] == "Training") {
+
+                        var totMin = 5;
+                        var totRec = 7;
+                        var totOpt = 12;
+
+                    }
+
+                    var details = data[primaCella][0][secondaCella][0];
+                    var foundMin = details[0];
+                    var foundRec = details[1];
+                    var foundOpt = details[2];
+
+                    var cellText3 = document.createTextNode(Math.round((foundMin * 100) / totMin) + "%");
+                    var cellText4 = document.createTextNode(Math.round((foundRec * 100) / totRec) + "%");
+                    var cellText5 = document.createTextNode(Math.round((foundOpt * 100) / totOpt) + "%");
+
                     cell3.appendChild(cellText3);
+                    cell4.appendChild(cellText4);
+                    cell5.appendChild(cellText5);
+
+
+
+                    //var toPush = data[primaCella][0][secondaCella];
+                    //var details = data[primaCella][0][secondaCella][0];
+
+                    //proprieta.push(toPush.toString());
+                    //var cellText3 = document.createTextNode(proprieta);
+                    //var cellText3 = document.createTextNode(details[0]);
+
                 }
             }
         });
+
+        setTimeout(function(){ $("#web_table").tablesorter(); }, 1000);
+
+
 
     </script>
 
