@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Website Visualization</title>
+    <!-- d3.js framework -->
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../stylesheet.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+    <h1 id="title"></h1>
+
+    <h2 id="type_header"></h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Minimum Property</th>
+                <th>Compliant</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody id="minimum_table">
+
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+
+    <script type="text/javascript">
+
+        var siteName = (window.location.hash).split("#")[1];
+        var type = (window.location.hash).split("#")[2];
+
+        document.getElementById("title").innerHTML = siteName.replace(/_/g, "/");
+        document.getElementById("type_header").innerHTML = type + " type";
+
+
+
+        d3.json("../" + siteName + "/tagsFound.json", function (data) {
+
+            var minProps, recProps, optProps;
+            var props = [];
+
+            if (type == "Event") {
+                for (var i in data["event_bioschemas"]) {
+                    for (var j in Object.keys(data["event_bioschemas"][i])) {
+                        props.push(Object.keys(data["event_bioschemas"][i])[j]);
+                    }
+                }
+                for (var i in data["event_schema"]) {
+                    for (var j in Object.keys(data["event_schema"][i])) {
+                        props.push(Object.keys(data["event_schema"][i])[j]);
+                    }
+                }
+            } else if (type == "Organization") {
+
+                for (var i in data["organization_bioschemas"]) {
+                    for (var j in Object.keys(data["organization_bioschemas"][i])) {
+                        props.push(Object.keys(data["organization_bioschemas"][i])[j]);
+                    }
+                }
+                for (var i in data["organization_schema"]) {
+                    for (var j in Object.keys(data["organization_schema"][i])) {
+                        props.push(Object.keys(data["organization_schema"][i])[j]);
+                    }
+                }
+            } else if (type == "Person") {
+                for (var i in data["person_bioschemas"]) {
+                    for (var j in Object.keys(data["person_bioschemas"][i])) {
+                        props.push(Object.keys(data["person_bioschemas"][i])[j]);
+                    }
+                }
+                for (var i in data["person_schema"]) {
+                    for (var j in Object.keys(data["person_schema"][i])) {
+                        props.push(Object.keys(data["person_schema"][i])[j]);
+                    }
+                }
+            } else if (type == "Training") {
+                for (var i in data["training_bioschemas"]) {
+                    for (var j in Object.keys(data["training_bioschemas"][i])) {
+                        props.push(Object.keys(data["training_bioschemas"][i])[j]);
+                    }
+                }
+                for (var i in data["training_schema"]) {
+                    for (var j in Object.keys(data["training_schema"][i])) {
+                        props.push(Object.keys(data["training_schema"][i])[j]);
+                    }
+                }
+            }
+
+            var minBody = document.getElementById("minimum_table");
+
+            for (var k in props) {
+                var row = minBody.insertRow(0);
+                var cell1 = row.insertCell(0),
+                    cell2 = row.insertCell(1),
+                    cell3 = row.insertCell(2);
+                var cellText1 = document.createTextNode(props[k]);
+                cell1.appendChild(cellText1);
+            }
+
+        });
+
+    function updateList(list, val) {
+        list.push(val);
+        return list;
+    }
+
+    </script>
+
+</body>
+</html>

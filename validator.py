@@ -276,8 +276,10 @@ class WebsiteTags:
                 for el in soup.findAll(itemprop=True):
                     prop = el.get("itemprop")
 
-                    if prop == "logo" or prop == "image":
+                    if prop == "image":
                         cont = el.get("src")
+                    elif prop == "logo":
+                        cont = el.get("content")
                     elif prop == "sameAs" or prop == "url":
                         cont = el.get("href")
                     else:
@@ -395,7 +397,7 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
-        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd, details)
+        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
 
     def scrapeRDFa(self, sitename):
         """Get the RDFa data from the website and save them into a JSON file."""
@@ -550,7 +552,7 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
-        UpdateRegistry().updateRegistryFile(self.url.split("/")[2], typesToAdd, propsToAdd, details)
+        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
 
 class UpdateRegistry:
     """Update the registry file every time a new website is added to the scraped websites file."""

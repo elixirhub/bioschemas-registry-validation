@@ -50,6 +50,10 @@
                     cell2, cell3, cell4, cell5, cell6, cell7;
 
                 var primaCella = siti[i];
+                //var linkCella = primaCella.replace(/\./g, "_").replace("_", ".");
+                //var cellText1 = document.createElement("a");
+                //cellText1.setAttribute("href", "website.html#" + primaCella);
+                //cellText1.innerHTML = primaCella;
                 var cellText1 = document.createTextNode(primaCella);
                 var typeDict = data[primaCella][0];
 
@@ -81,8 +85,12 @@
                     }
 
                     var proprieta = [];
-                    var cellText2 = document.createTextNode(tipi[j]);
+                    //var cellText2 = document.createTextNode(tipi[j]);
+                    var cellText2 = document.createElement("a");
                     var secondaCella = tipi[j];
+                    cellText2.setAttribute("href", "website.html#" + primaCella + "#" + secondaCella);
+                    cellText2.innerHTML = secondaCella;
+
                     cell2.appendChild(cellText2);
 
                     if (tipi[j] == "Event") {
