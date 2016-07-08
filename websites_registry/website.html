@@ -26,6 +26,32 @@
         </tbody>
     </table>
 
+    <table>
+        <thead>
+        <tr>
+            <th>Recommended Property</th>
+            <th>Compliant</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody id="recomm_table">
+
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Optional Property</th>
+            <th>Compliant</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody id="optional_table">
+
+        </tbody>
+    </table>
+
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
@@ -37,8 +63,410 @@
         document.getElementById("title").innerHTML = siteName.replace(/_/g, "/");
         document.getElementById("type_header").innerHTML = type + " type";
 
+        var minBody = document.getElementById("minimum_table");
+        var recBody = document.getElementById("recomm_table");
+        var optBody = document.getElementById("optional_table");
+
+        d3.json("../" + siteName + "/tagsGuide.json", function (data) {
+
+            if (type == "Event") {
+                for (var i in data["event_bioschemas"]) {
+                    for (var j in data["event_bioschemas"][i]) {
+                        var property = document.createTextNode(j);
+                        var guideline = data["event_bioschemas"][i][j][0];
+                        var avail = data["event_bioschemas"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+
+                for (var i in data["event_schema"]) {
+                    for (var j in data["event_schema"][i]) {
+                        //var property = document.createTextNode(j);
+                        var property = document.createElement("a");
+                        property.setAttribute("href", "https://schema.org/" + j);
+                        property.innerHTML = j;
+                        var guideline = data["event_schema"][i][j][0];
+                        var avail = data["event_schema"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+            } else if (type == "Organization") {
+                for (var i in data["organization_bioschemas"]) {
+                    for (var j in data["organization_bioschemas"][i]) {
+                        var property = document.createTextNode(j);
+                        var guideline = data["organization_bioschemas"][i][j][0];
+                        var avail = data["organization_bioschemas"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+
+                for (var i in data["organization_schema"]) {
+                    for (var j in data["organization_schema"][i]) {
+                        //var property = document.createTextNode(j);
+                        var property = document.createElement("a");
+                        property.setAttribute("href", "https://schema.org/" + j);
+                        property.innerHTML = j;
+                        var guideline = data["organization_schema"][i][j][0];
+                        var avail = data["organization_schema"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+            } else if (type == "Person") {
+                for (var i in data["person_bioschemas"]) {
+                    for (var j in data["person_bioschemas"][i]) {
+                        var property = document.createTextNode(j);
+                        var guideline = data["person_bioschemas"][i][j][0];
+                        var avail = data["person_bioschemas"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+
+                for (var i in data["person_schema"]) {
+                    for (var j in data["person_schema"][i]) {
+                        //var property = document.createTextNode(j);
+                        var property = document.createElement("a");
+                        property.setAttribute("href", "https://schema.org/" + j);
+                        property.innerHTML = j;
+                        var guideline = data["person_schema"][i][j][0];
+                        var avail = data["person_schema"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+            } else if (type == "Training") {
+                for (var i in data["training_bioschemas"]) {
+                    for (var j in data["training_bioschemas"][i]) {
+                        var property = document.createTextNode(j);
+                        var guideline = data["training_bioschemas"][i][j][0];
+                        var avail = data["training_bioschemas"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+
+                for (var i in data["training_schema"]) {
+                    for (var j in data["training_schema"][i]) {
+                        //var property = document.createTextNode(j);
+                        var property = document.createElement("a");
+                        property.setAttribute("href", "https://schema.org/" + j);
+                        property.innerHTML = j;
+                        var guideline = data["training_schema"][i][j][0];
+                        var avail = data["training_schema"][i][j][1];
+                        var resp = document.createTextNode(avail);
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.insertCell(0).appendChild(property);
+                            if (avail == "Found") {
+                                row.insertCell(1).appendChild(resp);
+                            } else {
+                                row.insertCell(1);
+                            }
+                            row.insertCell(2);
+                        }
+                    }
+                }
+            }
+        });
+
+        /**
+        d3.json("../bioschemas/bioschemasTags.json", function (data) {
+
+            if (type == "Event") {
+                for (var i in data["event_bioschemas"]) {
+                    for (var j in Object.keys(data["event_bioschemas"][i])) {
+                        console.log(Object.keys(data["event_bioschemas"][i])[j]);
+                    }
+                }
+                for (var i in data["event_schema"]) {
+                    for (var j in Object.keys(data["event_schema"][i])) {
+                        console.log(Object.keys(data["event_schema"][i])[j]);
+                    }
+                }
+            } else if (type == "Organization") {
+
+                for (var i in data["organization_bioschemas"]) {
+                    //console.log(data["organization_bioschemas"][i]);
+                    //console.log(Object.keys(data["organization_bioschemas"][i])[0]);
+
+                    for (var j in data["organization_bioschemas"][i]) {
+                        //console.log(data["organization_bioschemas"][i][j][3]);
+                        var property = Object.keys(data["organization_bioschemas"][i])[0];
+                        var guideline = data["organization_bioschemas"][i][j][3];
+                        var cellText = document.createTextNode(property);
+
+                        if (guideline == "Minimum") {
+                            var row = minBody.insertRow(0);
+                            row.setAttribute("id", property);
+                            row.insertCell(0).appendChild(cellText);
+                        } else if (guideline == "Recommended") {
+                            var row = recBody.insertRow(0);
+                            row.setAttribute("id", property);
+                            row.insertCell(0).appendChild(cellText);
+                        } else {
+                            var row = optBody.insertRow(0);
+                            row.setAttribute("id", property);
+                            row.insertCell(0).appendChild(cellText);
+                        }
+                    }
+                }
 
 
+                for (var i in data["organization_bioschemas"]) {
+                    console.log(Object.keys(data["organization_bioschemas"][i])[0]);
+                    for (var j in Object.keys(data["organization_bioschemas"][i])) {
+                        //console.log(Object.keys(data["organization_bioschemas"][i])[j]);
+                        for (var k in Object.keys(data["organization_bioschemas"][i])[j]) {
+                            console.log(data[Object.keys(data["organization_bioschemas"][i])[j][k]]);
+                        }
+                    }
+                }
+                for (var i in data["organization_schema"]) {
+                    for (var j in Object.keys(data["organization_schema"][i])) {
+                        console.log(Object.keys(data["organization_schema"][i])[j]);
+                    }
+                }
+
+
+            } else if (type == "Person") {
+                for (var i in data["person_bioschemas"]) {
+                    for (var j in Object.keys(data["person_bioschemas"][i])) {
+                        console.log(Object.keys(data["person_bioschemas"][i])[j]);
+                    }
+                }
+                for (var i in data["person_schema"]) {
+                    for (var j in Object.keys(data["person_schema"][i])) {
+                        console.log(Object.keys(data["person_schema"][i])[j]);
+                    }
+                }
+            } else if (type == "Training") {
+                for (var i in data["training_bioschemas"]) {
+                    for (var j in Object.keys(data["training_bioschemas"][i])) {
+                        console.log(Object.keys(data["training_bioschemas"][i])[j]);
+                    }
+                }
+                for (var i in data["training_schema"]) {
+                    for (var j in Object.keys(data["training_schema"][i])) {
+                        console.log(Object.keys(data["training_schema"][i])[j]);
+                    }
+                }
+            }
+
+        });
+        */
+
+        /**
         d3.json("../" + siteName + "/tagsFound.json", function (data) {
 
             var minProps, recProps, optProps;
@@ -102,12 +530,8 @@
                 cell1.appendChild(cellText1);
             }
 
-        });
+        });*/
 
-    function updateList(list, val) {
-        list.push(val);
-        return list;
-    }
 
     </script>
 

@@ -154,6 +154,16 @@ class WebsiteTags:
             "training_bioschemas": [],
             "training_schema": []
         }
+        self.tagsGuide = {
+            "event_bioschemas": [],
+            "event_schema": [],
+            "organization_bioschemas": [],
+            "organization_schema": [],
+            "person_bioschemas": [],
+            "person_schema": [],
+            "training_bioschemas": [],
+            "training_schema": []
+        }
         self.tagsData = {
             "event_bioschemas": [],
             "event_schema": [],
@@ -272,6 +282,7 @@ class WebsiteTags:
 
         for typeProp in reference.refTags:
             prop_dict = {}
+            guide_dict = {}
             for property in reference.refTags[typeProp]:
                 for el in soup.findAll(itemprop=True):
                     prop = el.get("itemprop")
@@ -291,12 +302,24 @@ class WebsiteTags:
                                 prop_dict[prop] += [cont]
                             except KeyError:
                                 prop_dict[prop] = [cont]
+                            #guide_dict[prop] = property[key][3]
+                        #else:
+                            #print key, "not found"
+                for key in property:
+                    if key in prop_dict:
+                        guide_dict[key] = [property[key][3], "Found"]
+                    else:
+                        guide_dict[key] = [property[key][3], "Not found"]
 
                 self.foundTags[typeProp] = [prop_dict]
+                self.tagsGuide[typeProp] = [guide_dict]
 
         endfile = open("%s/tagsFound.json" % sitename, "wb")
         json.dump(self.foundTags, endfile, indent=4, sort_keys=True)
         endfile.close()
+        endfile2 = open("%s/tagsGuide.json" % sitename, "wb")
+        json.dump(self.tagsGuide, endfile2, indent=4, sort_keys=True)
+        endfile2.close()
 
     def validateWebsiteMicrodata(self, sitename):
         """Validate the entries found in the website for Bioschemas markup using Microdata."""
