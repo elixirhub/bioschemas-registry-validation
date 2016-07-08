@@ -6,6 +6,17 @@
     <!-- d3.js framework -->
     <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="../stylesheet.css" media="screen" title="no title" charset="utf-8">
+
+    <style>
+        #missingMin p {
+            background-color: red;
+        }
+
+        #missingRec p {
+            background-color: orange;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -54,6 +65,8 @@
 
     <div id="missingMin"></div>
 
+    <div id="missingRec"></div>
+
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
@@ -100,6 +113,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
@@ -146,6 +165,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
@@ -189,6 +214,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
@@ -235,6 +266,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
@@ -278,6 +315,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
@@ -324,6 +367,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
@@ -367,6 +416,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
@@ -413,6 +468,12 @@
                                 row.insertCell(1).appendChild(resp);
                             } else {
                                 row.insertCell(1);
+
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+
                             }
                             row.insertCell(2);
                         } else {
