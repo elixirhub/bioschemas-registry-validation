@@ -2,6 +2,62 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+table {
+    border-collapse: collapse;
+    margin: 10px auto;
+    min-width: 33em;
+}
+
+thead {
+    background-color: rgba(39, 109, 175, .6);
+}
+
+td, th {
+    padding: 5px 10px;
+    border: 2px solid rgb(39, 109, 175);
+}
+
+td:nth-child(even) {
+    text-align: center;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+#missingMin p {
+    background-color: #f7786b;
+    text-align: center;
+    width: 50%;
+    border: 2px solid darkred;
+    border-radius: 10px;
+    font-size: 1.3em;
+    margin: 0.3em;
+    padding: 0.5em;
+}
+
+#missingRec p {
+    background-color: #F4A460;
+    text-align: center;
+    width: 50%;
+    border: 2px solid orangered;
+    border-radius: 10px;
+    font-size: 1.2em;
+    margin: 0.3em;
+    padding: 0.5em;
+}
+
+#recommButton {
+    background-color: #276DAF;
+    color: white;
+    width: 10em;
+    border: 2px solid darkblue;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0.5em;
+}
+
 .svg-container {
     display: inline-block;
     position: relative;
@@ -55,23 +111,7 @@ body {
     margin-right: 20px;
 }
 
-table {
-    border-collapse: collapse;
-    margin: 10px auto;
-}
 
-thead {
-    background-color: rgba(39, 109, 175, .6);
-}
-
-td, th {
-    padding: 5px 10px;
-    border: 2px solid rgb(39, 109, 175);
-}
-
-tbody tr:nth-child(odd) {
-    background-color: #f5f5f5;
-}
 
 .dropbtn {
     background-color: #4CAF50;
