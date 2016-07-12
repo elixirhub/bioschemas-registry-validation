@@ -17,8 +17,7 @@
                 <th rowspan="2">Website</th>
                 <th rowspan="2">Type</th>
                 <th colspan="3">Properties</th>
-                <th rowspan="2">CV</th>
-                <th rowspan="2">Cardinality</th>
+                <th rowspan="2">Rating</th>
             </tr>
             <tr>
                 <th>Min</th>
@@ -47,13 +46,9 @@
             for (var i in siti) {
                 var row = tableBody.insertRow(),
                     cell1 = row.insertCell(0),
-                    cell2, cell3, cell4, cell5, cell6, cell7;
+                    cell2, cell3, cell4, cell5, cell6;
 
                 var primaCella = siti[i];
-                //var linkCella = primaCella.replace(/\./g, "_").replace("_", ".");
-                //var cellText1 = document.createElement("a");
-                //cellText1.setAttribute("href", "website.html#" + primaCella);
-                //cellText1.innerHTML = primaCella;
                 var cellText1 = document.createTextNode(primaCella);
                 var typeDict = data[primaCella][0];
 
@@ -73,7 +68,6 @@
                         cell4 = row.insertCell(3);
                         cell5 = row.insertCell(4);
                         cell6 = row.insertCell(5);
-                        cell7 = row.insertCell(6);
                     } else {
                         var newRow = tableBody.insertRow();
                         cell2 = newRow.insertCell(0);
@@ -81,11 +75,8 @@
                         cell4 = newRow.insertCell(2);
                         cell5 = newRow.insertCell(3);
                         cell6 = newRow.insertCell(4);
-                        cell7 = newRow.insertCell(5);
                     }
 
-                    var proprieta = [];
-                    //var cellText2 = document.createTextNode(tipi[j]);
                     var cellText2 = document.createElement("a");
                     var secondaCella = tipi[j];
                     cellText2.setAttribute("href", "website.html#" + primaCella + "#" + secondaCella);
@@ -124,9 +115,18 @@
                     var foundRec = details[1];
                     var foundOpt = details[2];
 
-                    var cellText3 = document.createTextNode(Math.round((foundMin * 100) / totMin) + "%");
-                    var cellText4 = document.createTextNode(Math.round((foundRec * 100) / totRec) + "%");
-                    var cellText5 = document.createTextNode(Math.round((foundOpt * 100) / totOpt) + "%");
+                    var percMin = (foundMin * 100) / totMin;
+                    var percRec = (foundRec * 100) / totRec;
+                    var percOpt = (foundOpt * 100) / totOpt;
+
+                    var percTot = Math.round(((percMin * 60) / 100) + ((percRec * 35) / 100) + ((percOpt * 5) / 100));
+
+                    var cellText3 = document.createTextNode(Math.round(percMin) + "%");
+                    var cellText4 = document.createTextNode(Math.round(percRec) + "%");
+                    var cellText5 = document.createTextNode(Math.round(percOpt) + "%");
+                    var cellText6 = document.createElement("img");
+                    cellText6.src = ratingStars(percTot);
+                    cellText6.style.width = "100%";
 
                     cell3.appendChild(cellText3);
                     cell3.style.backgroundColor = colorTable(Math.round((foundMin * 100) / totMin));
@@ -134,6 +134,7 @@
                     cell4.style.backgroundColor = colorTable(Math.round((foundRec * 100) / totRec));
                     cell5.appendChild(cellText5);
                     cell5.style.backgroundColor = colorTable(Math.round((foundOpt * 100) / totOpt));
+                    cell6.appendChild(cellText6);
 
                 }
             }
@@ -150,6 +151,20 @@
                 return "#99FF66";
             } else if (val >= 75) {
                 return "#33CC66";
+            }
+        }
+
+        function ratingStars(val) {
+            if (val <= 20) {
+                return "../1star.png";
+            } else if (val > 20 && val <= 40) {
+                return "../2stars.png";
+            } else if (val > 40 && val <= 60) {
+                return "../3stars.png";
+            } else if (val > 60 && val <= 80) {
+                return "../4stars.png";
+            } else {
+                return "../5stars.png";
             }
         }
 

@@ -336,17 +336,18 @@ class WebsiteTags:
                 for key in property:
                     if key in prop_dict:
                         if property[key][4] == "Yes":
-                            if cont.capitalize() in edamList:
-                                guide_dict[key] = [property[key][3], "Found", "Valid"]
+                            cont = prop_dict[key]
+                            if cont[0].capitalize() in edamList:
+                                guide_dict[key] = [property[key][3], "Found", "Valid", property[key][2]]
                             else:
-                                guide_dict[key] = [property[key][3], "Found", "Not valid"]
+                                guide_dict[key] = [property[key][3], "Found", "Not valid", property[key][2]]
                         else:
-                           guide_dict[key] = [property[key][3], "Found", "No"]
+                           guide_dict[key] = [property[key][3], "Found", "No", property[key][2]]
                     else:
                         if property[key][4] == "Yes":
-                           guide_dict[key] = [property[key][3], "Not found", "Yes"]
+                           guide_dict[key] = [property[key][3], "Not found", "Yes", property[key][2]]
                         else:
-                            guide_dict[key] = [property[key][3], "Not found", "No"]
+                            guide_dict[key] = [property[key][3], "Not found", "No", property[key][2]]
 
                 self.foundTags[typeProp] = [prop_dict]
                 self.tagsGuide[typeProp] = [guide_dict]

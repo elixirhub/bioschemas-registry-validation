@@ -15,12 +15,17 @@
 
     <h2 id="type_header"></h2>
 
+    <div id="ratingDiv">
+        <h3 id="rating"></h3>
+    </div>
+
     <table>
         <thead>
             <tr>
                 <th style="min-width: 15em;">Minimum Property</th>
                 <th style="min-width: 8em; max-width: 8em;">Compliant</th>
-                <th style="min-width: 5em; max-width: 5em;">CV</th>
+                <th style="min-width: 3em; max-width: 3em;">CV</th>
+                <th style="min-width: 3em; max-width: 3em;">Card</th>
                 <th style="min-width: 10em;">Details</th>
             </tr>
         </thead>
@@ -34,7 +39,8 @@
             <tr>
                 <th style="min-width: 15em;">Recommended Property</th>
                 <th style="min-width: 8em; max-width: 8em;">Compliant</th>
-                <th style="min-width: 5em; max-width: 5em;">CV</th>
+                <th style="min-width: 3em; max-width: 3em;">CV</th>
+                <th style="min-width: 3em; max-width: 3em;">Card</th>
                 <th style="min-width: 10em;">Details</th>
             </tr>
         </thead>
@@ -48,7 +54,8 @@
             <tr>
                 <th style="min-width: 15em;">Optional Property</th>
                 <th style="min-width: 8em; max-width: 8em;">Compliant</th>
-                <th style="min-width: 5em; max-width: 5em;">CV</th>
+                <th style="min-width: 3em; max-width: 3em;">CV</th>
+                <th style="min-width: 3em; max-width: 3em;">Card</th>
                 <th style="min-width: 10em;">Details</th>
             </tr>
         </thead>
@@ -82,134 +89,31 @@
         var recBody = document.getElementById("recomm_table");
         var optBody = document.getElementById("optional_table");
 
+        var minRate = 0;
+        var recRate = 0;
+        var optRate = 0;
+        var minTot = 0;
+        var recTot = 0;
+        var optTot = 0;
+
         d3.json("../" + siteName + "/tagsGuide.json", function (data) {
 
             if (type == "Event") {
-                for (var i in data["event_bioschemas"]) {
-                    for (var j in data["event_bioschemas"][i]) {
-                        var property = document.createTextNode(j);
-                        var guideline = data["event_bioschemas"][i][j][0];
-                        var avail = data["event_bioschemas"][i][j][1];
-                        var convoc = data["event_bioschemas"][i][j][2];
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
-                        var tick = document.createElement("img");
-                        tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
-                        var nope = document.createElement("img");
-                        nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
-
-                        if (guideline == "Minimum") {
-                            var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                                var missDiv = document.getElementById("missingMin");
-                                var newp = document.createElement("p");
-                                newp.innerHTML = "Missing minimum property " + j;
-                                missDiv.appendChild(newp);
-
-                            }
-
-                            row.insertCell(3);
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
 
 
-                                var missDiv = document.getElementById("missingRec");
-                                var newp = document.createElement("p");
-                                newp.innerHTML = "Missing recommended property " + j;
-                                missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3);
-                        } else {
-                            var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            }
-                            row.insertCell(3);
-                        }
-                    }
-                }
 
                 for (var i in data["event_schema"]) {
                     for (var j in data["event_schema"][i]) {
-                        //var property = document.createTextNode(j);
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
                         var guideline = data["event_schema"][i][j][0];
                         var avail = data["event_schema"][i][j][1];
                         var convoc = data["event_schema"][i][j][2];
+                        var cardin = data["event_schema"][i][j][3];
+                        var respC = document.createTextNode(cardin);
                         var respY = document.createTextNode("Yes");
                         var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
                         tick.style.width = "20%";
@@ -220,15 +124,18 @@
                         if (guideline == "Minimum") {
                             var row = minBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            minTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -248,19 +155,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else if (guideline == "Recommended") {
                             var row = recBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            recTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -280,19 +192,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else {
                             var row = optBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            optTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -307,7 +224,8 @@
                                 }
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
                         }
                     }
                 }
@@ -318,9 +236,10 @@
                         var guideline = data["organization_bioschemas"][i][j][0];
                         var avail = data["organization_bioschemas"][i][j][1];
                         var convoc = data["organization_bioschemas"][i][j][2];
+                        var cardin = data["organization_bioschemas"][i][j][3];
+                        var respC = document.createTextNode(cardin);
                         var respY = document.createTextNode("Yes");
                         var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
                         tick.style.width = "20%";
@@ -331,15 +250,18 @@
                         if (guideline == "Minimum") {
                             var row = minBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            minTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -359,19 +281,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else if (guideline == "Recommended") {
                             var row = recBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            recTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -392,19 +319,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else {
                             var row = optBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            optTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -419,23 +351,24 @@
                                 }
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
                         }
                     }
                 }
 
                 for (var i in data["organization_schema"]) {
                     for (var j in data["organization_schema"][i]) {
-                        //var property = document.createTextNode(j);
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
                         var guideline = data["organization_schema"][i][j][0];
                         var avail = data["organization_schema"][i][j][1];
                         var convoc = data["organization_schema"][i][j][2];
+                        var cardin = data["organization_schema"][i][j][3];
+                        var respC = document.createTextNode(cardin);
                         var respY = document.createTextNode("Yes");
                         var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
                         tick.style.width = "20%";
@@ -446,15 +379,18 @@
                         if (guideline == "Minimum") {
                             var row = minBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            minTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -474,19 +410,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else if (guideline == "Recommended") {
                             var row = recBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            recTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -506,19 +447,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else {
                             var row = optBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            optTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -533,7 +479,8 @@
                                 }
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
                         }
                     }
                 }
@@ -544,9 +491,10 @@
                         var guideline = data["person_bioschemas"][i][j][0];
                         var avail = data["person_bioschemas"][i][j][1];
                         var convoc = data["person_bioschemas"][i][j][2];
+                        var cardin = data["person_bioschemas"][i][j][3];
+                        var respC = document.createTextNode(cardin);
                         var respY = document.createTextNode("Yes");
                         var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
                         tick.style.width = "20%";
@@ -557,15 +505,18 @@
                         if (guideline == "Minimum") {
                             var row = minBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            minTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -585,19 +536,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else if (guideline == "Recommended") {
                             var row = recBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            recTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -617,19 +573,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else {
                             var row = optBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            optTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -644,23 +605,24 @@
                                 }
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
                         }
                     }
                 }
 
                 for (var i in data["person_schema"]) {
                     for (var j in data["person_schema"][i]) {
-                        //var property = document.createTextNode(j);
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
                         var guideline = data["person_schema"][i][j][0];
                         var avail = data["person_schema"][i][j][1];
                         var convoc = data["person_schema"][i][j][2];
+                        var cardin = data["person_schema"][i][j][3];
+                        var respC = document.createTextNode(cardin);
                         var respY = document.createTextNode("Yes");
                         var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
                         tick.style.width = "20%";
@@ -671,15 +633,18 @@
                         if (guideline == "Minimum") {
                             var row = minBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            minTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -700,19 +665,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else if (guideline == "Recommended") {
                             var row = recBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            recTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -732,19 +702,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else {
                             var row = optBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            optTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -759,7 +734,8 @@
                                 }
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
                         }
                     }
                 }
@@ -770,9 +746,10 @@
                         var guideline = data["training_bioschemas"][i][j][0];
                         var avail = data["training_bioschemas"][i][j][1];
                         var convoc = data["training_bioschemas"][i][j][2];
+                        var cardin = data["training_bioschemas"][i][j][3];
+                        var respC = document.createTextNode(cardin);
                         var respY = document.createTextNode("Yes");
                         var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
                         tick.style.width = "20%";
@@ -783,15 +760,18 @@
                         if (guideline == "Minimum") {
                             var row = minBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            minTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -811,19 +791,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else if (guideline == "Recommended") {
                             var row = recBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            recTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -843,19 +828,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else {
                             var row = optBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            optTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -870,23 +860,24 @@
                                 }
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
                         }
                     }
                 }
 
                 for (var i in data["training_schema"]) {
                     for (var j in data["training_schema"][i]) {
-                        //var property = document.createTextNode(j);
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
                         var guideline = data["training_schema"][i][j][0];
                         var avail = data["training_schema"][i][j][1];
                         var convoc = data["training_schema"][i][j][2];
+                        var cardin = data["training_schema"][i][j][3];
+                        var respC = document.createTextNode(cardin);
                         var respY = document.createTextNode("Yes");
                         var respN = document.createTextNode("No");
-                        //var resp = document.createTextNode(avail);
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
                         tick.style.width = "20%";
@@ -897,15 +888,18 @@
                         if (guideline == "Minimum") {
                             var row = minBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            minTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    minRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -925,19 +919,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else if (guideline == "Recommended") {
                             var row = recBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            recTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    recRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -957,19 +956,24 @@
                                 missDiv.appendChild(newp);
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
+
                         } else {
                             var row = optBody.insertRow(0);
                             row.insertCell(0).appendChild(property);
+                            optTot++;
                             if (avail == "Found") {
                                 if (convoc == "Valid") {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respY);
                                 } else if (convoc == "Not valid") {
                                     row.insertCell(1).appendChild(nope);
                                     row.insertCell(2).appendChild(respY);
                                 } else {
                                     row.insertCell(1).appendChild(tick);
+                                    optRate++;
                                     row.insertCell(2).appendChild(respN);
                                 }
 
@@ -984,11 +988,43 @@
                                 }
 
                             }
-                            row.insertCell(3);
+                            row.insertCell(3).appendChild(respC);
+                            row.insertCell(4);
                         }
                     }
                 }
             }
+
+            var minRating = (minRate / minTot) * 100;
+            var recRating = (recRate / recTot) * 100;
+            var optRating = (optRate / optTot) * 100;
+
+            var minStars = (minRating * 60) / 100;
+            var recStars = (recRating * 35) / 100;
+            var optStars = (optRating * 5) / 100;
+
+            var totRating = minStars + recStars + optStars;
+
+            var rateTarget = document.getElementById("rating");
+            rateTarget.innerHTML = "This website's compliance rating is " + Math.round(totRating) + "%";
+
+            var rateDiv = document.getElementById("ratingDiv");
+            var rateImg = document.createElement("img");
+            if (totRating <= 20) {
+                rateImg.src = "../1star.png";
+            } else if (totRating > 20 && totRating <= 40) {
+                rateImg.src = "../2stars.png";
+            } else if (totRating > 40 && totRating <= 60) {
+                rateImg.src = "../3stars.png";
+            } else if (totRating > 60 && totRating <= 80) {
+                rateImg.src = "../4stars.png";
+            } else {
+                rateImg.src = "../5stars.png";
+            }
+
+            rateImg.style.width = "20%";
+            rateDiv.appendChild(rateImg);
+
         });
 
         var showButt = d3.select("#recommButton");
