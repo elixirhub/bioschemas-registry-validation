@@ -19,14 +19,19 @@
         <h3 id="rating"></h3>
     </div>
 
-    <table>
+    <button type="button" class="buttons" id="descrButton">Show Property Description</button>
+
+    <table id="minTable" class="tablesorter">
         <thead>
             <tr>
-                <th style="min-width: 15em;">Minimum Property</th>
-                <th style="min-width: 8em; max-width: 8em;">Compliant</th>
-                <th style="min-width: 3em; max-width: 3em;">CV</th>
-                <th style="min-width: 3em; max-width: 3em;">Card</th>
-                <th style="min-width: 10em;">Details</th>
+                <th style="width: 5em;">&nbsp;</th>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Guideline</th>
+                <th>CV</th>
+                <th>Cardinality</th>
+                <th class="hide description">Description</th>
+
             </tr>
         </thead>
         <tbody id="minimum_table">
@@ -34,29 +39,37 @@
         </tbody>
     </table>
 
+    <!--
     <table>
         <thead>
             <tr>
-                <th style="min-width: 15em;">Recommended Property</th>
-                <th style="min-width: 8em; max-width: 8em;">Compliant</th>
-                <th style="min-width: 3em; max-width: 3em;">CV</th>
-                <th style="min-width: 3em; max-width: 3em;">Card</th>
-                <th style="min-width: 10em;">Details</th>
+                <th style="width: 5em;">&nbsp;</th>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Guideline</th>
+                <th>CV</th>
+                <th>Cardinality</th>
+                <th class="hide">Description</th>
             </tr>
         </thead>
         <tbody id="recomm_table">
 
         </tbody>
     </table>
+    -->
 
-    <table>
+    <button type="button" class="buttons" id="optButton">Show Optional Properties</button>
+
+    <table class="hide tablesorter" id="optTable">
         <thead>
             <tr>
-                <th style="min-width: 15em;">Optional Property</th>
-                <th style="min-width: 8em; max-width: 8em;">Compliant</th>
-                <th style="min-width: 3em; max-width: 3em;">CV</th>
-                <th style="min-width: 3em; max-width: 3em;">Card</th>
-                <th style="min-width: 10em;">Details</th>
+                <th style="width: 5em;">&nbsp;</th>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Guideline</th>
+                <th>CV</th>
+                <th>Cardinality</th>
+                <th class="hide description">Description</th>
             </tr>
         </thead>
         <tbody id="optional_table">
@@ -64,18 +77,17 @@
         </tbody>
     </table>
 
-    <p><span class="glyphicon glyphicon-ok"></span></p>
-
     <br>
 
     <div id="missingMin"></div>
 
-    <button type="button" id="recommButton">Missing Recommended</button>
+    <button type="button" class="buttons" id="recommButton">Missing Recommended</button>
 
     <div id="missingRec" class="hide"></div>
 
-
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <!-- TableSorter.js -->
+    <script type="text/javascript" src="../tablesorter-master/jquery.tablesorter.js"></script>
 
     <script type="text/javascript">
 
@@ -86,7 +98,7 @@
         document.getElementById("type_header").innerHTML = type + " type";
 
         var minBody = document.getElementById("minimum_table");
-        var recBody = document.getElementById("recomm_table");
+        //var recBody = document.getElementById("recomm_table");
         var optBody = document.getElementById("optional_table");
 
         var minRate = 0;
@@ -100,259 +112,392 @@
 
             if (type == "Event") {
 
+                for (var i in data["event_bioschemas"]) {
+                    for (var j in data["event_bioschemas"][i]) {
+                        var property = document.createTextNode(j);
 
+                        var stdType = data["event_bioschemas"][i][j][0];
+                        var stdDescr = data["event_bioschemas"][i][j][1];
+                        var stdCard = data["event_bioschemas"][i][j][2];
+                        var stdGuide = data["event_bioschemas"][i][j][3];
+                        var stdVocab;
+                        if (data["event_bioschemas"][i][j][4] == "Yes") {
+                            stdVocab = data["event_bioschemas"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["event_bioschemas"][i][j][5];
+                        var actCard = data["event_bioschemas"][i][j][6];
+                        var actVocab = data["event_bioschemas"][i][j][7];
+
+                        var tick = document.createElement("img");
+                        tick.src = "../tick_green.png";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
+                        var nope = document.createElement("img");
+                        nope.src = "../cross-512.png";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
+
+                        if (stdGuide == "Minimum") {
+
+                            var row = minBody.insertRow(0);
+                            minTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
+                                var missDiv = document.getElementById("missingMin");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing minimum property " + j;
+                                missDiv.appendChild(newp);
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
+
+                        } else if (stdGuide == "Recommended") {
+
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
+                                var missDiv = document.getElementById("missingRec");
+                                var newp = document.createElement("p");
+                                newp.innerHTML = "Missing recommended property " + j;
+                                missDiv.appendChild(newp);
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
+
+                        } else {
+
+                            var row = optBody.insertRow(0);
+                            optTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
+                        }
+                    }
+                }
 
                 for (var i in data["event_schema"]) {
                     for (var j in data["event_schema"][i]) {
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
-                        var guideline = data["event_schema"][i][j][0];
-                        var avail = data["event_schema"][i][j][1];
-                        var convoc = data["event_schema"][i][j][2];
-                        var cardin = data["event_schema"][i][j][3];
-                        var respC = document.createTextNode(cardin);
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
+
+                        var stdType = data["event_schema"][i][j][0];
+                        var stdDescr = data["event_schema"][i][j][1];
+                        var stdCard = data["event_schema"][i][j][2];
+                        var stdGuide = data["event_schema"][i][j][3];
+                        var stdVocab;
+                        if (data["event_schema"][i][j][4] == "Yes") {
+                            stdVocab = data["event_schema"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["event_schema"][i][j][5];
+                        var actCard = data["event_schema"][i][j][6];
+                        var actVocab = data["event_schema"][i][j][7];
+
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
                         var nope = document.createElement("img");
                         nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
 
-                        if (guideline == "Minimum") {
+                        if (stdGuide == "Minimum") {
+
                             var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             minTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingMin");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
-
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            recTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
+                        } else if (stdGuide == "Recommended") {
 
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingRec");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
-
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
                         } else {
+
                             var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             optTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
                         }
+
                     }
                 }
             } else if (type == "Organization") {
                 for (var i in data["organization_bioschemas"]) {
                     for (var j in data["organization_bioschemas"][i]) {
                         var property = document.createTextNode(j);
-                        var guideline = data["organization_bioschemas"][i][j][0];
-                        var avail = data["organization_bioschemas"][i][j][1];
-                        var convoc = data["organization_bioschemas"][i][j][2];
-                        var cardin = data["organization_bioschemas"][i][j][3];
-                        var respC = document.createTextNode(cardin);
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
+
+                        var stdType = data["organization_bioschemas"][i][j][0];
+                        var stdDescr = data["organization_bioschemas"][i][j][1];
+                        var stdCard = data["organization_bioschemas"][i][j][2];
+                        var stdGuide = data["organization_bioschemas"][i][j][3];
+                        var stdVocab;
+                        if (data["organization_bioschemas"][i][j][4] == "Yes") {
+                            stdVocab = data["organization_bioschemas"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["organization_bioschemas"][i][j][5];
+                        var actCard = data["organization_bioschemas"][i][j][6];
+                        var actVocab = data["organization_bioschemas"][i][j][7];
+
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
                         var nope = document.createElement("img");
                         nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
 
-                        if (guideline == "Minimum") {
+                        if (stdGuide == "Minimum") {
+
                             var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             minTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingMin");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
-
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            recTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
+                        } else if (stdGuide == "Recommended") {
 
-
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingRec");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
-
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
                         } else {
+
                             var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             optTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
                         }
                     }
                 }
@@ -362,125 +507,128 @@
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
-                        var guideline = data["organization_schema"][i][j][0];
-                        var avail = data["organization_schema"][i][j][1];
-                        var convoc = data["organization_schema"][i][j][2];
-                        var cardin = data["organization_schema"][i][j][3];
-                        var respC = document.createTextNode(cardin);
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
+
+                        var stdType = data["organization_schema"][i][j][0];
+                        var stdDescr = data["organization_schema"][i][j][1];
+                        var stdCard = data["organization_schema"][i][j][2];
+                        var stdGuide = data["organization_schema"][i][j][3];
+                        var stdVocab;
+                        if (data["organization_schema"][i][j][4] == "Yes") {
+                            stdVocab = data["organization_schema"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["organization_schema"][i][j][5];
+                        var actCard = data["organization_schema"][i][j][6];
+                        var actVocab = data["organization_schema"][i][j][7];
+
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
                         var nope = document.createElement("img");
                         nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
 
-                        if (guideline == "Minimum") {
+                        if (stdGuide == "Minimum") {
+
                             var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             minTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingMin");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
-
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            recTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
+                        } else if (stdGuide == "Recommended") {
 
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingRec");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
-
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
                         } else {
+
                             var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             optTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
                         }
                     }
                 }
@@ -488,125 +636,128 @@
                 for (var i in data["person_bioschemas"]) {
                     for (var j in data["person_bioschemas"][i]) {
                         var property = document.createTextNode(j);
-                        var guideline = data["person_bioschemas"][i][j][0];
-                        var avail = data["person_bioschemas"][i][j][1];
-                        var convoc = data["person_bioschemas"][i][j][2];
-                        var cardin = data["person_bioschemas"][i][j][3];
-                        var respC = document.createTextNode(cardin);
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
+
+                        var stdType = data["person_bioschemas"][i][j][0];
+                        var stdDescr = data["person_bioschemas"][i][j][1];
+                        var stdCard = data["person_bioschemas"][i][j][2];
+                        var stdGuide = data["person_bioschemas"][i][j][3];
+                        var stdVocab;
+                        if (data["person_bioschemas"][i][j][4] == "Yes") {
+                            stdVocab = data["person_bioschemas"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["person_bioschemas"][i][j][5];
+                        var actCard = data["person_bioschemas"][i][j][6];
+                        var actVocab = data["person_bioschemas"][i][j][7];
+
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
                         var nope = document.createElement("img");
                         nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
 
-                        if (guideline == "Minimum") {
+                        if (stdGuide == "Minimum") {
+
                             var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             minTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingMin");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
-
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            recTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
+                        } else if (stdGuide == "Recommended") {
 
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingRec");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
-
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
                         } else {
+
                             var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             optTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
                         }
                     }
                 }
@@ -616,126 +767,128 @@
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
-                        var guideline = data["person_schema"][i][j][0];
-                        var avail = data["person_schema"][i][j][1];
-                        var convoc = data["person_schema"][i][j][2];
-                        var cardin = data["person_schema"][i][j][3];
-                        var respC = document.createTextNode(cardin);
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
+
+                        var stdType = data["person_schema"][i][j][0];
+                        var stdDescr = data["person_schema"][i][j][1];
+                        var stdCard = data["person_schema"][i][j][2];
+                        var stdGuide = data["person_schema"][i][j][3];
+                        var stdVocab;
+                        if (data["person_schema"][i][j][4] == "Yes") {
+                            stdVocab = data["person_schema"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["person_schema"][i][j][5];
+                        var actCard = data["person_schema"][i][j][6];
+                        var actVocab = data["person_schema"][i][j][7];
+
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
                         var nope = document.createElement("img");
                         nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
 
-                        if (guideline == "Minimum") {
+                        if (stdGuide == "Minimum") {
+
                             var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             minTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingMin");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
-
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            recTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
+                        } else if (stdGuide == "Recommended") {
 
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingRec");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
-
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
                         } else {
+
                             var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             optTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
                         }
                     }
                 }
@@ -743,125 +896,128 @@
                 for (var i in data["training_bioschemas"]) {
                     for (var j in data["training_bioschemas"][i]) {
                         var property = document.createTextNode(j);
-                        var guideline = data["training_bioschemas"][i][j][0];
-                        var avail = data["training_bioschemas"][i][j][1];
-                        var convoc = data["training_bioschemas"][i][j][2];
-                        var cardin = data["training_bioschemas"][i][j][3];
-                        var respC = document.createTextNode(cardin);
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
+
+                        var stdType = data["training_bioschemas"][i][j][0];
+                        var stdDescr = data["training_bioschemas"][i][j][1];
+                        var stdCard = data["training_bioschemas"][i][j][2];
+                        var stdGuide = data["training_bioschemas"][i][j][3];
+                        var stdVocab;
+                        if (data["training_bioschemas"][i][j][4] == "Yes") {
+                            stdVocab = data["training_bioschemas"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["training_bioschemas"][i][j][5];
+                        var actCard = data["training_bioschemas"][i][j][6];
+                        var actVocab = data["training_bioschemas"][i][j][7];
+
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
                         var nope = document.createElement("img");
                         nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
 
-                        if (guideline == "Minimum") {
+                        if (stdGuide == "Minimum") {
+
                             var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             minTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingMin");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
-
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            recTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
+                        } else if (stdGuide == "Recommended") {
 
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingRec");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
-
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
                         } else {
+
                             var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             optTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
                         }
                     }
                 }
@@ -871,125 +1027,128 @@
                         var property = document.createElement("a");
                         property.setAttribute("href", "https://schema.org/" + j);
                         property.innerHTML = j;
-                        var guideline = data["training_schema"][i][j][0];
-                        var avail = data["training_schema"][i][j][1];
-                        var convoc = data["training_schema"][i][j][2];
-                        var cardin = data["training_schema"][i][j][3];
-                        var respC = document.createTextNode(cardin);
-                        var respY = document.createTextNode("Yes");
-                        var respN = document.createTextNode("No");
+
+                        var stdType = data["training_schema"][i][j][0];
+                        var stdDescr = data["training_schema"][i][j][1];
+                        var stdCard = data["training_schema"][i][j][2];
+                        var stdGuide = data["training_schema"][i][j][3];
+                        var stdVocab;
+                        if (data["training_schema"][i][j][4] == "Yes") {
+                            stdVocab = data["training_schema"][i][j][4];
+                        } else {
+                            stdVocab = "No";
+                        }
+                        var actType = data["training_schema"][i][j][5];
+                        var actCard = data["training_schema"][i][j][6];
+                        var actVocab = data["training_schema"][i][j][7];
+
                         var tick = document.createElement("img");
                         tick.src = "../tick_green.png";
-                        tick.style.width = "20%";
+                        tick.style.width = "35%";
+                        tick.style.display = "block";
+                        tick.style.marginLeft = "auto";
+                        tick.style.marginRight = "auto";
                         var nope = document.createElement("img");
                         nope.src = "../cross-512.png";
-                        nope.style.width = "20%";
+                        nope.style.width = "30%";
+                        nope.style.display = "block";
+                        nope.style.marginLeft = "auto";
+                        nope.style.marginRight = "auto";
+                        var warn = document.createElement("img");
+                        warn.src = "../warning.png";
+                        warn.style.width = "35%";
+                        warn.style.display = "block";
+                        warn.style.marginLeft = "auto";
+                        warn.style.marginRight = "auto";
 
-                        if (guideline == "Minimum") {
+                        if (stdGuide == "Minimum") {
+
                             var row = minBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             minTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    minRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
-                            } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                minRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingMin");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
-
-                            }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
-
-                        } else if (guideline == "Recommended") {
-                            var row = recBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
-                            recTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    recRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
+                                row.insertCell(0).appendChild(warn);
+                                minRate++;
+                            }
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
+                        } else if (stdGuide == "Recommended") {
 
+                            var row = minBody.insertRow(0);
+                            recTot++;
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                recRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                                 var missDiv = document.getElementById("missingRec");
                                 var newp = document.createElement("p");
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
-
+                            } else {
+                                row.insertCell(0).appendChild(warn);
+                                recRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
 
                         } else {
+
                             var row = optBody.insertRow(0);
-                            row.insertCell(0).appendChild(property);
                             optTot++;
-                            if (avail == "Found") {
-                                if (convoc == "Valid") {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respY);
-                                } else if (convoc == "Not valid") {
-                                    row.insertCell(1).appendChild(nope);
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(1).appendChild(tick);
-                                    optRate++;
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                            if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                row.insertCell(0).appendChild(tick);
+                                optRate++;
+                            } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                row.insertCell(0).appendChild(nope);
                             } else {
-                                var resp = document.createTextNode("not provided");
-                                row.insertCell(1).appendChild(resp);
-
-                                if (convoc == "Yes") {
-                                    row.insertCell(2).appendChild(respY);
-                                } else {
-                                    row.insertCell(2).appendChild(respN);
-                                }
-
+                                row.insertCell(0).appendChild(warn);
+                                optRate++;
                             }
-                            row.insertCell(3).appendChild(respC);
-                            row.insertCell(4);
+                            row.insertCell(1).appendChild(property);
+                            var tabType = document.createTextNode(stdType);
+                            var tabGuide = document.createTextNode(stdGuide);
+                            var tabVocab = document.createTextNode(stdVocab);
+                            var tabCard = document.createTextNode(stdCard);
+                            var tabDescr = document.createTextNode(stdDescr);
+                            row.insertCell(2).appendChild(tabType);
+                            row.insertCell(3).appendChild(tabGuide);
+                            row.insertCell(4).appendChild(tabVocab);
+                            row.insertCell(5).appendChild(tabCard);
+                            var descrCell = row.insertCell(6);
+                            descrCell.className = "hide description";
+                            descrCell.appendChild(tabDescr);
                         }
                     }
                 }
@@ -1027,14 +1186,37 @@
 
         });
 
-        var showButt = d3.select("#recommButton");
-        showButt.on("click", function () {
+        var recButt = d3.select("#recommButton");
+        recButt.on("click", function () {
             if (document.getElementById("missingRec").classList.contains("hide")) {
                 document.getElementById("missingRec").classList.remove("hide");
             } else {
                 document.getElementById("missingRec").classList.add("hide");
             }
         });
+
+        var optButt = d3.select("#optButton");
+        optButt.on("click", function () {
+            if (document.getElementById("optTable").classList.contains("hide")) {
+                document.getElementById("optTable").classList.remove("hide");
+            } else {
+                document.getElementById("optTable").classList.add("hide");
+            }
+        });
+
+        var descrButt = d3.select("#descrButton");
+        descrButt.on("click", function () {
+            for (var i in document.getElementsByClassName("description")) {
+                if (document.getElementsByClassName("description")[i].classList.contains("hide")) {
+                    document.getElementsByClassName("description")[i].classList.remove("hide");
+                } else {
+                    document.getElementsByClassName("description")[i].classList.add("hide");
+                }
+            }
+        });
+
+        setTimeout(function(){ $("#minTable").tablesorter(); }, 1000);
+        setTimeout(function(){ $("#optTable").tablesorter(); }, 1000);
 
     </script>
 

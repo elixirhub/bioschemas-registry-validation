@@ -306,6 +306,21 @@ class WebsiteTags:
                             except KeyError:
                                 prop_dict[prop] = [cont]
 
+                        #     if property[key][4] == "Yes":
+                        #         #cont = prop_dict[key]
+                        #         print cont
+                        #         if cont[0].capitalize() in edamList:
+                        #             guide_dict[key] = [property[key][3], "Found", "Valid", property[key][2]]
+                        #         else:
+                        #             guide_dict[key] = [property[key][3], "Found", "Not valid", property[key][2]]
+                        #     else:
+                        #         guide_dict[key] = [property[key][3], "Found", "No", property[key][2]]
+                        # else:
+                        #     if property[key][4] == "Yes":
+                        #         guide_dict[key] = [property[key][3], "Not found", "Yes", property[key][2]]
+                        #     else:
+                        #         guide_dict[key] = [property[key][3], "Not found", "No", property[key][2]]
+
                             #if property[key][4] == "Yes":
                             #    if cont.capitalize() in edamList:
                             #        guide_dict[key] = [property[key][3], "Found", "Valid"]
@@ -335,19 +350,80 @@ class WebsiteTags:
 
                 for key in property:
                     if key in prop_dict:
-                        if property[key][4] == "Yes":
-                            cont = prop_dict[key]
-                            if cont[0].capitalize() in edamList:
-                                guide_dict[key] = [property[key][3], "Found", "Valid", property[key][2]]
+                        cont = prop_dict[key]
+                        if cont == None:
+                            pass
+                        else:
+                            cont = str(cont[0])
+
+                            # Type values
+                            if property[key][0] == "Integer":
+                                if cont.isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Number":
+                                if cont.replace(".", "", 1).isdigit() or cont.replace(",", "", 1).isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Boolean":
+                                if cont == "True" or cont == "False" or cont == "true" or cont == "false" or cont == "T" or cont == "F":
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "URL":
+                                if "/" in cont or "." in cont:
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
                             else:
-                                guide_dict[key] = [property[key][3], "Found", "Not valid", property[key][2]]
-                        else:
-                           guide_dict[key] = [property[key][3], "Found", "No", property[key][2]]
+                                val0 = "OK"
+
+                            # Cardinality
+                            if property[key][2] == "One":
+                                if type(cont) == str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+                            else:
+                                if type(cont) != str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+
+                            # Vocabulary
+                            if property[key][4] == "Yes":
+                                if cont.capitalize in edamList:
+                                    val2 = "OK"
+                                else:
+                                    val2 = "Wrong"
+                            else:
+                                val2 = "OK"
+
+
+                            # Guide dict
+                            guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], val0, val1, val2]
+
                     else:
-                        if property[key][4] == "Yes":
-                           guide_dict[key] = [property[key][3], "Not found", "Yes", property[key][2]]
-                        else:
-                            guide_dict[key] = [property[key][3], "Not found", "No", property[key][2]]
+                        guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], "Not found", "Not found", "Not found"]
+
+
+                #         if property[key][4] == "Yes":
+                #             cont = prop_dict[key]
+                #             if cont[0].capitalize() in edamList:
+                #                 guide_dict[key] = [property[key][3], "Found", "Valid", property[key][2]]
+                #             else:
+                #                 guide_dict[key] = [property[key][3], "Found", "Not valid", property[key][2]]
+                #         else:
+                #            guide_dict[key] = [property[key][3], "Found", "No", property[key][2]]
+                #     else:
+                #         if property[key][4] == "Yes":
+                #            guide_dict[key] = [property[key][3], "Not found", "Yes", property[key][2]]
+                #         else:
+                #             guide_dict[key] = [property[key][3], "Not found", "No", property[key][2]]
+
+                #print guide_dict
 
                 self.foundTags[typeProp] = [prop_dict]
                 self.tagsGuide[typeProp] = [guide_dict]

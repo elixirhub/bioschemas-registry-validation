@@ -53,13 +53,13 @@
                 var typeDict = data[primaCella][0];
 
                 var tipi = Object.keys(typeDict);
-                var rowSpan = 1;
-                if (tipi.length > 1) {
-                    rowSpan = tipi.length;
-                }
+                //var rowSpan = 1;
+                //if (tipi.length > 1) {
+                //    rowSpan = tipi.length;
+                //}
 
                 cell1.appendChild(cellText1);
-                cell1.setAttribute("rowspan", rowSpan);
+                //cell1.setAttribute("rowspan", rowSpan);
 
                 for (var j in tipi) {
                     if (j < 1) {
@@ -70,11 +70,15 @@
                         cell6 = row.insertCell(5);
                     } else {
                         var newRow = tableBody.insertRow();
-                        cell2 = newRow.insertCell(0);
-                        cell3 = newRow.insertCell(1);
-                        cell4 = newRow.insertCell(2);
-                        cell5 = newRow.insertCell(3);
-                        cell6 = newRow.insertCell(4);
+                        cell1 = newRow.insertCell(0);
+                        cell2 = newRow.insertCell(1);
+                        cell3 = newRow.insertCell(2);
+                        cell4 = newRow.insertCell(3);
+                        cell5 = newRow.insertCell(4);
+                        cell6 = newRow.insertCell(5);
+
+                        var cellText = document.createTextNode(primaCella);
+                        cell1.appendChild(cellText);
                     }
 
                     var cellText2 = document.createElement("a");
