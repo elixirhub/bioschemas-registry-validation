@@ -58,6 +58,10 @@
     </table>
     -->
 
+    <button type="button" class="buttons" id="warnButton">Warnings</button>
+
+    <div id="warnings"></div>
+
     <button type="button" class="buttons" id="optButton">Show Optional Properties</button>
 
     <table class="hide tablesorter" id="optTable">
@@ -164,19 +168,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -210,19 +223,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -252,19 +274,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -340,19 +371,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -386,19 +426,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -428,19 +477,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -515,19 +573,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -561,19 +628,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -603,19 +679,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -691,19 +776,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -737,19 +831,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -779,19 +882,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -865,19 +977,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -911,19 +1032,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -953,19 +1083,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -1041,19 +1180,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -1087,19 +1235,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -1129,19 +1286,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -1215,19 +1381,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -1261,19 +1436,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -1303,19 +1487,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -1391,19 +1584,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -1437,19 +1639,28 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -1479,19 +1690,28 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                var warnDiv = document.getElementById("warnings");
+                                var newp = document.createElement("p");
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type in property " + j;
+                                } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
+                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
                                 }
+                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
