@@ -7,6 +7,8 @@
     <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="../stylesheet.css" media="screen" title="no title" charset="utf-8">
+    <!-- Tooltipster -->
+    <link rel="stylesheet" href="../tooltipster-master/dist/css/tooltipster.bundle.min.css">
 
 </head>
 <body>
@@ -58,10 +60,6 @@
     </table>
     -->
 
-    <button type="button" class="buttons" id="warnButton">Warnings</button>
-
-    <div id="warnings"></div>
-
     <button type="button" class="buttons" id="optButton">Show Optional Properties</button>
 
     <table class="hide tablesorter" id="optTable">
@@ -92,6 +90,8 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
     <!-- TableSorter.js -->
     <script type="text/javascript" src="../tablesorter-master/jquery.tablesorter.js"></script>
+
+    <script type="text/javascript" src="../tooltipster-master/dist/js/tooltipster.bundle.min.js"></script>
 
     <script type="text/javascript">
 
@@ -168,28 +168,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -223,28 +220,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -274,28 +268,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -371,28 +362,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -426,28 +414,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -477,28 +462,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -573,28 +555,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -628,28 +607,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -679,28 +655,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -776,28 +749,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -831,28 +801,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -882,28 +849,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -977,28 +941,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -1032,28 +993,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -1083,28 +1041,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -1180,28 +1135,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -1235,28 +1187,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -1286,28 +1235,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -1381,28 +1327,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -1436,28 +1379,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -1487,28 +1427,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -1584,28 +1521,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
@@ -1639,28 +1573,25 @@
                                 missDiv.appendChild(newp);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
@@ -1690,28 +1621,25 @@
                                 row.insertCell(0).appendChild(nope);
                             } else {
 
-                                var warnDiv = document.getElementById("warnings");
-                                var newp = document.createElement("p");
                                 if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong controlled vocabulary";
-                                    newp.innerHTML = "Wrong controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong cardinality";
-                                    newp.innerHTML = "Wrong cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
                                     warn.title = "Wrong type";
-                                    newp.innerHTML = "Wrong type in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
                                     warn.title = "Wrong cardinality and controlled vocabulary";
-                                    newp.innerHTML = "Wrong cardinality and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
                                     warn.title = "Wrong type and cardinality";
-                                    newp.innerHTML = "Wrong type and cardinality in property " + j;
+                                    warn.className = "tooltip";
                                 } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
                                     warn.title = "Wrong type and controlled vocabulary";
-                                    newp.innerHTML = "Wrong type and controlled vocabulary in property " + j;
+                                    warn.className = "tooltip";
                                 }
-                                warnDiv.appendChild(newp);
 
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
@@ -1797,6 +1725,8 @@
 
         setTimeout(function(){ $("#minTable").tablesorter(); }, 1000);
         setTimeout(function(){ $("#optTable").tablesorter(); }, 1000);
+
+        setTimeout(function(){ $(".tooltip").tooltipster(); }, 1000);
         
     </script>
 
