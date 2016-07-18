@@ -163,6 +163,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -194,6 +209,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -221,6 +251,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -294,6 +339,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -325,6 +385,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -352,6 +427,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -424,6 +514,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -455,6 +560,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -482,6 +602,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -555,6 +690,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -586,6 +736,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -613,6 +778,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -684,6 +864,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -715,6 +910,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -742,6 +952,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -815,6 +1040,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -846,6 +1086,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -873,6 +1128,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -944,6 +1214,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -975,6 +1260,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -1002,6 +1302,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -1075,6 +1390,21 @@
                                 newp.innerHTML = "Missing minimum property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 minRate++;
                             }
@@ -1106,6 +1436,21 @@
                                 newp.innerHTML = "Missing recommended property " + j;
                                 missDiv.appendChild(newp);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 recRate++;
                             }
@@ -1133,6 +1478,21 @@
                             } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
                                 row.insertCell(0).appendChild(nope);
                             } else {
+
+                                if (actType == "OK" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong controlled vocabulary";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "OK") {
+                                    warn.title = "Wrong type";
+                                } else if (actType == "OK" && actCard == "Not found" && actVocab == "Not found") {
+                                    warn.title = "Wrong cardinality and controlled vocabulary";
+                                } else if (actType == "Not found" && actCard == "Not found" && actVocab == "OK") {
+                                    warn.title = "Wrong type and cardinality";
+                                } else if (actType == "Not found" && actCard == "OK" && actVocab == "Not found") {
+                                    warn.title = "Wrong type and controlled vocabulary";
+                                }
+
                                 row.insertCell(0).appendChild(warn);
                                 optRate++;
                             }
@@ -1217,7 +1577,7 @@
 
         setTimeout(function(){ $("#minTable").tablesorter(); }, 1000);
         setTimeout(function(){ $("#optTable").tablesorter(); }, 1000);
-
+        
     </script>
 
 </body>
