@@ -306,48 +306,6 @@ class WebsiteTags:
                             except KeyError:
                                 prop_dict[prop] = [cont]
 
-                        #     if property[key][4] == "Yes":
-                        #         #cont = prop_dict[key]
-                        #         print cont
-                        #         if cont[0].capitalize() in edamList:
-                        #             guide_dict[key] = [property[key][3], "Found", "Valid", property[key][2]]
-                        #         else:
-                        #             guide_dict[key] = [property[key][3], "Found", "Not valid", property[key][2]]
-                        #     else:
-                        #         guide_dict[key] = [property[key][3], "Found", "No", property[key][2]]
-                        # else:
-                        #     if property[key][4] == "Yes":
-                        #         guide_dict[key] = [property[key][3], "Not found", "Yes", property[key][2]]
-                        #     else:
-                        #         guide_dict[key] = [property[key][3], "Not found", "No", property[key][2]]
-
-                            #if property[key][4] == "Yes":
-                            #    if cont.capitalize() in edamList:
-                            #        guide_dict[key] = [property[key][3], "Found", "Valid"]
-                            #    else:
-                            #        guide_dict[key] = [property[key][3], "Found", "Not valid"]
-                            #else:
-                            #    guide_dict[key] = [property[key][3], "Found", "No"]
-                        #else:
-                        #    if property[key][4] == "Yes":
-                        #        guide_dict[key] = [property[key][3], "Not found", "Yes"]
-                        #    else:
-                        #        guide_dict[key] = [property[key][3], "Not found", "No"]
-
-                #for key in property:
-                #    if key in prop_dict and property[key][4] == "Yes":
-                #        if cont.capitalize() in edamList:
-                #            guide_dict[key] = [property[key][3], "Found", "Valid"]
-                #        else:
-                #            guide_dict[key] = [property[key][3], "Found", "Not valid"]
-                #    elif key in prop_dict and property[key][4] != "Yes":
-                #        guide_dict[key] = [property[key][3], "Found", "No"]
-                #   elif not key in prop_dict and property[key][4] == "Yes":
-                #        guide_dict[key] = [property[key][3], "Not found", "Yes"]
-                #    else:
-                #        guide_dict[key] = [property[key][3], "Not found", "No"]
-
-
                 for key in property:
                     if key in prop_dict:
                         cont = prop_dict[key]
@@ -368,7 +326,7 @@ class WebsiteTags:
                                 else:
                                     val0 = "Wrong"
                             elif property[key][0] == "Boolean":
-                                if cont == "True" or cont == "False" or cont == "true" or cont == "false" or cont == "T" or cont == "F":
+                                if cont == "True" or cont == "False" or cont == "true" or cont == "false" or cont == "T" or cont == "F" or cont == "t" or cont == "f":
                                     val0 = "OK"
                                 else:
                                     val0 = "Wrong"
@@ -394,7 +352,7 @@ class WebsiteTags:
 
                             # Vocabulary
                             if property[key][4] == "Yes":
-                                if cont.capitalize in edamList:
+                                if cont.capitalize() in edamList:
                                     val2 = "OK"
                                 else:
                                     val2 = "Wrong"
@@ -408,22 +366,6 @@ class WebsiteTags:
                     else:
                         guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], "Not found", "Not found", "Not found"]
 
-
-                #         if property[key][4] == "Yes":
-                #             cont = prop_dict[key]
-                #             if cont[0].capitalize() in edamList:
-                #                 guide_dict[key] = [property[key][3], "Found", "Valid", property[key][2]]
-                #             else:
-                #                 guide_dict[key] = [property[key][3], "Found", "Not valid", property[key][2]]
-                #         else:
-                #            guide_dict[key] = [property[key][3], "Found", "No", property[key][2]]
-                #     else:
-                #         if property[key][4] == "Yes":
-                #            guide_dict[key] = [property[key][3], "Not found", "Yes", property[key][2]]
-                #         else:
-                #             guide_dict[key] = [property[key][3], "Not found", "No", property[key][2]]
-
-                #print guide_dict
 
                 self.foundTags[typeProp] = [prop_dict]
                 self.tagsGuide[typeProp] = [guide_dict]
@@ -561,8 +503,10 @@ class WebsiteTags:
 
         for typeProp in reference.refTags:
             prop_dict = {}
+            guide_dict = {}
             for property in reference.refTags[typeProp]:
                 for el in soup.findAll(property=True):
+
                     prop = el.get("property")
 
                     if len(prop.split(":")) > 1:
@@ -570,8 +514,10 @@ class WebsiteTags:
                     else:
                         prop = prop.strip()
 
-                    if prop == "logo" or prop == "image":
+                    if prop == "image":
                         cont = el.get("src")
+                    elif prop == "logo":
+                        cont = el.get("content")
                     elif prop == "sameAs" or prop == "url":
                         cont = el.get("href")
                     else:
@@ -584,16 +530,80 @@ class WebsiteTags:
                             except KeyError:
                                 prop_dict[prop] = [cont]
 
+                for key in property:
+                    if key in prop_dict:
+                        cont = prop_dict[key]
+                        if cont == None:
+                            pass
+                        else:
+                            cont = str(cont[0])
+
+                            # Type values
+                            if property[key][0] == "Integer":
+                                if cont.isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Number":
+                                if cont.replace(".", "", 1).isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Boolean":
+                                if cont == "True" or cont == "False" or cont == "true" or cont == "false" or cont == "T" or cont == "F" or cont == "t" or cont == "f":
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "URL":
+                                if "/" in cont or "." in cont:
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            else:
+                                val0 = "OK"
+
+                            # Cardinality
+                            if property[key][2] == "One":
+                                if type(cont) == str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+                            else:
+                                if type(cont) != str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+
+                            # Vocabulary
+                            if property[key][4] == "Yes":
+                                if cont.capitalize() in edamList:
+                                    val2 = "OK"
+                                else:
+                                    val2 = "Wrong"
+                            else:
+                                val2 = "OK"
+
+                            # Guide dict
+                            guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], val0, val1, val2]
+
+                    else:
+                        guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], "Not found", "Not found", "Not found"]
+
+
                 self.foundTags[typeProp] = [prop_dict]
+                self.tagsGuide[typeProp] = [guide_dict]
 
         endfile = open("%s/tagsFound.json" % sitename, "wb")
         json.dump(self.foundTags, endfile, indent=4, sort_keys=True)
         endfile.close()
+        endfile2 = open("%s/tagsGuide.json" % sitename, "wb")
+        json.dump(self.tagsGuide, endfile2, indent=4, sort_keys=True)
+        endfile2.close()
 
     def validateWebsiteRDFa(self, sitename):
         """Validate the entries found in the website for Bioschemas markup using RDFa."""
 
-        found_types = open("%s/typesFound.txt" % sitename, "rb")
+        found_types = open("%s/typesFound.txt" % sitename, "rb")    # All the types found in the website
         f = open("%s/tagsFound.json" % sitename, "rb")
         r = open("bioschemas/bioschemasTags.json", "rb")
         found = json.load(f)
@@ -609,10 +619,10 @@ class WebsiteTags:
 
         for line in found_types:
 
-            miss = open("%s/missingMin.csv" % sitename, "ab")
+            miss = open("%s/missingMin.csv" % sitename, "ab")   # Required props missing in the website
             w_miss = csv.writer(miss)
 
-            prov = open("%s/providedRec.csv" % sitename, "ab")
+            prov = open("%s/providedRec.csv" % sitename, "ab")  # Not required props provided in the website
             w_prov = csv.writer(prov)
 
             line = line.strip()
