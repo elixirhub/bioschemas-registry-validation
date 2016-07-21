@@ -58,6 +58,25 @@ tbody tr:nth-child(odd) {
     margin: 0.5em;
 }
 
+.buttons_mini {
+    background-color: #276DAF;
+    color: white;
+    width: 5em;
+    border: 2px solid darkblue;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0.3em;
+}
+
+.inputs {
+    border: 2px solid darkblue;
+    border-radius: 5px;
+    height: 2em;
+    width: 25em;
+    font-size: 1em;
+}
+
 .svg-container {
     display: inline-block;
     position: relative;
@@ -231,7 +250,7 @@ tbody tr:nth-child(odd) {
 .rating_bar {
     width: 80px;
     height: 16px;
-    background: url("stars.png");
+    background: url("img/stars.png");
     background-repeat: repeat-x;
     background-position: 0 0;
     text-align: left;
@@ -239,7 +258,7 @@ tbody tr:nth-child(odd) {
 
 .rating {
     height: 16px;
-    background: url("stars.png");
+    background: url("img/stars.png");
     background-position: 0 -16px;
     background-repeat: repeat-x;
 }

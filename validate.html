@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bioschemas Validator</title>
+    <!-- d3.js framework -->
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="stylesheet.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+<button type="button" class="buttons_mini" onclick="window.location.href='index.html'">Back</button>
+
+<div>
+    <p>Please type in a valid URL in the field below.</p>
+    <p>Website Name: </p>
+    <input type="text" id="name_input" class="inputs"><br>
+    <p>Website URL: </p>
+    <input type="text" id="url_input" class="inputs" style="display: inline;">&nbsp;&nbsp;&nbsp;<button type="submit" id="submitBtn" class="buttons_mini">Validate!</button>
+</div>
+
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+
+    $("#submitBtn").on("click", function () {
+        var urlToVal = $("#url_input").val();
+        var nameToVal = $("#name_input").val();
+        $.get("validate_url.php", {url : urlToVal, nome : nameToVal});
+    });
+
+</script>
+
+</body>
+</html>

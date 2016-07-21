@@ -143,8 +143,9 @@ class TagsReference:
 class WebsiteTags:
     """Extract all the properties found in the scraped website."""
 
-    def __init__(self, url):
+    def __init__(self, url, nome):
         self.url = url
+        self.nome = nome
         self.websiteTypes = set()
         self.foundTags = {
             "event_bioschemas": [],
@@ -218,7 +219,7 @@ class WebsiteTags:
 
         scrapedSites = open("scrapedWebsites.csv", "ab")
         siteWriter = csv.writer(scrapedSites)
-        siteWriter.writerow(["%s" % self.url, "%s" % self.url.split("/")[2]])
+        siteWriter.writerow(["%s" % self.url, "%s" % self.nome])
         scrapedSites.close()
 
         self.newWebsiteTags()
@@ -709,25 +710,6 @@ class UpdateRegistry:
         self.websites = []
         self.types = []
 
-    def createFiles(self):
-        """Create the registry file."""
-
-        web_reg = open("websites_reg.csv", "wb")
-        w_web = csv.writer(web_reg)
-        w_web.writerow(["Website"])
-
-        prop_reg = open("props_reg.csv", "wb")
-        w_prop = csv.writer(prop_reg)
-        w_prop.writerow(["Properties"])
-
-        type_reg = open("types_reg.csv", "wb")
-        w_type = csv.writer(type_reg)
-        w_type.writerow(["Types"])
-
-        web_reg.close()
-        prop_reg.close()
-        type_reg.close()
-
     def updateRegistryFile(self, website, type_bs, props, details):
         """Create and update the registry file."""
 
@@ -745,71 +727,7 @@ class UpdateRegistry:
 
         with open("registry.json", "wb") as f:
             json.dump(data, f, indent=4)
-        
-    def updateProps(self, prop_list):
-        """Update the props_reg.csv file."""
-
-        source = open("props_reg.csv", "rb")
-        r = csv.reader(source)
-
-        to_add = set()
-
-        for line in r:
-            for el in prop_list:
-                if line[0] != el:
-                    to_add.add(el)
-
-        source.close()
-
-        endfile = open("props_reg.csv", "ab")
-        w = csv.writer(endfile)
-        for el in to_add:
-            w.writerow([el])
-
-        endfile.close()
-
-    def updateTypes(self, typeee):
-        """Update the types_reg.csv file."""
-
-        source = open("types_reg.csv", "rb")
-        r = csv.reader(source)
-
-        to_add = set()
-
-        for line in r:
-            if line[0] != typeee:
-                to_add.add(typeee)
-
-        source.close()
-
-        endfile = open("types_reg.csv", "ab")
-        w = csv.writer(endfile)
-        for el in to_add:
-            w.writerow([el])
-
-        endfile.close()
-
-    def updateWebsites(self, website):
-        """Update the websites_reg.csv file."""
-
-        source = open("websites_reg.csv", "rb")
-        r = csv.reader(source)
-
-        to_add = set()
-
-        for line in r:
-            if line[0] != website:
-                to_add.add(website)
-
-        source.close()
-
-        endfile = open("websites_reg.csv", "ab")
-        w = csv.writer(endfile)
-        for el in to_add:
-            w.writerow([el])
-
-        endfile.close()
 
 
-WebsiteTags(sys.argv[1])
+WebsiteTags(sys.argv[1], sys.argv[2])
 #UpdateRegistry().createFiles()
