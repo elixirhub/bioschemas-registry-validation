@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Properties Visualization</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+
+    <!-- Barplot and legend container -->
+    <div class="svg-container" id="barcont">
+
+        <!-- Website dropdown -->
+        <div class="dropdown">
+            <button class="dropbtn" id="mainbtn">Websites</button>
+            <div class="dropdown-content" id="maincnt"></div>
+        </div>
+
+        <!-- Barplot container -->
+        <div class="svg-container" id="barchart"></div>
+
+        <!-- Legend container -->
+        <div class="svg-container" id="barlegend">
+
+            <!-- Website list button -->
+            <div class="dropdown" id="listButton">
+                <button class="dropbtn">List</button>
+            </div>
+
+            <svg class="hide" id="barlegendsvg" width="200" height="600">
+                <g>
+                    <circle cy="100" cx="100" r="20" fill="#1B62E8"></circle>
+                    <text y="140" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Event</text>
+                </g>
+
+                <g>
+                    <circle cy="200" cx="100" r="20" fill="#2AACFF"></circle>
+                    <text y="240" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Organization</text>
+                </g>
+
+                <g>
+                    <circle cy="300" cx="100" r="20" fill="#81CDFE"></circle>
+                    <text y="340" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Person</text>
+                </g>
+
+                <g>
+                    <circle cy="400" cx="100" r="20" fill="#1DFFDE"></circle>
+                    <text y="440" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Training</text>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Ratings table -->
+        <div class="svg-container hide" id="websitetable"></div>
+
+    </div>
+
+    <!-- Compliance container -->
+    <div class="svg-container" id="compliance">
+
+        <div id="event_radial"></div>
+        <div id="organization_radial"></div>
+        <div id="person_radial"></div>
+        <div id="training_radial"></div>
+
+    </div>
+
+    <!-- Bubble container title -->
+    <div id="bubbletitle"></div>
+
+    <!-- Buttons to switch chart type -->
+    <div class="dropcont hide" id="changeChart">
+
+        <!-- Bubble chart button -->
+        <div class="dropdown2" id="bubbleButt">
+            <button class="dropbtn" id="buttonBubble">Bubble</button>
+        </div>
+
+        <!-- Pie chart button -->
+        <div class="dropdown2" id="pieButt">
+            <button class="dropbtn">Pie</button>
+        </div>
+
+    </div>
+
+    <!-- Bubblechart and table container -->
+    <div class="svg-container" id="bubblecont">
+
+        <!-- Bubblechart container -->
+        <div class="svg-container" id="bubblechart"></div>
+
+        <!-- Table container -->
+        <div class="svg-container" id="bubbleinfo">
+
+            <!-- Show raw data button -->
+            <div class="dropdown2 hide" id="rawButt">
+                <button class="dropbtn">Show Raw Data</button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <!-- Raw data container -->
+    <div class="svg-container hide" id="rawinfo"></div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="main_vis.js"></script>
+</body>
+</html>
