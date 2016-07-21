@@ -30,10 +30,11 @@
         </tbody>
     </table>
 
+    <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
     <!-- TableSorter.js -->
     <script type="text/javascript" src="../tablesorter-master/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="../visualizator.js"></script>
+    <!--<script type="text/javascript" src="../visualizator.js"></script>-->
     <script type="text/javascript">
 
 
@@ -53,13 +54,8 @@
                 var typeDict = data[primaCella][0];
 
                 var tipi = Object.keys(typeDict);
-                //var rowSpan = 1;
-                //if (tipi.length > 1) {
-                //    rowSpan = tipi.length;
-                //}
 
                 cell1.appendChild(cellText1);
-                //cell1.setAttribute("rowspan", rowSpan);
 
                 for (var j in tipi) {
                     if (j < 1) {
@@ -169,15 +165,15 @@
 
         function ratingStars(val) {
             if (val <= 20) {
-                return "../1star.png";
+                return "../img/1star.png";
             } else if (val > 20 && val <= 40) {
-                return "../2stars.png";
+                return "../img/2stars.png";
             } else if (val > 40 && val <= 60) {
-                return "../3stars.png";
+                return "../img/3stars.png";
             } else if (val > 60 && val <= 80) {
-                return "../4stars.png";
+                return "../img/4stars.png";
             } else {
-                return "../5stars.png";
+                return "../img/5stars.png";
             }
         }
 
