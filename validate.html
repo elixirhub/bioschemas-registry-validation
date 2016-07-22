@@ -16,8 +16,14 @@
     <p>Website Name: </p>
     <input type="text" id="name_input" class="inputs"><br>
     <p>Website URL: </p>
-    <input type="text" id="url_input" class="inputs" style="display: inline;">&nbsp;&nbsp;&nbsp;<button type="submit" id="submitBtn" class="buttons_mini">Validate!</button>
+    <input type="text" id="url_input" class="inputs"><br><br>
+    <label>
+        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;&nbsp;Validate sibling links too
+    </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" id="submitBtn" class="buttons_mini">Validate!</button>
 </div>
+
+<div id="response"></div>
 
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -25,9 +31,40 @@
 
     $("#submitBtn").on("click", function () {
         var urlToVal = $("#url_input").val();
+        if (urlToVal == "") {
+            console.log("empty");
+        }
         var nameToVal = $("#name_input").val();
-        $.get("validate_url.php", {url : urlToVal, nome : nameToVal});
+        var linkToVal;
+        if ($("#link_input").is(":checked")) {
+            linkToVal = 0;
+        } else {
+            linkToVal = 1;
+        }
+
+        //window.location.href = "success_validate.html";
+        if (urlToVal == "") {
+            alert("You need to provide a valid URL to validate!");
+        } else if (nameToVal == "") {
+            var r = confirm("If you don't provide a name for your website, the URL will be used as its name.");
+            if (r == true) {
+                $.get("validate_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal});
+                $("#response").append("<p>Thanks for using this service.</p>");
+                $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.");
+            }
+        } else {
+            $.get("validate_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal});
+            $("#response").append("<p>Thanks for using this service.</p>");
+            $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.");
+        }
+
     });
+
+
+
+
+
+
 
 </script>
 

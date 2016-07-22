@@ -143,9 +143,10 @@ class TagsReference:
 class WebsiteTags:
     """Extract all the properties found in the scraped website."""
 
-    def __init__(self, url, nome):
+    def __init__(self, url, nome, sibs=1):
         self.url = url
         self.nome = nome
+        self.sibs = sibs
         self.websiteTypes = set()
         self.foundTags = {
             "event_bioschemas": [],
@@ -227,8 +228,11 @@ class WebsiteTags:
     def newWebsiteTags(self):
         """Create a new directory named after the domain of the scraped website."""
 
-        websiteComps = self.url.split("/")
-        websiteName = "_".join(websiteComps[2:])
+        if self.nome == self.url:
+            websiteComps = self.url.split("/")
+            websiteName = "_".join(websiteComps[2:])
+        else:
+            websiteName = self.nome
 
         os.system("mkdir %s" % websiteName)
 
@@ -239,15 +243,22 @@ class WebsiteTags:
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName)
             self.validateWebsiteMicrodata(websiteName)
+            if self.sibs == 0:
+                self.validateSiblings()
         else:
             self.scrapeRDFa(websiteName)
             self.validateWebsiteRDFa(websiteName)
+            if self.sibs == 0:
+                self.validateSiblings()
 
     def updateWebsiteTags(self):
         """Update the data from previously scraped websites."""
 
-        websiteComps = self.url.split("/")
-        websiteName = "_".join(websiteComps[2:])
+        if self.nome == self.url:
+            websiteComps = self.url.split("/")
+            websiteName = "_".join(websiteComps[2:])
+        else:
+            websiteName = self.nome
 
         response = requests.get(self.url)
         html = response.content
@@ -256,9 +267,13 @@ class WebsiteTags:
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName)
             self.validateWebsiteMicrodata(websiteName)
+            if self.sibs == 0:
+                self.validateSiblings()
         else:
             self.scrapeRDFa(websiteName)
             self.validateWebsiteRDFa(websiteName)
+            if self.sibs == 0:
+                self.validateSiblings()
 
     def scrapeMicrodata(self, sitename):
         """Get the microdata from the website and save them into a JSON file."""
@@ -702,6 +717,22 @@ class WebsiteTags:
 
         UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
 
+    def validateSiblings(self):
+        """Collect any sibling pages and validate them."""
+
+        response = requests.get(self.url)
+        html = response.content
+        soup = BeautifulSoup(html, "lxml")
+        targetList = []
+
+        for el in soup.findAll(href=True):
+            if el.get("href").startswith(self.url):
+                print el.get("href")
+                targetList.append(el.get("href"))
+        for i in len(targetList):
+            WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1)
+
+
 class UpdateRegistry:
     """Update the registry file every time a new website is added to the scraped websites file."""
 
@@ -729,5 +760,5 @@ class UpdateRegistry:
             json.dump(data, f, indent=4)
 
 
-WebsiteTags(sys.argv[1], sys.argv[2])
+WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3])
 #UpdateRegistry().createFiles()
