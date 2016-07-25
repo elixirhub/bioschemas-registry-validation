@@ -9,15 +9,17 @@
 </head>
 <body>
 
+<button type="button" class="buttons_mini" onclick="window.location.href='../index.html'">Back</button>
+
     <h2>Browse by Type</h2>
 
-    <table>
+    <table id="web_table" class="tablesorter">
         <thead>
-            <tr>
-                <th>Type</th>
-                <th>Website</th>
-                <th>Properties</th>
-            </tr>
+        <tr>
+            <th>Type</th>
+            <th>Websites</th>
+            <th>Properties</th>
+        </tr>
         </thead>
         <tbody id="types_table">
 
@@ -28,6 +30,56 @@
     <script type="text/javascript" src="../visualizator.js"></script>
     <script type="text/javascript">
 
+        var tableBody = document.getElementById("types_table");
+        var tot_web, tot_props, tot_type;
+        var typeSet = new Set();
+        var propSet = new Set();
+        var eventList, organList, personList, trainList = [];
+
+        d3.json("../registry.json", function (data) {
+            var eventList = [];
+            var organList = [];
+            var personList = [];
+            var trainList = [];
+
+            var siti = Object.keys(data);
+            tot_web = siti.length;
+            for (var i in siti) {
+                var primaCella = siti[i];
+                var typeDict = data[primaCella][0];
+                var tipi = Object.keys(typeDict);
+                for (var j in tipi) {
+                    var row = tableBody.insertRow(),
+                        cell1 = row.insertCell(0),
+                        cell2, cell3;
+                    var secondaCella = tipi[j];
+                    typeSet.add(secondaCella);
+
+                    console.log(primaCella);
+                    if (secondaCella == "Event") {
+                        eventList.push(primaCella);
+                    } else if (secondaCella == "Organization") {
+                        organList.push(primaCella);
+                    } else if (secondaCella == "Person") {
+                        personList.push(primaCella);
+                    } else if (secondaCella == "Training") {
+                        trainList.push(primaCella)
+                    }
+
+                    var toPush = data[primaCella][0][secondaCella];
+                    //console.log(primaCella);
+                    for (var k in toPush) {
+                        propSet.add(toPush[k]);
+                    }
+                }
+            }
+            tot_type = Array.from(typeSet).length;
+            console.log(personList);
+            tot_props = Array.from(propSet).length;
+
+        });
+
+        /**
         var tableBody = document.getElementById("types_table");
         var event_webs = [];
         var event_props = [];
@@ -103,10 +155,6 @@
         });
 
 
-
-
-
-        /**
         d3.json("../registry.json", function (data) {
 
             var siti = Object.keys(data);
