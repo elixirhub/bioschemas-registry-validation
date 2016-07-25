@@ -13,6 +13,8 @@
 </head>
 <body>
 
+    <button type="button" class="buttons_mini" onclick="window.location.href='../index.html'">Back</button>
+
     <h1 id="title"></h1>
 
     <h2 id="type_header"></h2>
@@ -1691,9 +1693,13 @@
             var recRating = (recRate / recTot) * 100;
             var optRating = (optRate / optTot) * 100;
 
+            //console.log(minRating);
+
             var minStars = (minRating * 60) / 100;
             var recStars = (recRating * 35) / 100;
             var optStars = (optRating * 5) / 100;
+
+            //console.log(minStars);
 
             var totRating = minStars + recStars + optStars;
 
