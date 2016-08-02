@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bioschemas Tester</title>
+    <!-- d3.js framework -->
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="stylesheet.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+<button type="button" class="buttons_mini" onclick="window.location.href='index.html'">Back</button>
+
+<div>
+    <p>Please type in a valid URL in the field below.</p>
+    <p>Website Name: </p>
+    <input type="text" id="name_input" class="inputs"><br>
+    <p>Website URL: </p>
+    <input type="text" id="url_input" class="inputs"><br><br>
+    <label>
+        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;&nbsp;Validate children links too
+    </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" id="submitBtn" class="buttons_mini">Validate!</button>
+</div>
+
+<div id="response"></div>
+
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+
+    $("#submitBtn").on("click", function () {
+        var urlToVal = $("#url_input").val();
+        var nameToVal = $("#name_input").val();
+        var linkToVal;
+        if ($("#link_input").is(":checked")) {
+            linkToVal = 0;
+        } else {
+            linkToVal = 1;
+        }
+
+        if (urlToVal == "") {
+            alert("You need to provide a valid URL to validate!");
+        } else if (nameToVal == "") {
+            var r = confirm("If you don't provide a name for your website, the URL will be used as its name.");
+            if (r == true) {
+                $.get("test_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal});
+                $("#response").append("<p>Thanks for using this service.</p>");
+                $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.");
+            }
+        } else {
+            $.get("test_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal});
+            $("#response").append("<p>Thanks for using this service.</p>");
+            $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.");
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
