@@ -31,9 +31,6 @@
 
     $("#submitBtn").on("click", function () {
         var urlToVal = $("#url_input").val();
-        if (urlToVal == "") {
-            console.log("empty");
-        }
         var nameToVal = $("#name_input").val();
         var linkToVal;
         if ($("#link_input").is(":checked")) {
@@ -42,7 +39,6 @@
             linkToVal = 1;
         }
 
-        //window.location.href = "success_validate.html";
         if (urlToVal == "") {
             alert("You need to provide a valid URL to validate!");
         } else if (nameToVal == "") {
