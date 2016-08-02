@@ -188,7 +188,7 @@ class WebsiteTags:
         """Create an empty temporary directory or delete everything from the existing temp dir."""
 
         if os.path.isdir("temp"):
-            os.system("rm -rf temp/*")
+            os.system("rm -rf temp/*/")
         else:
             os.system("mkdir temp")
 
