@@ -46,12 +46,12 @@
             if (r == true) {
                 $.get("validate_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal});
                 $("#response").append("<p>Thanks for using this service.</p>");
-                $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.");
+                $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.</p>");
             }
         } else {
             $.get("validate_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal});
             $("#response").append("<p>Thanks for using this service.</p>");
-            $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.");
+            $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Websites Page'>Websites</a> page.</p>");
         }
 
     });

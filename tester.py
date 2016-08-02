@@ -435,7 +435,7 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
-        #UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
+        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
         UpdateRegistry().createChartFile(sitename, typesToAdd)
 
     def scrapeRDFa(self, sitename):
@@ -659,7 +659,7 @@ class WebsiteTags:
         found_types.close()
         report.close()
 
-        #UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
+        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
         UpdateRegistry().createChartFile(sitename, typesToAdd)
 
     def validateSiblings(self):
@@ -685,6 +685,28 @@ class UpdateRegistry:
         self.properties = []
         self.websites = []
         self.types = []
+
+    def updateRegistryFile(self, website, type_bs, props, details):
+        """Create and update the registry file."""
+
+        finDict = {}
+        elDict = {}
+        for i in range(len(type_bs)):
+            elDict[type_bs[i]] = details[i]
+            elDict[type_bs[i]] += props[i]
+        finDict[website] = [elDict]
+
+        with open("temp/registry.json", "wb") as f:
+            f.write("{")
+            f.write("}")
+
+        with open("temp/registry.json", "rb") as f:
+            data = json.load(f)
+
+        data.update(finDict)
+
+        with open("temp/registry.json", "wb") as f:
+            json.dump(data, f, indent=4)
 
     def createChartFile(self, website, type_bs):
         """Create the csv file needed to build the chart in the website page."""
