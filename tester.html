@@ -6,6 +6,8 @@
     <!-- d3.js framework -->
     <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="stylesheet.css" media="screen" title="no title" charset="utf-8">
+    <!-- ToolTipster.css -->
+    <link rel="stylesheet" href="../tooltipster-master/dist/css/tooltipster.bundle.min.css">
 </head>
 <body>
 
@@ -25,8 +27,32 @@
 
 <div id="response"></div>
 
+<table id="web_table" class="tablesorter hide">
+    <thead>
+    <tr>
+        <th rowspan="2">Website</th>
+        <th rowspan="2">Type</th>
+        <th colspan="3">Properties</th>
+        <th rowspan="2" style="width: 20em;">Rating</th>
+    </tr>
+    <tr>
+        <th>Min</th>
+        <th>Rec</th>
+        <th>Opt</th>
+    </tr>
+    </thead>
+    <tbody id="types_table">
+
+    </tbody>
+</table>
+
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<!-- TableSorter.js -->
+<script type="text/javascript" src="../tablesorter-master/jquery.tablesorter.js"></script>
+<!-- ToolTipster.js -->
+<script type="text/javascript" src="../tooltipster-master/dist/js/tooltipster.bundle.min.js"></script>
+
 <script type="text/javascript">
 
     $("#submitBtn").on("click", function () {
@@ -54,7 +80,164 @@
             $("#response").append("<p>You will be able to view the results in a moment...</p>");
         }
 
-        setTimeout(window.open("testerResults.html"), 10000);
+        //setTimeout(window.open("testerResults.html"), 10000);
+
+        setTimeout(function () {
+            var tableBody = document.getElementById("types_table");
+
+            d3.json("temp/registry.json", function (data) {
+
+                var siti = Object.keys(data);
+                for (var i in siti) {
+                    var row = tableBody.insertRow(),
+                            cell1 = row.insertCell(0),
+                            cell2, cell3, cell4, cell5, cell6;
+
+                    var primaCella = siti[i];
+                    var cellText1 = document.createTextNode(primaCella);
+                    var typeDict = data[primaCella][0];
+
+                    var tipi = Object.keys(typeDict);
+
+                    cell1.appendChild(cellText1);
+
+                    for (var j in tipi) {
+                        if (j < 1) {
+                            cell2 = row.insertCell(1);
+                            cell3 = row.insertCell(2);
+                            cell4 = row.insertCell(3);
+                            cell5 = row.insertCell(4);
+                            cell6 = row.insertCell(5);
+                        } else {
+                            var newRow = tableBody.insertRow();
+                            cell1 = newRow.insertCell(0);
+                            cell2 = newRow.insertCell(1);
+                            cell3 = newRow.insertCell(2);
+                            cell4 = newRow.insertCell(3);
+                            cell5 = newRow.insertCell(4);
+                            cell6 = newRow.insertCell(5);
+
+                            var cellText = document.createTextNode(primaCella);
+                            cell1.appendChild(cellText);
+                        }
+
+                        var cellText2 = document.createElement("a");
+                        var secondaCella = tipi[j];
+                        cellText2.setAttribute("href", "temp/website.html#" + primaCella + "#" + secondaCella);
+                        cellText2.innerHTML = secondaCella;
+
+                        cell2.appendChild(cellText2);
+
+                        if (tipi[j] == "Event") {
+
+                            var totMin = 9;
+                            var totRec = 13;
+                            var totOpt = 11;
+
+                        } else if (tipi[j] == "Organization") {
+
+                            var totMin = 6;
+                            var totRec = 11;
+                            var totOpt = 11;
+
+                        } else if (tipi[j] == "Person") {
+
+                            var totMin = 2;
+                            var totRec = 8;
+                            var totOpt = 9;
+
+                        } else if (tipi[j] == "Training") {
+
+                            var totMin = 5;
+                            var totRec = 7;
+                            var totOpt = 12;
+
+                        }
+
+                        var details = data[primaCella][0][secondaCella][0];
+                        var foundMin = details[0];
+                        var foundRec = details[1];
+                        var foundOpt = details[2];
+
+                        var percMin = (foundMin * 100) / totMin;
+                        var percRec = (foundRec * 100) / totRec;
+                        var percOpt = (foundOpt * 100) / totOpt;
+
+                        var percTot = Math.round(((percMin * 60) / 100) + ((percRec * 35) / 100) + ((percOpt * 5) / 100));
+
+                        var cellText3 = document.createTextNode(Math.round(percMin) + "%");
+                        var cellText4 = document.createTextNode(Math.round(percRec) + "%");
+                        var cellText5 = document.createTextNode(Math.round(percOpt) + "%");
+                        var cellText6 = document.createElement("img");
+                        cellText6.src = ratingStars(percTot);
+                        cellText6.alt = ratingAlt(percTot);
+                        cellText6.style.width = "70%";
+                        cellText6.style.display = "block";
+                        cellText6.style.marginLeft = "auto";
+                        cellText6.style.marginRight = "auto";
+
+                        cell3.appendChild(cellText3);
+                        cell3.style.backgroundColor = colorTable(Math.round((foundMin * 100) / totMin));
+                        cell4.appendChild(cellText4);
+                        cell4.style.backgroundColor = colorTable(Math.round((foundRec * 100) / totRec));
+                        cell5.appendChild(cellText5);
+                        cell5.style.backgroundColor = colorTable(Math.round((foundOpt * 100) / totOpt));
+                        cell6.appendChild(cellText6);
+
+                    }
+                }
+            });
+
+            setTimeout(function(){ $("#web_table").tablesorter({
+                textExtraction:function (s) {
+                    if ($(s).find("img").length == 0) return $(s).text();
+                    return $(s).find("img").attr("alt");
+                }
+            }); }, 1000);
+
+            function colorTable(val) {
+                if (val < 25) {
+                    return "#FF3333";
+                } else if (val >= 25 && val < 50) {
+                    return "#FF9933";
+                } else if (val >= 50 && val < 75) {
+                    return "#99FF66";
+                } else if (val >= 75) {
+                    return "#33CC66";
+                }
+            }
+
+            function ratingStars(val) {
+                if (val <= 20) {
+                    return "../img/1star.png";
+                } else if (val > 20 && val <= 40) {
+                    return "../img/2stars.png";
+                } else if (val > 40 && val <= 60) {
+                    return "../img/3stars.png";
+                } else if (val > 60 && val <= 80) {
+                    return "../img/4stars.png";
+                } else {
+                    return "../img/5stars.png";
+                }
+            }
+
+            function ratingAlt(val) {
+                if (val <= 20) {
+                    return 1;
+                } else if (val > 20 && val <= 40) {
+                    return 2;
+                } else if (val > 40 && val <= 60) {
+                    return 3;
+                } else if (val > 60 && val <= 80) {
+                    return 4;
+                } else {
+                    return 5;
+                }
+            }
+
+            document.getElementById("web_table").classList.remove("hide");
+
+        }, 10000)
 
     });
 

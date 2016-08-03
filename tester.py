@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Created by Roberto Preste
 
-import requests, sys, json, csv, os, microdata, urllib
+import requests, sys, json, csv, os, urllib
 from datetime import date
 from bs4 import BeautifulSoup
 from random import randint
