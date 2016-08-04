@@ -166,6 +166,10 @@
     var noColor = "#E1514B";
     var warnColor = "#FEC574";
 
+    var minColor = "rgba(11, 121, 75, .5)";
+    var recColor = "rgba(144, 238, 144, .5)";
+    var optColor = "rgba(224, 255, 255, .5)";
+
     var graphList = [];
 
     d3.json(siteName + "/tagsGuide.json", function (data) {
@@ -276,7 +280,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -336,7 +342,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -392,7 +400,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -507,7 +517,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -567,7 +579,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -623,7 +637,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -736,7 +752,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -796,7 +814,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -852,7 +872,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -967,7 +989,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1027,7 +1051,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1083,7 +1109,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1196,7 +1224,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1256,7 +1286,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1312,7 +1344,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1427,7 +1461,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1487,7 +1523,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1543,7 +1581,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1656,7 +1696,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1716,7 +1758,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1772,7 +1816,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1887,7 +1933,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = minColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -1947,7 +1995,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = recColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
@@ -2003,7 +2053,9 @@
                             var tabCard = document.createTextNode(stdCard);
                             var tabDescr = document.createTextNode(stdDescr);
                             row.insertCell(2).appendChild(tabType);
-                            row.insertCell(3).appendChild(tabGuide);
+                            var guideCell = row.insertCell(3);
+                            guideCell.style.backgroundColor = optColor;
+                            guideCell.appendChild(tabGuide);
                             row.insertCell(4).appendChild(tabVocab);
                             row.insertCell(5).appendChild(tabCard);
                             var descrCell = row.insertCell(6);
