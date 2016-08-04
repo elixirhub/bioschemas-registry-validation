@@ -52,12 +52,8 @@
                     cell2, cell3, cell4, cell5, cell6;
 
                 var primaCella = siti[i];
-                var cellText1 = document.createTextNode(primaCella);
                 var typeDict = data[primaCella][0];
-
                 var tipi = Object.keys(typeDict);
-
-                cell1.appendChild(cellText1);
 
                 for (var j in tipi) {
                     if (j < 1) {
@@ -75,15 +71,16 @@
                         cell5 = newRow.insertCell(4);
                         cell6 = newRow.insertCell(5);
 
-                        var cellText = document.createTextNode(primaCella);
-                        cell1.appendChild(cellText);
                     }
 
-                    var cellText2 = document.createElement("a");
+                    var cellText1 = document.createElement("a");
                     var secondaCella = tipi[j];
-                    cellText2.setAttribute("href", "website.html#" + primaCella + "#" + secondaCella);
-                    cellText2.innerHTML = secondaCella;
+                    var cellText2 = document.createTextNode(secondaCella);
 
+                    cellText1.setAttribute("href", "website.html#" + primaCella + "#" + secondaCella);
+                    cellText1.innerHTML = primaCella;
+
+                    cell1.appendChild(cellText1);
                     cell2.appendChild(cellText2);
 
                     if (tipi[j] == "Event") {

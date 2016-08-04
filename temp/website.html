@@ -2070,7 +2070,6 @@
                         });
 
                 var maxScore = Math.max(minRate, recRate, optRate);
-                console.log(maxScore);
 
                 var outlineArc = d3.svg.arc()
                         .innerRadius(innerRadius)
@@ -2096,8 +2095,6 @@
                         d.label  =  d.label;
                         d.mean   = +d.mean;
                     });
-                    // for (var i = 0; i < data.score; i++) { console.log(data[i].mean) }
-
 
                     var path = svg.selectAll(".solidArc")
                             .data(pie(data))
@@ -2175,11 +2172,6 @@
     }); }, 1000);
 
     setTimeout(function(){ $(".tooltip").tooltipster(); }, 1000);
-
-
-
-
-
 
 
 </script>

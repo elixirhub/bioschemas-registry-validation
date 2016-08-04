@@ -2070,7 +2070,6 @@
                             });
 
                     var maxScore = Math.max(minRate, recRate, optRate);
-                    console.log(maxScore);
 
                     var outlineArc = d3.svg.arc()
                             .innerRadius(innerRadius)
@@ -2096,8 +2095,6 @@
                             d.label  =  d.label;
                             d.mean   = +d.mean;
                         });
-                        // for (var i = 0; i < data.score; i++) { console.log(data[i].mean) }
-
 
                         var path = svg.selectAll(".solidArc")
                                 .data(pie(data))
@@ -2116,17 +2113,6 @@
                                 .attr("stroke", "gray")
                                 .attr("class", "outlineArc")
                                 .attr("d", outlineArc);
-
-
-                        // calculate the weighted mean score
-//                        var score =
-//                                data.reduce(function(a, b) {
-//                                    //console.log('a:' + a + ', b.score: ' + b.score + ', b.weight: ' + b.weight);
-//                                    return a + (b.score * b.weight);
-//                                }, 0) /
-//                                data.reduce(function(a, b) {
-//                                    return a + b.weight;
-//                                }, 0);
 
                         svg.append("svg:text")
                                 .attr("class", "aster-score")
@@ -2186,12 +2172,6 @@
         }); }, 1000);
 
         setTimeout(function(){ $(".tooltip").tooltipster(); }, 1000);
-
-
-
-
-
-
 
     </script>
 
