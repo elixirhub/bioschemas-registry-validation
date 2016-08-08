@@ -20,8 +20,21 @@
     <p>Website URL: </p>
     <input type="text" id="url_input" class="inputs"><br><br>
     <label>
-        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;&nbsp;Validate children links too
+        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Validate children links too
     </label>
+
+    <br>
+
+    <p>Scrape a specific Bioschemas type: &nbsp;
+        <select name="types" id="types_menu">
+            <option value="all" selected>All Types</option>
+            <option value="Event">Events</option>
+            <option value="Organization">Organizations</option>
+            <option value="Person">Persons</option>
+            <option value="Training">Training Materials</option>
+        </select>
+    </p>
+
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" id="submitBtn" class="buttons_mini">Validate!</button>
 </div>
 
@@ -64,18 +77,19 @@
         } else {
             linkToVal = 1;
         }
+        var typeToVal = $("#types_menu").val();
 
         if (urlToVal == "") {
             alert("You need to provide a valid URL to validate!");
         } else if (nameToVal == "") {
             var r = confirm("If you don't provide a name for your website, the URL will be used as its name.");
             if (r == true) {
-                $.get("test_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal});
+                $.get("test_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal, types : typeToVal});
                 $("#response").append("<p>Thanks for using this service.</p>");
                 $("#response").append("<p>You will be able to view the results in a moment...</p>");
             }
         } else {
-            $.get("test_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal});
+            $.get("test_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal, types : typeToVal});
             $("#response").append("<p>Thanks for using this service.</p>");
             $("#response").append("<p>You will be able to view the results in a moment...</p>");
         }

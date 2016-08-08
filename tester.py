@@ -143,10 +143,11 @@ class TagsReference:
 class WebsiteTags:
     """Extract all the properties found in the scraped website."""
 
-    def __init__(self, url, nome, sibs=1):
+    def __init__(self, url, nome, sibs=1, scrapeType="all"):
         self.url = url
         self.nome = nome
         self.sibs = sibs
+        self.scrapeType = scrapeType
         self.websiteTypes = set()
         self.foundTags = {
             "event_bioschemas": [],
@@ -208,17 +209,17 @@ class WebsiteTags:
         soup = BeautifulSoup(html, "lxml")
 
         if soup.findAll(itemprop=True):
-            self.scrapeMicrodata(websiteName)
+            self.scrapeMicrodata(websiteName, self.scrapeType)
             self.validateWebsiteMicrodata(websiteName)
             if self.sibs == 0:
-                self.validateSiblings()
+                self.validateSiblings(self.scrapeType)
         else:
-            self.scrapeRDFa(websiteName)
+            self.scrapeRDFa(websiteName, self.scrapeType)
             self.validateWebsiteRDFa(websiteName)
             if self.sibs == 0:
-                self.validateSiblings()
+                self.validateSiblings(self.scrapeType)
 
-    def scrapeMicrodata(self, sitename):
+    def scrapeMicrodata(self, sitename, prefType):
         """Get the microdata from the website and save them into a JSON file."""
 
         reference = TagsReference()
@@ -232,7 +233,11 @@ class WebsiteTags:
 
         for el in soup.findAll(itemtype=True):
             webtype = el.get("itemtype").split("/")[3]
-            self.websiteTypes.add(webtype)
+            if prefType != "all":
+                if webtype == prefType:
+                    self.websiteTypes.add(webtype)
+            else:
+                self.websiteTypes.add(webtype)
 
         endfile = open("temp/%s/typesFound.txt" % sitename, "wb")
         for el in self.websiteTypes:
@@ -438,7 +443,7 @@ class WebsiteTags:
         UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
         UpdateRegistry().createChartFile(sitename, typesToAdd)
 
-    def scrapeRDFa(self, sitename):
+    def scrapeRDFa(self, sitename, prefType):
         """Get the RDFa data from the website and save them into a JSON file."""
 
         reference = TagsReference()
@@ -452,7 +457,11 @@ class WebsiteTags:
 
         for el in soup.findAll(typeof=True):
             webtype = el.get("typeof")
-            self.websiteTypes.add(webtype)
+            if prefType != "all":
+                if webtype == prefType:
+                    self.websiteTypes.add(webtype)
+            else:
+                self.websiteTypes.add(webtype)
 
         endfile = open("temp/%s/typesFound.txt" % sitename, "wb")
         for el in self.websiteTypes:
@@ -662,7 +671,7 @@ class WebsiteTags:
         UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
         UpdateRegistry().createChartFile(sitename, typesToAdd)
 
-    def validateSiblings(self):
+    def validateSiblings(self, prefType):
         """Collect any sibling pages and validate them."""
 
         response = requests.get(self.url)
@@ -672,10 +681,10 @@ class WebsiteTags:
 
         for el in soup.findAll(href=True):
             if el.get("href").startswith(self.url):
-                print el.get("href")
+                # print el.get("href")
                 targetList.append(el.get("href"))
         for i in len(targetList):
-            WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1)
+            WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1, prefType)
 
 
 class UpdateRegistry:
@@ -1230,4 +1239,4 @@ class UpdateRegistry:
 
 
 
-WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3])
+WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
