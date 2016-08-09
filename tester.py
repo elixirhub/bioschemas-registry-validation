@@ -727,9 +727,9 @@ class UpdateRegistry:
         for typ in type_bs:
             graphList = []
             maxList = []
-            okCount = 0
-            noCount = 0
-            warnCount = 0
+            okList = []
+            warnList = []
+            noList = []
             ord = 0
 
             with open("temp/%s/tagsGuide.json" % website, "rb") as f, open("temp/%s/tagsFound.json" % website, "rb") as g:
@@ -756,45 +756,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                warnList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["event_schema"][0]:
@@ -816,45 +825,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                 elif typ == "Organization":
@@ -877,45 +895,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["organization_schema"][0]:
@@ -937,45 +964,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                 elif typ == "Person":
@@ -998,45 +1034,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["person_schema"][0]:
@@ -1058,45 +1103,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                 elif typ == "Training":
@@ -1119,45 +1173,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["training_schema"][0]:
@@ -1179,45 +1242,54 @@ class UpdateRegistry:
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         elif stdGuide == "Recommended":
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
                         else:
                             weightGraph = 0.2
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
+                                okList.append(i)
                                 ord += 1
 
                             elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
                                 colorGraph = noColor
+                                noList.append(i)
                                 ord += 1
 
                             else:
                                 colorGraph = warnColor
+                                warnList.append(i)
                                 ord += 1
 
-                        graphList.append([ord, label, scoreGraph, weightGraph, colorGraph])
+                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                 meanVal = max(maxList)
@@ -1232,6 +1304,14 @@ class UpdateRegistry:
 
                 for el in graphList:
                     el.append(meanVal)
+                    if el[0] in okList:
+                        el.insert(0, (okList.index(el[0]) + 1))
+                    elif el[0] in warnList:
+                        el.insert(0, (warnList.index(el[0]) + 1 + len(okList)))
+                    elif el[0] in noList:
+                        el.insert(0, (noList.index(el[0]) + 1 + len(okList) + len(warnList)))
+                graphList.sort(key=lambda x: x[0])
+                for el in graphList:
                     w.writerow(el)
                     s.writerow([meanVal, "val"])
                 endfile.close()

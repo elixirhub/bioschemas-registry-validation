@@ -2112,7 +2112,7 @@
                             .attr("class", "d3-tip")
                             .offset([0, 0])
                             .html(function(d) {
-                                return d.data.label + ": <span style='color: orangered'>" + d.data.score + "</span>";
+                                return d.data.label + ": <span style='color: orangered'>" + d.data.score + "</span><br>" + (d.data.weight == 0.5 ? "Minimum Property" : (d.data.weight == 0.3 ? "Recommended Property" : "Optional Property"));
                             });
 
                     var arc = d3.svg.arc()
