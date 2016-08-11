@@ -1,16 +1,17 @@
 {
-    "Ephesus_TEST": [
+    "jfjkopppp": [
         {
-            "Person": [
+            "Organization": [
                 [
                     2, 
-                    2, 
+                    3, 
                     0
                 ], 
-                "image", 
-                "email", 
-                "name", 
-                "description"
+                "url", 
+                "logo", 
+                "description", 
+                "keywords", 
+                "name"
             ]
         }
     ], 
@@ -40,6 +41,35 @@
             ]
         }
     ], 
+    "Ephesus_TEST": [
+        {
+            "Person": [
+                [
+                    2, 
+                    2, 
+                    0
+                ], 
+                "image", 
+                "email", 
+                "name", 
+                "description"
+            ]
+        }
+    ], 
+    "testtt": [
+        {
+            "Person": [
+                [
+                    2, 
+                    1, 
+                    0
+                ], 
+                "image", 
+                "description", 
+                "name"
+            ]
+        }
+    ], 
     "Trust_TEST": [
         {
             "Person": [
@@ -48,6 +78,32 @@
                     0, 
                     0
                 ], 
+                "name"
+            ]
+        }
+    ], 
+    "tester3": [
+        {
+            "Person": [
+                [
+                    2, 
+                    1, 
+                    0
+                ], 
+                "image", 
+                "description", 
+                "name"
+            ], 
+            "Organization": [
+                [
+                    2, 
+                    3, 
+                    0
+                ], 
+                "url", 
+                "logo", 
+                "description", 
+                "keywords", 
                 "name"
             ]
         }

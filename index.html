@@ -2,23 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Properties Visualization</title>
+    <title>Bioschemas Properties Visualization</title>
     <!-- d3.js framework -->
     <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="stylesheet.css" media="screen" title="no title" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
+    <div style="display: inline-block;">
+        <a href="index.html"><img class="rotation" src="img/square_logo2.png" alt="Bioschemas" style="width: 10%; height: 10%;"></a>
+        <a href="index.html"><img src="img/name_lower.png" alt="Bioschemas" style="width: 40%; height: 40%;"></a>
+    </div>
+
+    <h1>Bioschemas Properties Visualization</h1>
+
+    <p>This webtool allows to test any website for their compliance with Bioschemas standards, and then submit them to our registry of Bioschemas-compliant websites.</p>
+
     <div id="report_div">
-        <p>
-            The registry currently contains <span id="tot_props"></span> properties, coming from <span id="tot_websites"></span> websites and belonging to <span id="tot_types"></span> different Bioschemas types.
-        </p>
-        <p>
-            Last registry update: <span id="last_update"></span>.
-        </p>
-        <p>
-            Browse the registry by:
-        </p>
+        <p>The registry currently contains <span id="tot_props"></span> properties, coming from <span id="tot_websites"></span> websites and belonging to <span id="tot_types"></span> different Bioschemas types.</p>
+
+        <p>Last registry update: <span id="last_update"></span>.</p>
+
+        <p>Browse the registry by:</p>
     </div>
 
     <div>
