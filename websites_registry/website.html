@@ -106,7 +106,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="buttons" id="optButton">Show Optional Properties</button>
+    <button type="button" class="buttons" id="optButton">Show Optional Properties Table</button>
 
     <table class="hide tablesorter" id="optTable">
         <thead>
@@ -2148,6 +2148,18 @@
                             d.mean   = +d.mean;
                         });
 
+                        var outerPath = svg.selectAll(".outlineArc")
+                                .data(pie(data))
+                                .enter().append("path")
+                                .attr("fill", function (d) {
+                                    return backChartColor(d.data.weight);
+                                })
+                                .attr("stroke", "gray")
+                                .attr("class", "outlineArc")
+                                .attr("d", outlineArc)
+                                .on('mouseover', tip.show)
+                                .on('mouseout', tip.hide);
+
                         var path = svg.selectAll(".solidArc")
                                 .data(pie(data))
                                 .enter().append("path")
@@ -2157,14 +2169,6 @@
                                 .attr("d", arc)
                                 .on('mouseover', tip.show)
                                 .on('mouseout', tip.hide);
-
-                        var outerPath = svg.selectAll(".outlineArc")
-                                .data(pie(data))
-                                .enter().append("path")
-                                .attr("fill", "none")
-                                .attr("stroke", "gray")
-                                .attr("class", "outlineArc")
-                                .attr("d", outlineArc);
 
                         svg.append("svg:text")
                                 .attr("class", "aster-score")
@@ -2179,6 +2183,19 @@
             });
 
         });
+
+        function backChartColor(val) {
+            var minColor = "rgba(11, 121, 75, .3)";
+            var recColor = "rgba(144, 238, 144, .3)";
+            var optColor = "rgba(224, 255, 255, .3)";
+            if (val == 0.5) {
+                return minColor;
+            } else if (val == 0.3) {
+                return recColor;
+            } else {
+                return optColor;
+            }
+        }
 
         var recButt = d3.select("#recommButton");
         recButt.on("click", function () {
