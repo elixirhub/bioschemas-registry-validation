@@ -1,5 +1,6 @@
 body {
     font-family: "Noto Sans", Helvetica, Arial, sans-serif;
+    font-size: 16px;
 }
 
 table {
@@ -65,14 +66,18 @@ Rotating Logo
 }
 
 .buttons {
-    background-color: #2bb673;
+    background-color: #0b794b;
     color: white;
-    width: 10em;
+    width: 5em;
     border: 2px solid #0b794b;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 1.2em;
     margin: 0.5em;
+}
+
+.buttons:hover {
+    background-color: #2bb673;
 }
 
 .buttons_mini {
@@ -144,6 +149,66 @@ Rotating Logo
     width: auto;
     margin-top: 80px;
     margin-right: 20px;
+}
+
+.navbar {
+    background-color: #0b794b;
+    width: auto;
+    height: 2.5em;
+    padding-top: 0.625em;
+    position: relative;
+    border-bottom-left-radius: 0.5208333333333334em;
+    border-bottom-right-radius: 0.5208333333333334em;
+}
+
+.navbar_links {
+    max-width: 62.5em;
+    height: auto;
+    position: relative;
+    margin: 0 auto;
+}
+
+.navbar a {
+    color: #FFFFFF;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+.page-link {
+    padding-bottom: 1em;
+}
+
+.nav_buttons {
+    display: inline-block;
+    height: 2.0833333333333335em;
+    margin-top: -0.5208333333333334em;
+    padding-top: 0.5208333333333334em;
+    padding-left: 0.5208333333333334em;
+    padding-right: 0.5208333333333334em;
+}
+
+.nav_buttons:hover {
+    color: #333333;
+    background-color: #2bb673;
+    height: 2.03125em;
+    padding-top: 0.46875em;
+    padding-right: 0.46875em;
+    padding-left: 0.46875em;
+    border-bottom-left-radius: 0.5208333333333334em;
+    border-bottom-right-radius: 0.5208333333333334em;
+    border: 1px solid #2bb673;
+}
+
+#nav_active {
+    color: #333333;
+    background-color: #2bb673;
+    height: 2.03125em;
+    padding-top: 0.46875em;
+    padding-right: 0.46875em;
+    padding-left: 0.46875em;
+    border-bottom-left-radius: 0.5208333333333334em;
+    border-bottom-right-radius: 0.5208333333333334em;
+    border: 1px solid #2bb673;
 }
 
 

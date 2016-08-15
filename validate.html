@@ -3,13 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Bioschemas Validator</title>
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
     <!-- d3.js framework -->
     <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="stylesheet.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
 
-<button type="button" class="buttons_mini" onclick="window.location.href='index.html'">Back</button>
+    <div style="display: inline-block; padding: 1em 0;">
+        <a href="index.html"><img class="rotation" src="img/square_logo2.png" alt="Bioschemas" style="width: 10%; height: 10%;"></a>
+        <a href="index.html"><img src="img/name_lower.png" alt="Bioschemas" style="width: 40%; height: 40%;"></a>
+    </div>
+
+    <div class="navbar">
+        <div class="navbar_links">
+            <a href="index.html" class="page-link">
+                <div class="nav_buttons">Home</div>
+            </a>
+            <a href="websites_registry/index.html" class="page-link">
+                <div class="nav_buttons">Registry</div>
+            </a>
+            <a href="validate.html" class="page-link">
+                <div class="nav_buttons" id="nav_active">Submit Website</div>
+            </a>
+            <a href="tester.html" class="page-link">
+                <div class="nav_buttons">Test Website</div>
+            </a>
+        </div>
+    </div>
+
+<!--<button type="button" class="buttons_mini" onclick="window.location.href='index.html'">Back</button>-->
 
 <div>
     <p>Please type in a valid URL in the field below.</p>

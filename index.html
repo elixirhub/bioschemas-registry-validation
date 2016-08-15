@@ -12,36 +12,58 @@
 </head>
 <body>
 
-    <div style="display: inline-block;">
+    <div style="display: inline-block; padding: 1em 0;">
         <a href="index.html"><img class="rotation" src="img/square_logo2.png" alt="Bioschemas" style="width: 10%; height: 10%;"></a>
         <a href="index.html"><img src="img/name_lower.png" alt="Bioschemas" style="width: 40%; height: 40%;"></a>
     </div>
 
+    <div class="navbar">
+        <div class="navbar_links">
+            <a href="index.html" class="page-link">
+                <div class="nav_buttons" id="nav_active">Home</div>
+            </a>
+            <a href="websites_registry/index.html" class="page-link">
+                <div class="nav_buttons">Registry</div>
+            </a>
+            <a href="validate.html" class="page-link">
+                <div class="nav_buttons">Submit Website</div>
+            </a>
+            <a href="tester.html" class="page-link">
+                <div class="nav_buttons">Test Website</div>
+            </a>
+        </div>
+    </div>
+
     <h1>Bioschemas Properties Visualization</h1>
 
-    <p>This webtool allows to test any website for their compliance with Bioschemas standards, and then submit them to our registry of Bioschemas-compliant websites.</p>
+    <p>This webtool allows to test any website for their compliance with Bioschemas specifications, and then submit them to our registry of Bioschemas-compliant websites.</p>
 
-    <div id="report_div">
-        <p>The registry currently contains <span id="tot_props"></span> properties, coming from <span id="tot_websites"></span> websites and belonging to <span id="tot_types"></span> different Bioschemas types.</p>
+    <div id="report_div" style="overflow: hidden">
+        <p style="overflow-x: hidden">The registry currently contains <span id="tot_props"></span> properties, coming from <span id="tot_websites"></span> websites and belonging to <span id="tot_types"></span> different Bioschemas types.</p>
 
         <p>Last registry update: <span id="last_update"></span>.</p>
 
-        <p>Browse the registry by:</p>
     </div>
 
     <div>
-        <button type="button" class="buttons" name="type_btn" onclick="window.location.href='types_registry/index.html'" disabled>Type</button>
-        <button type="button" class="buttons" name="web_btn" onclick="window.location.href='websites_registry/index.html'">Website</button>
-        <button type="button" class="buttons" name="prop_btn" onclick="window.location.href='properties_registry/index.html'" disabled>Property</button>
+        <!--<button type="button" class="buttons" name="type_btn" onclick="window.location.href='types_registry/index.html'" disabled>Type</button>-->
+        You can either browse the
+        <button type="button" class="buttons" name="web_btn" onclick="window.location.href='websites_registry/index.html'">Registry</button>
+        or test a website for its Bioschemas compliance with the
+        <button type="button" class="buttons" name="test_btn" onclick="window.location.href='tester.html'">Tester</button>
+        tool, or submit a website to the registry with the
+        <button type="button" class="buttons" name="val_btn" onclick="window.location.href='validate.html'">Validator</button>
+        tool.
+        <!--<button type="button" class="buttons" name="prop_btn" onclick="window.location.href='properties_registry/index.html'" disabled>Property</button>-->
     </div>
 
-    <div>
+    <!--<div>
         <p>Or you can validate a URL with the online Bioschemas validator:</p>
 
         <button type="button" class="buttons" name="val_btn" onclick="window.location.href='validate.html'">Validator</button>
         <button type="button" class="buttons" name="test_btn" onclick="window.location.href='tester.html'">Test a website</button>
 
-    </div>
+    </div>-->
 
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
