@@ -1,3 +1,7 @@
+/*****
+Basics
+*****/
+
 body {
     font-family: "Noto Sans", Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -10,19 +14,21 @@ table {
 }
 
 thead {
-    /*background-color: rgba(39, 109, 175, .6);*/
     background-color: #2bb673;
     font-size: 1.1em;
 }
 
 td, th {
     padding: 5px 10px;
-    /*border: 2px solid rgb(39, 109, 175);*/
     border: 2px solid #0b794b;
 }
 
 tbody tr:nth-child(odd) {
     background-color: #f5f5f5;
+}
+
+.hide {
+    display: none;
 }
 
 /*****
@@ -43,6 +49,10 @@ Rotating Logo
     -ms-transform: rotate(360deg);
     transform: rotate(360deg);
 }
+
+/*****
+Missing Properties Banners
+*****/
 
 #missingMin p {
     background-color: #f7786b;
@@ -65,6 +75,10 @@ Rotating Logo
     margin: 0.3em;
     padding: 0.5em;
 }
+
+/*****
+Buttons and Inputs
+*****/
 
 .buttons {
     background-color: #0b794b;
@@ -115,57 +129,9 @@ Rotating Logo
     font-size: 1em;
 }
 
-.svg-container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    vertical-align: middle;
-}
-
-#barcont {
-    margin: 0 auto;
-    width: 100%;
-    height: 600px;
-    margin-top: -50px;
-    text-align: center;
-}
-
-#barchart {
-    text-align: center;
-    margin: auto;
-    width: 800px;
-}
-
-#barlegend {
-    text-align: center;
-    margin: auto;
-    width: 200px;
-}
-
-#bubblecont {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    vertical-align: middle;
-    overflow: scroll;
-    margin: 0 auto;
-}
-
-#bubblechart {
-    text-align: center;
-    float: left;
-    width: auto;
-    height: auto;
-    margin-left: 20px;
-}
-
-#bubbleinfo {
-    text-align: center;
-    float: right;
-    width: auto;
-    margin-top: 80px;
-    margin-right: 20px;
-}
+/*****
+Navbar
+*****/
 
 .navbar {
     background-color: #0b794b;
@@ -227,144 +193,16 @@ Rotating Logo
     border: 1px solid #2bb673;
 }
 
+/*****
+Chart
+*****/
 
-
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    width: 150px;
-    border: none;
-    cursor: pointer;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 50px;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-}
-
-.dropcont {
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 20px;
-    margin-left: 70px;
-}
-
-.dropdown2 {
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.dropdown2:hover .dropdown2-content {
-    display: block;
-}
-
-.dropdown2:hover .dropbtn {
-    background-color: #3e8e41;
-}
-
-#compliance {
+.svg-container {
     display: inline-block;
     position: relative;
     width: 100%;
     vertical-align: middle;
-    overflow: scroll;
-    margin: 0 auto;
-    text-align: center;
 }
-
-#event_radial {
-    display: inline-block;
-    margin: 0 auto;
-    text-align: center;
-    width: 250px;
-}
-
-#organization_radial {
-    display: inline-block;
-    margin: auto;
-    text-align: center;
-    width: 250px;
-}
-
-#person_radial {
-    display: inline-block;
-    margin: auto;
-    text-align: center;
-    width: 250px;
-}
-
-#training_radial {
-    display: inline-block;
-    margin: auto;
-    text-align: center;
-    width: 250px;
-}
-
-.progress-meter text {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.hide {
-    display: none;
-}
-
-.rating_bar {
-    width: 80px;
-    height: 16px;
-    background: url("img/stars.png");
-    background-repeat: repeat-x;
-    background-position: 0 0;
-    text-align: left;
-}
-
-.rating {
-    height: 16px;
-    background: url("img/stars.png");
-    background-position: 0 -16px;
-    background-repeat: repeat-x;
-}
-
-#rawinfo {
-    text-align: center;
-}
-
-/* Chart */
 
 .axis path,
 .axis line {
