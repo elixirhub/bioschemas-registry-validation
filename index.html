@@ -39,14 +39,14 @@
     <p>This webtool allows to test any website for their compliance with Bioschemas specifications, and then submit them to our registry of Bioschemas-compliant websites.</p>
 
     <div id="report_div" style="overflow: hidden">
-        <p style="overflow-x: hidden">The registry currently contains <span id="tot_props"></span> properties, coming from <span id="tot_websites"></span> websites and belonging to <span id="tot_types"></span> different Bioschemas types.</p>
+        <p>The registry currently contains <strong><span id="tot_props"></span></strong> properties, coming from <strong><span id="tot_websites"></span></strong> websites and belonging to <strong><span id="tot_types"></span></strong> different Bioschemas types.</p>
 
         <p>Last registry update: <span id="last_update"></span>.</p>
 
     </div>
 
     <div>
-        <!--<button type="button" class="buttons" name="type_btn" onclick="window.location.href='types_registry/index.html'" disabled>Type</button>-->
+
         You can either browse the
         <button type="button" class="buttons" name="web_btn" onclick="window.location.href='websites_registry/index.html'">Registry</button>
         or test a website for its Bioschemas compliance with the
@@ -54,20 +54,11 @@
         tool, or submit a website to the registry with the
         <button type="button" class="buttons" name="val_btn" onclick="window.location.href='validate.html'">Validator</button>
         tool.
-        <!--<button type="button" class="buttons" name="prop_btn" onclick="window.location.href='properties_registry/index.html'" disabled>Property</button>-->
+
     </div>
-
-    <!--<div>
-        <p>Or you can validate a URL with the online Bioschemas validator:</p>
-
-        <button type="button" class="buttons" name="val_btn" onclick="window.location.href='validate.html'">Validator</button>
-        <button type="button" class="buttons" name="test_btn" onclick="window.location.href='tester.html'">Test a website</button>
-
-    </div>-->
 
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-    <!--<script type="text/javascript" src="visualizator.js"></script>-->
     <script type="text/javascript">
 
         window.onload = function () {
