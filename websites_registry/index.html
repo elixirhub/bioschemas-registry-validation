@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Bioschemas Properties Visualization</title>
+    <link rel="icon" type="icon/png" href="../img/favicon.png">
+
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
     <!-- d3.js framework -->
@@ -24,11 +26,11 @@
             <a href="index.html" class="page-link">
                 <div class="nav_buttons" id="nav_active">Registry</div>
             </a>
-            <a href="../validate.html" class="page-link">
-                <div class="nav_buttons">Submit Website</div>
-            </a>
             <a href="../tester.html" class="page-link">
                 <div class="nav_buttons">Test Website</div>
+            </a>
+            <a href="../validate.html" class="page-link">
+                <div class="nav_buttons">Submit Website</div>
             </a>
         </div>
     </div>
@@ -101,6 +103,7 @@
                     var cellText2 = document.createTextNode(secondaCella);
 
                     cellText1.setAttribute("href", "website.html#" + primaCella + "#" + secondaCella);
+                    cellText1.setAttribute("target", "_blank");
                     cellText1.innerHTML = primaCella;
 
                     cell1.appendChild(cellText1);

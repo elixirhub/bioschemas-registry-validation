@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Bioschemas Properties Visualization</title>
+    <link rel="icon" type="icon/png" href="img/favicon.png">
+
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
     <!-- d3.js framework -->
@@ -26,23 +28,30 @@
             <a href="websites_registry/index.html" class="page-link">
                 <div class="nav_buttons">Registry</div>
             </a>
-            <a href="validate.html" class="page-link">
-                <div class="nav_buttons">Submit Website</div>
-            </a>
             <a href="tester.html" class="page-link">
                 <div class="nav_buttons" id="nav_active">Test Website</div>
+            </a>
+            <a href="validate.html" class="page-link">
+                <div class="nav_buttons">Submit Website</div>
             </a>
         </div>
     </div>
 
 <div>
-    <p>Please type in a valid URL in the field below.</p>
-    <p>Website Name: </p>
+
+    <h2>Test A Website</h2>
+
+    <p>With the Testing tool you can test a specific URL for its compliance with the Bioschemas specifications. You can also choose to test all the children links for that page (links with the same root URL) as well as scraping your URL for one specific Bioschemas type (Event, Organization, Person, Training Material).</p>
+
+    <h3>Website URL: </h3>
+    <input type="text" id="url_input" class="inputs"><br>
+
+    <h3>Website Name: </h3>
     <input type="text" id="name_input" class="inputs"><br>
-    <p>Website URL: </p>
-    <input type="text" id="url_input" class="inputs"><br><br>
+    <h5>If you choose not to provide a name for the URL you are testing, the URL itself will be used as a name.</h5>
+
     <label>
-        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Validate children links too
+        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Test children links too
     </label>
 
     <br>
@@ -57,7 +66,7 @@
         </select>
     </p>
 
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" id="submitBtn" class="buttons_mini">Validate!</button>
+    <button type="submit" id="submitBtn" class="buttons">Validate!</button>
 </div>
 
 <div id="response"></div>
@@ -107,13 +116,13 @@
             var r = confirm("If you don't provide a name for your website, the URL will be used as its name.");
             if (r == true) {
                 $.get("test_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal, types : typeToVal});
-                $("#response").append("<p>Thanks for using this service.</p>");
-                $("#response").append("<p>You will be able to view the results in a moment...</p>");
+                $("#response").append("<p>Thanks for using this service!</p>");
+                $("#response").append("<p>The results will appear below in a moment...</p>");
             }
         } else {
             $.get("test_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal, types : typeToVal});
-            $("#response").append("<p>Thanks for using this service.</p>");
-            $("#response").append("<p>You will be able to view the results in a moment...</p>");
+            $("#response").append("<p>Thanks for using this service!</p>");
+            $("#response").append("<p>The results will appear below in a moment...</p>");
         }
 
         setTimeout(function () {
@@ -154,6 +163,7 @@
                         var cellText2 = document.createTextNode(secondaCella);
 
                         cellText1.setAttribute("href", "temp/website.html#" + primaCella + "#" + secondaCella);
+                        cellText1.setAttribute("target", "_blank");
                         cellText1.innerHTML = primaCella;
 
                         cell1.appendChild(cellText1);
