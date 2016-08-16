@@ -242,13 +242,13 @@ class WebsiteTags:
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)
             self.validateWebsiteMicrodata(websiteName)
-            if self.sibs == 0:
-                self.validateSiblings(self.scrapeType)
+            if self.sibs == "0":
+                self.validateChildren(self.scrapeType)
         else:
             self.scrapeRDFa(websiteName, self.scrapeType)
             self.validateWebsiteRDFa(websiteName)
-            if self.sibs == 0:
-                self.validateSiblings(self.scrapeType)
+            if self.sibs == "0":
+                self.validateChildren(self.scrapeType)
 
     def updateWebsiteTags(self):
         """Update the data from previously scraped websites."""
@@ -266,13 +266,13 @@ class WebsiteTags:
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)
             self.validateWebsiteMicrodata(websiteName)
-            if self.sibs == 0:
-                self.validateSiblings(self.scrapeType)
+            if self.sibs == "0":
+                self.validateChildren(self.scrapeType)
         else:
             self.scrapeRDFa(websiteName, self.scrapeType)
             self.validateWebsiteRDFa(websiteName)
-            if self.sibs == 0:
-                self.validateSiblings(self.scrapeType)
+            if self.sibs == "0":
+                self.validateChildren(self.scrapeType)
 
     def scrapeMicrodata(self, sitename, prefType):
         """Get the microdata from the website and save them into a JSON file."""
@@ -718,8 +718,8 @@ class WebsiteTags:
         UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
         UpdateRegistry().createChartFile(sitename, typesToAdd)
 
-    def validateSiblings(self, prefType):
-        """Collect any sibling pages and validate them."""
+    def validateChildren(self, prefType):
+        """Collect any children pages and validate them."""
 
         response = requests.get(self.url)
         html = response.content
@@ -729,8 +729,9 @@ class WebsiteTags:
         for el in soup.findAll(href=True):
             if el.get("href").startswith(self.url):
                 targetList.append(el.get("href"))
-        for i in len(targetList):
-            WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1, prefType)
+        if len(targetList) > 0:
+            for i in xrange(len(targetList)):
+                WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1, prefType)
 
 
 class UpdateRegistry:
@@ -746,18 +747,21 @@ class UpdateRegistry:
 
         finDict = {}
         elDict = {}
-        for i in range(len(type_bs)):
-            elDict[type_bs[i]] = details[i]
-            elDict[type_bs[i]] += props[i]
-        finDict[website] = [elDict]
+        if len(type_bs) > 0:
+            for i in xrange(len(type_bs)):
+                elDict[type_bs[i]] = details[i]
+                elDict[type_bs[i]] += props[i]
+            finDict[website] = [elDict]
 
-        with open("registry.json", "rb") as f:
-            data = json.load(f)
+            with open("registry.json", "rb") as f:
+                data = json.load(f)
 
-        data.update(finDict)
+            data.update(finDict)
 
-        with open("registry.json", "wb") as f:
-            json.dump(data, f, indent=4)
+            with open("registry.json", "wb") as f:
+                json.dump(data, f, indent=4)
+        else:
+            pass
 
     def createChartFile(self, website, type_bs):
         """Create the csv file needed to build the chart in the website page."""
