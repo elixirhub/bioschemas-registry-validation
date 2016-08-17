@@ -164,10 +164,10 @@
                             var scoreGraph = 0,
                                 weightGraph = 0.0,
                                 colorGraph = "";
-                            if (data2["organization_schema"][0][j] == undefined) {
+                            if (data2["event_bioschemas"][0][j] == undefined) {
                                 scoreGraph = 0;
                             } else {
-                                scoreGraph = data2["organization_schema"][0][j].length;
+                                scoreGraph = data2["event_bioschemas"][0][j].length;
                             }
 
                             var stdType = data["event_bioschemas"][i][j][0];
@@ -401,10 +401,10 @@
                             var scoreGraph = 0,
                                 weightGraph = 0.0,
                                 colorGraph = "";
-                            if (data2["organization_schema"][0][j] == undefined) {
+                            if (data2["event_schema"][0][j] == undefined) {
                                 scoreGraph = 0;
                             } else {
-                                scoreGraph = data2["organization_schema"][0][j].length;
+                                scoreGraph = data2["event_schema"][0][j].length;
                             }
 
                             var stdType = data["event_schema"][i][j][0];
@@ -636,10 +636,10 @@
                             var scoreGraph = 0,
                                 weightGraph = 0.0,
                                 colorGraph = "";
-                            if (data2["organization_schema"][0][j] == undefined) {
+                            if (data2["organization_bioschemas"][0][j] == undefined) {
                                 scoreGraph = 0;
                             } else {
-                                scoreGraph = data2["organization_schema"][0][j].length;
+                                scoreGraph = data2["organization_bioschemas"][0][j].length;
                             }
 
                             var stdType = data["organization_bioschemas"][i][j][0];
@@ -1108,10 +1108,10 @@
                             var scoreGraph = 0,
                                 weightGraph = 0.0,
                                 colorGraph = "";
-                            if (data2["organization_schema"][0][j] == undefined) {
+                            if (data2["person_bioschemas"][0][j] == undefined) {
                                 scoreGraph = 0;
                             } else {
-                                scoreGraph = data2["organization_schema"][0][j].length;
+                                scoreGraph = data2["person_bioschemas"][0][j].length;
                             }
 
                             var stdType = data["person_bioschemas"][i][j][0];
@@ -1345,10 +1345,10 @@
                             var scoreGraph = 0,
                                 weightGraph = 0.0,
                                 colorGraph = "";
-                            if (data2["organization_schema"][0][j] == undefined) {
+                            if (data2["person_schema"][0][j] == undefined) {
                                 scoreGraph = 0;
                             } else {
-                                scoreGraph = data2["organization_schema"][0][j].length;
+                                scoreGraph = data2["person_schema"][0][j].length;
                             }
 
                             var stdType = data["person_schema"][i][j][0];
@@ -1572,7 +1572,7 @@
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
                         }
                     }
-                } else if (type == "Training") {
+                } else if (type == "Training" || type == "CreativeWork") {
                     for (var i in data["training_bioschemas"]) {
                         for (var j in data["training_bioschemas"][i]) {
                             var property = document.createTextNode(j);
@@ -1580,10 +1580,10 @@
                             var scoreGraph = 0,
                                 weightGraph = 0.0,
                                 colorGraph = "";
-                            if (data2["organization_schema"][0][j] == undefined) {
+                            if (data2["training_bioschemas"][0][j] == undefined) {
                                 scoreGraph = 0;
                             } else {
-                                scoreGraph = data2["organization_schema"][0][j].length;
+                                scoreGraph = data2["training_bioschemas"][0][j].length;
                             }
 
                             var stdType = data["training_bioschemas"][i][j][0];
@@ -1817,10 +1817,10 @@
                             var scoreGraph = 0,
                                 weightGraph = 0.0,
                                 colorGraph = "";
-                            if (data2["organization_schema"][0][j] == undefined) {
+                            if (data2["training_schema"][0][j] == undefined) {
                                 scoreGraph = 0;
                             } else {
-                                scoreGraph = data2["organization_schema"][0][j].length;
+                                scoreGraph = data2["training_schema"][0][j].length;
                             }
 
                             var stdType = data["training_schema"][i][j][0];

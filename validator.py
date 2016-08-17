@@ -432,7 +432,7 @@ class WebsiteTags:
             w_prov = csv.writer(prov)
 
             line = line.strip()
-            if line == "Event" or line == "Organization" or line == "Person" or line == "Training":
+            if line == "Event" or line == "Organization" or line == "Person" or line == "Training" or line == "CreativeWork":
                 subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
                 typeProps = set()
@@ -656,7 +656,7 @@ class WebsiteTags:
             w_prov = csv.writer(prov)
 
             line = line.strip()
-            if line == "Event" or line == "Organization" or line == "Person" or line == "Training":
+            if line == "Event" or line == "Organization" or line == "Person" or line == "Training" or line == "CreativeWork":
                 subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
                 typeProps = set()
@@ -1209,7 +1209,7 @@ class UpdateRegistry:
                         graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
-                elif typ == "Training":
+                elif typ == "Training" or typ == "CreativeWork":
                     for i in data["training_bioschemas"][0]:
                         label = i
                         scoreGraph = 0
