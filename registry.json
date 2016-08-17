@@ -1,3 +1,123 @@
 {
-
+    "Portolan_Atlas_of_the_Mediterranean_Sea,_Western_Europe,_and_the_Northwest_Coast_of_Africa_-_World_Digital_Library": [
+        {
+            "Person": [
+                [
+                    2, 
+                    1, 
+                    0
+                ], 
+                "image", 
+                "description", 
+                "name"
+            ], 
+            "Organization": [
+                [
+                    2, 
+                    3, 
+                    0
+                ], 
+                "url", 
+                "logo", 
+                "description", 
+                "keywords", 
+                "name"
+            ]
+        }
+    ], 
+    "ferro_test": [
+        {
+            "Person": [
+                [
+                    1, 
+                    2, 
+                    0
+                ], 
+                "image", 
+                "email", 
+                "name"
+            ]
+        }
+    ], 
+    "borg_test": [
+        {
+            "Person": [
+                [
+                    1, 
+                    1, 
+                    0
+                ], 
+                "email", 
+                "name"
+            ]
+        }
+    ], 
+    "wdl_just_person": [
+        {
+            "Person": [
+                [
+                    2, 
+                    1, 
+                    0
+                ], 
+                "image", 
+                "description", 
+                "name"
+            ]
+        }
+    ], 
+    "borgost1": [
+        {
+            "Person": [
+                [
+                    1, 
+                    1, 
+                    0
+                ], 
+                "email", 
+                "name"
+            ]
+        }
+    ], 
+    "wdl_Test": [
+        {
+            "Person": [
+                [
+                    2, 
+                    1, 
+                    0
+                ], 
+                "image", 
+                "description", 
+                "name"
+            ], 
+            "Organization": [
+                [
+                    2, 
+                    3, 
+                    0
+                ], 
+                "url", 
+                "logo", 
+                "description", 
+                "keywords", 
+                "name"
+            ]
+        }
+    ], 
+    "Ephesus_Tour_from_Kusadasi_full_day_by_Ephesus_Breeze": [
+        {
+            "Person": [
+                [
+                    2, 
+                    2, 
+                    0
+                ], 
+                "image", 
+                "email", 
+                "name", 
+                "description"
+            ]
+        }
+    ]
 }

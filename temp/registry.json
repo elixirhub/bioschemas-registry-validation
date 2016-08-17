@@ -1,14 +1,26 @@
 {
-    "doulas_test_child": [
+    "testerwdl23": [
         {
             "Person": [
                 [
-                    1, 
                     2, 
+                    1, 
                     0
                 ], 
                 "image", 
-                "email", 
+                "description", 
+                "name"
+            ], 
+            "Organization": [
+                [
+                    2, 
+                    3, 
+                    0
+                ], 
+                "url", 
+                "logo", 
+                "description", 
+                "keywords", 
                 "name"
             ]
         }
