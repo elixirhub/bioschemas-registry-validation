@@ -26,7 +26,7 @@
             <a href="websites_registry/index.html" class="page-link">
                 <div class="nav_buttons">Registry</div>
             </a>
-            <a href="../tester.html" class="page-link">
+            <a href="tester.html" class="page-link">
                 <div class="nav_buttons">Test Website</div>
             </a>
             <a href="validate.html" class="page-link">
@@ -51,6 +51,14 @@
     <label>
         <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Validate children links too
     </label>
+    and save the results
+    <label>
+        <input type="radio" name="arrangeChild" value="single" disabled>&nbsp;individually
+    </label>
+    or
+    <label>
+        <input type="radio" name="arrangeChild" value="altogether" disabled>&nbsp;altogether
+    </label>
 
     <br>
 
@@ -73,6 +81,20 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script type="text/javascript">
 
+    document.getElementById("link_input").onclick = function () {
+        var el = document.getElementsByName("arrangeChild");
+        if (this.checked) {
+            for (var i = 0; i < el.length; i++) {
+                el[i].disabled = false;
+            }
+            el[0].checked = true;
+        } else {
+            for (var i = 0; i < el.length; i++) {
+                el[i].disabled = true;
+            }
+        }
+    };
+
     $("#submitBtn").on("click", function () {
         var urlToVal = $("#url_input").val();
         var nameToVal = $("#name_input").val();
@@ -89,7 +111,7 @@
         } else if (nameToVal == "") {
             var r = confirm("If you don't provide a name for your website, the URL will be used as its name.");
             if (r == true) {
-                $.get("validate_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal, types : typeToVal});
+                $.get("validate_url.php", {url : urlToVal, nome : "_", link : linkToVal, types : typeToVal});
                 $("#response").append("<p>Thanks for using this service!</p>");
                 $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Registry'>Registry</a> page.</p>");
             }

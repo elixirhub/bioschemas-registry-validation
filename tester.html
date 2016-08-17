@@ -51,7 +51,15 @@
     <h5>If you choose not to provide a name for the URL you are testing, the URL itself will be used as a name.</h5>
 
     <label>
-        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Test children links too
+        <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Validate children links too
+    </label>
+    and save the results
+    <label>
+        <input type="radio" name="arrangeChild" value="single" disabled>&nbsp;individually
+    </label>
+    or
+    <label>
+        <input type="radio" name="arrangeChild" value="altogether" disabled>&nbsp;altogether
     </label>
 
     <br>
@@ -99,6 +107,20 @@
 
 <script type="text/javascript">
 
+    document.getElementById("link_input").onclick = function () {
+        var el = document.getElementsByName("arrangeChild");
+        if (this.checked) {
+            for (var i = 0; i < el.length; i++) {
+                el[i].disabled = false;
+            }
+            el[0].checked = true;
+        } else {
+            for (var i = 0; i < el.length; i++) {
+                el[i].disabled = true;
+            }
+        }
+    };
+
     $("#submitBtn").on("click", function () {
         var urlToVal = $("#url_input").val();
         var nameToVal = $("#name_input").val();
@@ -115,7 +137,7 @@
         } else if (nameToVal == "") {
             var r = confirm("If you don't provide a name for your website, the URL will be used as its name.");
             if (r == true) {
-                $.get("test_url.php", {url : urlToVal, nome : urlToVal, link : linkToVal, types : typeToVal});
+                $.get("test_url.php", {url : urlToVal, nome : "_", link : linkToVal, types : typeToVal});
                 $("#response").append("<p>Thanks for using this service!</p>");
                 $("#response").append("<p>The results will appear below in a moment...</p>");
             }
@@ -251,12 +273,20 @@
             function ratingStars(val) {
                 if (val <= 20) {
                     return "../img/1star.png";
-                } else if (val > 20 && val <= 40) {
+                } else if (val > 20 && val <= 30) {
+                    return "../img/15star.png";
+                } else if (val > 30 && val <= 40) {
                     return "../img/2stars.png";
-                } else if (val > 40 && val <= 60) {
+                } else if (val > 40 && val <= 50) {
+                    return "../img/25stars.png";
+                } else if (val > 50 && val <= 60) {
                     return "../img/3stars.png";
-                } else if (val > 60 && val <= 80) {
+                } else if (val > 60 && val <= 70) {
+                    return "../img/35stars.png";
+                } else if (val > 70 && val <= 80) {
                     return "../img/4stars.png";
+                } else if (val > 80 && val <= 90) {
+                    return "../img/45stars.png";
                 } else {
                     return "../img/5stars.png";
                 }

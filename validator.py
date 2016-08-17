@@ -227,17 +227,21 @@ class WebsiteTags:
     def newWebsiteTags(self):
         """Create a new directory named after the domain of the scraped website."""
 
-        if self.nome == self.url:
-            websiteComps = self.url.split("/")
-            websiteName = "_".join(websiteComps[2:])
-        else:
-            websiteName = self.nome
-
-        os.system("mkdir %s" % websiteName)
+        # if self.nome == self.url:
+        #     websiteComps = self.url.split("/")
+        #     websiteName = "_".join(websiteComps[2:])
 
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")
+
+        if self.nome == "_":
+            websiteComps = soup.title.string.split(" ")
+            websiteName = "_".join(websiteComps)
+        else:
+            websiteName = self.nome
+
+        os.system("mkdir %s" % websiteName)
 
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)
@@ -253,15 +257,21 @@ class WebsiteTags:
     def updateWebsiteTags(self):
         """Update the data from previously scraped websites."""
 
-        if self.nome == self.url:
-            websiteComps = self.url.split("/")
-            websiteName = "_".join(websiteComps[2:])
-        else:
-            websiteName = self.nome
+        # if self.nome == self.url:
+        #     websiteComps = self.url.split("/")
+        #     websiteName = "_".join(websiteComps[2:])
 
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")
+
+        if self.nome == "_":
+            websiteComps = soup.title.string.split(" ")
+            websiteName = "_".join(websiteComps)
+        else:
+            websiteName = self.nome
+
+        os.system("mkdir %s" % websiteName)
 
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)

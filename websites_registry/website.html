@@ -40,9 +40,9 @@
 
     <div style="display: inline-block; margin-top: 2%;">
 
-        <div style="float: left; width: 50%; margin-top: 5%; margin-left: 2%">
+        <h1 id="title"></h1>
 
-            <h1 id="title"></h1>
+        <div style="float: left; width: 50%; margin-top: 5%; margin-left: 2%">
 
             <h2 id="type_header"></h2>
 
@@ -58,7 +58,7 @@
 
         </div>
 
-        <div id="testchart" style="margin-left: 52%;"></div>
+        <div id="testchart" style="margin-left: 55%;"></div>
 
     </div>
 
@@ -121,7 +121,7 @@
         var siteName = (window.location.hash).split("#")[1];
         var type = (window.location.hash).split("#")[2];
 
-        document.getElementById("title").innerHTML = siteName.replace(/_/g, "/");
+        document.getElementById("title").innerHTML = siteName;
         document.getElementById("type_header").innerHTML = "Bioschemas type: " + type;
 
         var minBody = document.getElementById("minimum_table");
@@ -2055,12 +2055,20 @@
                 var rateImg = document.createElement("img");
                 if (totRating <= 20) {
                     rateImg.src = "../img/1star.png";
-                } else if (totRating > 20 && totRating <= 40) {
+                } else if (totRating > 20 && totRating <= 30) {
+                    rateImg.src = "../img/15star.png";
+                } else if (totRating > 30 && totRating <= 40) {
                     rateImg.src = "../img/2stars.png";
-                } else if (totRating > 40 && totRating <= 60) {
+                } else if (totRating > 40 && totRating <= 50) {
+                    rateImg.src = "../img/25stars.png";
+                } else if (totRating > 50 && totRating <= 60) {
                     rateImg.src = "../img/3stars.png";
-                } else if (totRating > 60 && totRating <= 80) {
+                } else if (totRating > 60 && totRating <= 70) {
+                    rateImg.src = "../img/35stars.png";
+                } else if (totRating > 70 && totRating <= 80) {
                     rateImg.src = "../img/4stars.png";
+                } else if (totRating > 80 && totRating <= 90) {
+                    rateImg.src = "../img/45stars.png";
                 } else {
                     rateImg.src = "../img/5stars.png";
                 }
@@ -2157,9 +2165,9 @@
         });
 
         function backChartColor(val) {
-            var minColor = "rgba(11, 121, 75, .3)";
-            var recColor = "rgba(144, 238, 144, .3)";
-            var optColor = "rgba(224, 255, 255, .3)";
+            var minColor = "#bfbfbf";
+            var recColor = "#d9d9d9";
+            var optColor = "#f2f2f2";
             if (val == 0.5) {
                 return minColor;
             } else if (val == 0.3) {

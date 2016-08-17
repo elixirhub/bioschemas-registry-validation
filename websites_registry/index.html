@@ -191,12 +191,20 @@
         function ratingStars(val) {
             if (val <= 20) {
                 return "../img/1star.png";
-            } else if (val > 20 && val <= 40) {
+            } else if (val > 20 && val <= 30) {
+                return "../img/15star.png";
+            } else if (val > 30 && val <= 40) {
                 return "../img/2stars.png";
-            } else if (val > 40 && val <= 60) {
+            } else if (val > 40 && val <= 50) {
+                return "../img/25stars.png";
+            } else if (val > 50 && val <= 60) {
                 return "../img/3stars.png";
-            } else if (val > 60 && val <= 80) {
+            } else if (val > 60 && val <= 70) {
+                return "../img/35stars.png";
+            } else if (val > 70 && val <= 80) {
                 return "../img/4stars.png";
+            } else if (val > 80 && val <= 90) {
+                return "../img/45stars.png";
             } else {
                 return "../img/5stars.png";
             }
