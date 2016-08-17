@@ -41,6 +41,7 @@
     <div style="display: inline-block; margin-top: 2%;">
 
         <h1 id="title"></h1>
+        <h3><a id="siteUrl" target="_blank"></a></h3>
 
         <div style="float: left; width: 50%; margin-top: 5%; margin-left: 2%">
 
@@ -124,6 +125,14 @@
         document.getElementById("title").innerHTML = siteName;
         document.getElementById("type_header").innerHTML = "Bioschemas type: " + type;
 
+        d3.json("../" + siteName + "/name_url.json", function (data3) {
+
+            var siteURL = data3[siteName];
+            document.getElementById("siteUrl").innerHTML = siteURL;
+            document.getElementById("siteUrl").setAttribute("href", siteURL);
+
+        });
+
         var minBody = document.getElementById("minimum_table");
         var optBody = document.getElementById("optional_table");
 
@@ -146,7 +155,6 @@
 
         d3.json("../" + siteName + "/tagsGuide.json", function (data) {
             d3.json("../" + siteName + "/tagsFound.json", function(data2) {
-
 
                 if (type == "Event") {
                     for (var i in data["event_bioschemas"]) {
@@ -2158,7 +2166,6 @@
                     });
                     document.getElementById("hint_p").innerHTML = "<strong>Hint: </strong>You can sort columns by clicking on their name; you can also view properties description as well as the Optional properties table using the buttons below."
                 }, 1000);
-
 
             });
 

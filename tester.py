@@ -204,6 +204,10 @@ class WebsiteTags:
 
         os.system("mkdir temp/%s" % websiteName)
 
+        nameDict = {websiteName: self.url}
+        with open("temp/%s/name_url.json" % websiteName, "wb") as f:
+            json.dump(nameDict, f, indent=4, sort_keys=True)
+
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")

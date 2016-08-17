@@ -227,10 +227,6 @@ class WebsiteTags:
     def newWebsiteTags(self):
         """Create a new directory named after the domain of the scraped website."""
 
-        # if self.nome == self.url:
-        #     websiteComps = self.url.split("/")
-        #     websiteName = "_".join(websiteComps[2:])
-
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")
@@ -242,6 +238,10 @@ class WebsiteTags:
             websiteName = self.nome
 
         os.system("mkdir %s" % websiteName)
+
+        nameDict = {websiteName: self.url}
+        with open("%s/name_url.json" % websiteName, "wb") as f:
+            json.dump(nameDict, f, indent=4, sort_keys=True)
 
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)
@@ -257,10 +257,6 @@ class WebsiteTags:
     def updateWebsiteTags(self):
         """Update the data from previously scraped websites."""
 
-        # if self.nome == self.url:
-        #     websiteComps = self.url.split("/")
-        #     websiteName = "_".join(websiteComps[2:])
-
         response = requests.get(self.url)
         html = response.content
         soup = BeautifulSoup(html, "lxml")
@@ -272,6 +268,10 @@ class WebsiteTags:
             websiteName = self.nome
 
         os.system("mkdir %s" % websiteName)
+
+        nameDict = {websiteName: self.url}
+        with open("%s/name_url.json" % websiteName, "wb") as f:
+            json.dump(nameDict, f, indent=4, sort_keys=True)
 
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)
