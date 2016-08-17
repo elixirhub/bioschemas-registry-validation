@@ -137,7 +137,7 @@ Navbar
 *****/
 
 .navbar {
-    background-color: dodgerblue;
+    background-color: steelblue;
     width: auto;
     height: 2.5em;
     padding-top: 0.625em;
@@ -173,27 +173,27 @@ Navbar
 }
 
 .nav_buttons:hover {
-    color: #333333;
-    background-color: steelblue;
+    color: #222222;
+    background-color: dodgerblue;
     height: 2.03125em;
     padding-top: 0.46875em;
     padding-right: 0.46875em;
     padding-left: 0.46875em;
     border-bottom-left-radius: 0.5208333333333334em;
     border-bottom-right-radius: 0.5208333333333334em;
-    border: 1px solid steelblue;
+    border: 1px solid dodgerblue;
 }
 
 #nav_active {
-    color: #333333;
-    background-color: steelblue;
+    color: #222222;
+    background-color: dodgerblue;
     height: 2.03125em;
     padding-top: 0.46875em;
     padding-right: 0.46875em;
     padding-left: 0.46875em;
     border-bottom-left-radius: 0.5208333333333334em;
     border-bottom-right-radius: 0.5208333333333334em;
-    border: 1px solid steelblue;
+    border: 1px solid dodgerblue;
 }
 
 /*****
