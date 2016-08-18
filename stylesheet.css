@@ -35,6 +35,67 @@ tbody tr:nth-child(odd) {
 }
 
 /*****
+Entries Sections
+*****/
+
+.summaryDiv {
+    border: 1px solid black;
+}
+
+button.accordion {
+    background-color: steelblue;
+    color: #ffffff;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    -webkit-transition: 0.4s time;
+    -moz-transition: 0.4s time;
+    -ms-transition: 0.4s time;
+    -o-transition: 0.4s time;
+    transition: 0.4s time;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: dodgerblue;
+}
+
+button.accordion:after {
+    content: '\02795';
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: '\2796';
+}
+
+div.panel {
+    padding: 5px 18px;
+    background-color: white;
+    border: 2px solid dodgerblue;
+    max-height: 0;
+    overflow: scroll;
+    -webkit-transition: 0.6s ease-in-out;
+    -moz-transition: 0.6s ease-in-out;
+    -ms-transition: 0.6s ease-in-out;
+    -o-transition: 0.6s ease-in-out;
+    transition: 0.6s ease-in-out;
+    opacity: 0;
+}
+
+div.panel.show {
+    opacity: 1;
+    max-height: 500px;
+    margin-bottom: 10px;
+}
+
+/*****
 Rotating Logo
 *****/
 
@@ -57,26 +118,16 @@ Rotating Logo
 Missing Properties Banners
 *****/
 
-#missingMin p {
-    background-color: #f7786b;
-    text-align: center;
-    width: 50%;
-    border: 2px solid darkred;
-    border-radius: 10px;
-    font-size: 1.3em;
-    margin: 0.3em;
-    padding: 0.5em;
+#missingMin {
+    font-size: 1.2em;
+    margin-left: 0.5em;
+    color: #f7786b;
 }
 
-#missingRec p {
-    background-color: #F4A460;
-    text-align: center;
-    width: 50%;
-    border: 2px solid orangered;
-    border-radius: 10px;
+#missingRec {
     font-size: 1.2em;
-    margin: 0.3em;
-    padding: 0.5em;
+    margin-left: 0.5em;
+    color: #F4A460;
 }
 
 /*****

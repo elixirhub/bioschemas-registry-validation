@@ -38,12 +38,16 @@
         </div>
     </div>
 
-    <div style="display: inline-block; margin-top: 2%;">
+    <br><br>
 
-        <h1 id="title"></h1>
-        <h3><a id="siteUrl" target="_blank"></a></h3>
+    <!-- Summary Section -->
+    <button class="accordion">Summary</button>
+    <div class="panel">
 
-        <div style="float: left; width: 50%; margin-top: 5%; margin-left: 2%">
+        <div style="float: left; width: 50%; margin-left: 2%">
+
+            <h1 id="title"></h1>
+            <h3><a id="siteUrl"></a></h3>
 
             <h2 id="type_header"></h2>
 
@@ -51,20 +55,21 @@
                 <h3 id="rating"></h3>
             </div>
 
-            <p id="hint_p" style="text-align: justify;"></p>
-
-            <button type="button" class="buttons_large" id="descrButton">Show Property Description</button>
-
-            <button type="button" class="buttons_large" id="optButton">Show Optional Properties Table</button>
-
         </div>
 
         <div id="testchart" style="margin-left: 55%;"></div>
-
     </div>
 
-    <table id="minTable" class="tablesorter">
-        <thead>
+    <!-- Min and Rec Props Section -->
+    <button class="accordion">Minimum and Recommended Properties</button>
+    <div class="panel">
+
+        <label>
+            <input type="checkbox" name="showMinDescr" id="showMinDescr" onclick="minDescr()">&nbsp; Show properties description
+        </label>
+
+        <table id="minTable" class="tablesorter">
+            <thead>
             <tr>
                 <th style="width: 5em;">&nbsp;</th>
                 <th>Property</th>
@@ -72,19 +77,26 @@
                 <th>Guideline</th>
                 <th>CV</th>
                 <th>Cardinality</th>
-                <th class="hide description">Description</th>
+                <th class="hide descriptionMin">Description</th>
 
             </tr>
-        </thead>
-        <tbody id="minimum_table">
+            </thead>
+            <tbody id="minimum_table">
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 
-    <h3 id="optH3" class="hide" style="text-indent: 2%;">Optional Properties</h3>
+    <!-- Optional Props Section -->
+    <button class="accordion">Optional Properties</button>
+    <div class="panel">
 
-    <table class="hide tablesorter" id="optTable">
-        <thead>
+        <label>
+            <input type="checkbox" name="showOptDescr" id="showOptDescr" onclick="optDescr()">&nbsp; Show properties description
+        </label>
+
+        <table class="tablesorter" id="optTable">
+            <thead>
             <tr>
                 <th style="width: 5em;">&nbsp;</th>
                 <th>Property</th>
@@ -92,21 +104,24 @@
                 <th>Guideline</th>
                 <th>CV</th>
                 <th>Cardinality</th>
-                <th class="hide description">Description</th>
+                <th class="hide descriptionOpt">Description</th>
             </tr>
-        </thead>
-        <tbody id="optional_table">
+            </thead>
+            <tbody id="optional_table">
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Report Section -->
+    <button class="accordion">Report</button>
+    <div class="panel">
+        <ul id="missingMin"></ul>
+        <ul id="missingRec"></ul>
+    </div>
 
     <br>
 
-    <div id="missingMin"></div>
-
-    <button type="button" class="buttons_large" id="recommButton">Missing Recommended</button>
-
-    <div id="missingRec" class="hide"></div>
 
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -114,10 +129,19 @@
     <script type="text/javascript" src="../tablesorter-master/jquery.tablesorter.js"></script>
     <!-- ToolTipster.js -->
     <script type="text/javascript" src="../tooltipster-master/dist/js/tooltipster.bundle.min.js"></script>
-
+    <!-- Tip for the chart -->
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
     <script type="text/javascript">
+
+        var acc = document.getElementsByClassName("accordion");
+        var dd;
+        for (dd = 0; dd < acc.length; dd++) {
+            acc[dd].onclick = function () {
+                this.classList.toggle("active");
+                this.nextElementSibling.classList.toggle("show");
+            }
+        }
 
         var siteName = (window.location.hash).split("#")[1];
         var type = (window.location.hash).split("#")[2];
@@ -222,7 +246,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -265,7 +289,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -284,7 +308,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -327,7 +351,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -385,7 +409,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -459,7 +483,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -502,7 +526,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -521,7 +545,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -564,7 +588,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -622,7 +646,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -694,7 +718,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -737,7 +761,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -756,7 +780,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -799,7 +823,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -857,7 +881,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -931,7 +955,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -974,7 +998,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -993,7 +1017,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1036,7 +1060,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -1094,7 +1118,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -1166,7 +1190,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1209,7 +1233,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -1228,7 +1252,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1271,7 +1295,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -1329,7 +1353,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -1403,7 +1427,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1446,7 +1470,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -1465,7 +1489,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1508,7 +1532,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -1566,7 +1590,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -1638,7 +1662,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1681,7 +1705,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -1700,7 +1724,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1743,7 +1767,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -1801,7 +1825,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -1875,7 +1899,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingMin");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing minimum property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1918,7 +1942,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else if (stdGuide == "Recommended") {
@@ -1937,7 +1961,7 @@
 
                                     row.insertCell(0).appendChild(nope);
                                     var missDiv = document.getElementById("missingRec");
-                                    var newp = document.createElement("p");
+                                    var newp = document.createElement("li");
                                     newp.innerHTML = "Missing recommended property " + j;
                                     missDiv.appendChild(newp);
                                 } else {
@@ -1980,7 +2004,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionMin";
                                 descrCell.appendChild(tabDescr);
 
                             } else {
@@ -2038,7 +2062,7 @@
                                 row.insertCell(4).appendChild(tabVocab);
                                 row.insertCell(5).appendChild(tabCard);
                                 var descrCell = row.insertCell(6);
-                                descrCell.className = "hide description";
+                                descrCell.className = "hide descriptionOpt";
                                 descrCell.appendChild(tabDescr);
                             }
                             graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
@@ -2164,7 +2188,7 @@
                                 .text(Math.round(totRating) + "%");
 
                     });
-                    document.getElementById("hint_p").innerHTML = "<strong>Hint: </strong>You can sort columns by clicking on their name; you can also view properties description as well as the Optional properties table using the buttons below."
+
                 }, 1000);
 
             });
@@ -2183,41 +2207,36 @@
                 return optColor;
             }
         }
+        
+        function minDescr() {
+            var el = document.getElementById("showMinDescr");
+            var targ = document.getElementsByClassName("descriptionMin");
 
-        var recButt = d3.select("#recommButton");
-        recButt.on("click", function () {
-            if (document.getElementById("missingRec").classList.contains("hide")) {
-                document.getElementById("missingRec").classList.remove("hide");
+            if (el.checked) {
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.remove("hide");
+                }
             } else {
-                document.getElementById("missingRec").classList.add("hide");
-            }
-        });
-
-        var optButt = d3.select("#optButton");
-        optButt.on("click", function () {
-            if (document.getElementById("optH3").classList.contains("hide")) {
-                document.getElementById("optH3").classList.remove("hide");
-            } else {
-                document.getElementById("optH3").classList.add("hide");
-            }
-
-            if (document.getElementById("optTable").classList.contains("hide")) {
-                document.getElementById("optTable").classList.remove("hide");
-            } else {
-                document.getElementById("optTable").classList.add("hide");
-            }
-        });
-
-        var descrButt = d3.select("#descrButton");
-        descrButt.on("click", function () {
-            for (var i in document.getElementsByClassName("description")) {
-                if (document.getElementsByClassName("description")[i].classList.contains("hide")) {
-                    document.getElementsByClassName("description")[i].classList.remove("hide");
-                } else {
-                    document.getElementsByClassName("description")[i].classList.add("hide");
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.add("hide");
                 }
             }
-        });
+        }
+
+        function optDescr() {
+            var el = document.getElementById("showOptDescr");
+            var targ = document.getElementsByClassName("descriptionOpt");
+
+            if (el.checked) {
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.remove("hide");
+                }
+            } else {
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.add("hide");
+                }
+            }
+        }
 
         setTimeout(function(){ $("#minTable").tablesorter({
             textExtraction:function (s) {
