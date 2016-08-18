@@ -2193,8 +2193,14 @@
 
                     });
 
-                }, 1000);
+                    var el = document.getElementsByClassName("accordion");
+                    el[0].classList.toggle("active");
+                    el[0].nextElementSibling.classList.toggle("show");
 
+                    el[1].classList.toggle("active");
+                    el[1].nextElementSibling.classList.toggle("show");
+
+                }, 500);
 
             });
 
