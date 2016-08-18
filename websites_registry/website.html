@@ -46,14 +46,12 @@
 
         <div style="float: left; width: 50%; margin-left: 2%">
 
-            <h1 id="title"></h1>
-            <h3><a id="siteUrl"></a></h3>
+            <h1>Entry Name: <span id="title"></span></h1>
+            <h3>Entry URL: <a id="siteUrl"></a></h3>
 
-            <h2 id="type_header"></h2>
+            <h3>Bioschemas type: <span id="type_header"></span></h3>
 
-            <div id="ratingDiv">
-                <h3 id="rating"></h3>
-            </div>
+            <div id="ratingDiv"></div>
 
         </div>
 
@@ -147,7 +145,7 @@
         var type = (window.location.hash).split("#")[2];
 
         document.getElementById("title").innerHTML = siteName.replace(/_/g, " ");
-        document.getElementById("type_header").innerHTML = "Bioschemas type: " + type;
+        document.getElementById("type_header").innerHTML = type;
 
         d3.json("../" + siteName + "/name_url.json", function (data3) {
 
@@ -171,9 +169,12 @@
         var noColor = "#E1514B";
         var warnColor = "#FEC574";
 
-        var minColor = "rgba(11, 121, 75, .5)";
-        var recColor = "rgba(144, 238, 144, .5)";
-        var optColor = "rgba(224, 255, 255, .5)";
+        //        var minColor = "rgba(11, 121, 75, .5)";
+        //        var recColor = "rgba(144, 238, 144, .5)";
+        //        var optColor = "rgba(224, 255, 255, .5)";
+        var minColor = "#a6a6a6";
+        var recColor = "#cccccc";
+        var optColor = "#e6e6e6";
 
         var graphList = [];
 
@@ -2080,8 +2081,8 @@
 
                 var totRating = minStars + recStars + optStars;
 
-                var rateTarget = document.getElementById("rating");
-                rateTarget.innerHTML = "This website's compliance rating is " + Math.round(totRating) + "%.";
+                //var rateTarget = document.getElementById("rating");
+                //rateTarget.innerHTML = "This website's compliance rating is " + Math.round(totRating) + "%.";
 
                 var rateDiv = document.getElementById("ratingDiv");
                 var rateImg = document.createElement("img");
@@ -2105,13 +2106,15 @@
                     rateImg.src = "../img/5stars.png";
                 }
 
-                rateImg.style.width = "40%";
+                rateImg.style.width = "50%";
+                rateImg.className = "tooltip";
+                rateImg.title = "Compliance rating: " + Math.round(totRating) + "%";
                 rateDiv.appendChild(rateImg);
 
                 setTimeout(function () {
 
-                    var width = 450,
-                            height = 450,
+                    var width = 350,
+                            height = 350,
                             radius = Math.min(width, height) / 2,
                             innerRadius = 0.3 * radius;
 
@@ -2181,11 +2184,11 @@
                                 .on('mouseover', tip.show)
                                 .on('mouseout', tip.hide);
 
-                        svg.append("svg:text")
+                        /*svg.append("svg:text")
                                 .attr("class", "aster-score")
                                 .attr("dy", ".35em")
                                 .attr("text-anchor", "middle") // text-align: right
-                                .text(Math.round(totRating) + "%");
+                                .text(Math.round(totRating) + "%");*/
 
                     });
 
