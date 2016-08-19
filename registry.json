@@ -79,6 +79,19 @@
             ]
         }
     ], 
+    "testcount": [
+        {
+            "Person": [
+                [
+                    1, 
+                    1, 
+                    0
+                ], 
+                "email", 
+                "name"
+            ]
+        }
+    ], 
     "wdl_Test": [
         {
             "Person": [

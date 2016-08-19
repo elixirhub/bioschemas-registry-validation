@@ -49,7 +49,7 @@
             <h1>Entry Name: <span id="title"></span></h1>
             <h3>Entry URL: <a id="siteUrl"></a></h3>
 
-            <h3>Bioschemas type: <span id="type_header"></span></h3>
+            <h3>Bioschemas type: <span id="type_header"></span> (<span id="type_count"></span>)</h3>
 
             <div id="ratingDiv"></div>
 
@@ -153,6 +153,15 @@
             document.getElementById("siteUrl").innerHTML = siteURL;
             document.getElementById("siteUrl").setAttribute("href", siteURL);
 
+        });
+
+        d3.json("../" + siteName + "/typesCount.json", function (data4) {
+            var typeEl = data4[type];
+            if (typeEl == 1) {
+                document.getElementById("type_count").innerHTML = typeEl + " entry";
+            } else {
+                document.getElementById("type_count").innerHTML = typeEl + " entries";
+            }
         });
 
         var minBody = document.getElementById("minimum_table");

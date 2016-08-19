@@ -1,28 +1,5 @@
 {
-    "testerwdl23": [
-        {
-            "Person": [
-                [
-                    2, 
-                    1, 
-                    0
-                ], 
-                "image", 
-                "description", 
-                "name"
-            ], 
-            "Organization": [
-                [
-                    2, 
-                    3, 
-                    0
-                ], 
-                "url", 
-                "logo", 
-                "description", 
-                "keywords", 
-                "name"
-            ]
-        }
+    "goblet_test": [
+        {}
     ]
 }

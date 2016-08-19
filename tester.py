@@ -149,6 +149,7 @@ class WebsiteTags:
         self.sibs = sibs
         self.scrapeType = scrapeType
         self.websiteTypes = set()
+        self.countTypes = {}
         self.foundTags = {
             "event_bioschemas": [],
             "event_schema": [],
@@ -237,6 +238,10 @@ class WebsiteTags:
 
         for el in soup.findAll(itemtype=True):
             webtype = el.get("itemtype").split("/")[3]
+            try:
+                self.countTypes[webtype] += 1
+            except KeyError:
+                self.countTypes[webtype] = 1
             if prefType != "all":
                 if webtype == prefType:
                     self.websiteTypes.add(webtype)
@@ -247,6 +252,10 @@ class WebsiteTags:
         for el in self.websiteTypes:
             endfile.write(el + "\n")
         endfile.close()
+
+        e = open("%s/typesCount.json" % sitename, "wb")
+        json.dump(self.countTypes, e, indent=4, sort_keys=True)
+        e.close()
 
         print "Scraping microdata from %s..." % self.url
 
@@ -461,6 +470,10 @@ class WebsiteTags:
 
         for el in soup.findAll(typeof=True):
             webtype = el.get("typeof")
+            try:
+                self.countTypes[webtype] += 1
+            except KeyError:
+                self.countTypes[webtype] = 1
             if prefType != "all":
                 if webtype == prefType:
                     self.websiteTypes.add(webtype)
@@ -471,6 +484,10 @@ class WebsiteTags:
         for el in self.websiteTypes:
             endfile.write(el + "\n")
         endfile.close()
+
+        e = open("%s/typesCount.json" % sitename, "wb")
+        json.dump(self.countTypes, e, indent=4, sort_keys=True)
+        e.close()
 
         print "Scraping microdata from %s..." % self.url
 
