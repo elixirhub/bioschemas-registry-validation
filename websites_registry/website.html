@@ -2133,15 +2133,17 @@
 
                     var tip = d3.tip()
                             .attr("class", "d3-tip")
-                            .offset([0, 0])
+                            .offset(function() {
+                                return [this.getBBox().height / 4, 0]
+                            })
                             .html(function(d) {
                                 return d.data.label + ": <span style='color: orangered'>" + d.data.score + "</span><br>" + (d.data.weight == 0.5 ? "Minimum Property" : (d.data.weight == 0.3 ? "Recommended Property" : "Optional Property"));
                             });
 
                     var arc = d3.svg.arc()
-                            .innerRadius(innerRadius)
+                            .innerRadius(innerRadius + 10)
                             .outerRadius(function (d) {
-                                return (radius - innerRadius) * (d.data.score != 0 ? (d.data.score / d.data.mean) : 0.05) + innerRadius;
+                                return (radius - innerRadius) * (d.data.score != 0 ? (d.data.score / d.data.mean) : 0.08) + innerRadius;
                             });
 
                     var maxScore = Math.max(minRate, recRate, optRate);
@@ -2162,11 +2164,10 @@
 
                         data.forEach(function(d) {
                             //d.id     =  d.id;
-                            d.order  = +d.order;
                             d.color  =  d.color;
                             d.weight = +d.weight;
                             d.score  = +d.score;
-                            d.width  = +d.weight;
+                            d.width  = +d.width;
                             d.label  =  d.label;
                             d.mean   = +d.mean;
                         });
@@ -2177,6 +2178,7 @@
                                 .attr("fill", function (d) {
                                     return backChartColor(d.data.weight);
                                 })
+                                //.attr("fill", "white")
                                 .attr("stroke", "gray")
                                 .attr("class", "outlineArc")
                                 .attr("d", outlineArc)
@@ -2187,6 +2189,7 @@
                                 .data(pie(data))
                                 .enter().append("path")
                                 .attr("fill", function(d) { return d.data.color; })
+                                //.attr("fill", "blue")
                                 .attr("class", "solidArc")
                                 .attr("stroke", "gray")
                                 .attr("d", arc)

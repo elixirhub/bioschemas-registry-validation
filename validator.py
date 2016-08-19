@@ -803,6 +803,8 @@ class UpdateRegistry:
             okList = []
             warnList = []
             noList = []
+            minList = []
+            recList = []
             ord = 0
 
             with open("%s/tagsGuide.json" % website, "rb") as f, open("%s/tagsFound.json" % website, "rb") as g:
@@ -826,6 +828,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -841,8 +844,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -858,6 +864,8 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         # else:
                         #     weightGraph = 0.2
@@ -876,7 +884,6 @@ class UpdateRegistry:
                         #         warnList.append(i)
                         #         ord += 1
                                 
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["event_schema"][0]:
@@ -895,6 +902,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -910,8 +918,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -927,6 +938,8 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         # else:
                         #     weightGraph = 0.2
@@ -945,7 +958,6 @@ class UpdateRegistry:
                         #         warnList.append(i)
                         #         ord += 1
                                 
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                 elif typ == "Organization":
@@ -965,6 +977,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -980,8 +993,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -997,6 +1013,8 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         # else:
                         #     weightGraph = 0.2
@@ -1015,7 +1033,6 @@ class UpdateRegistry:
                         #         warnList.append(i)
                         #         ord += 1
                                 
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["organization_schema"][0]:
@@ -1034,6 +1051,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1049,8 +1067,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1066,7 +1087,9 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
-                                
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
                         # else:
                         #     weightGraph = 0.2
                         #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
@@ -1084,7 +1107,6 @@ class UpdateRegistry:
                         #         warnList.append(i)
                         #         ord += 1
                                 
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                 elif typ == "Person":
@@ -1104,6 +1126,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1119,8 +1142,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1136,6 +1162,8 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         # else:
                         #     weightGraph = 0.2
@@ -1154,7 +1182,6 @@ class UpdateRegistry:
                         #         warnList.append(i)
                         #         ord += 1
                                 
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["person_schema"][0]:
@@ -1173,6 +1200,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1188,8 +1216,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1205,6 +1236,8 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         # else:
                         #     weightGraph = 0.2
@@ -1223,7 +1256,6 @@ class UpdateRegistry:
                         #         warnList.append(i)
                         #         ord += 1
                                 
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                 elif typ == "Training" or typ == "CreativeWork":
@@ -1243,6 +1275,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1258,8 +1291,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
-                                
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1275,8 +1311,10 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
-                                
-                        # else:
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                    # else:
                         #     weightGraph = 0.2
                         #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
                         #         colorGraph = okColor
@@ -1293,7 +1331,6 @@ class UpdateRegistry:
                         #         warnList.append(i)
                         #         ord += 1
                                 
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
                         maxList.append(scoreGraph)
 
                     for i in data["training_schema"][0]:
@@ -1312,6 +1349,7 @@ class UpdateRegistry:
                         except KeyError:
                             scoreGraph = 0
                         if stdGuide == "Minimum":
+                            minList.append(i)
                             weightGraph = 0.5
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1327,8 +1365,11 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
                         elif stdGuide == "Recommended":
+                            recList.append(i)
                             weightGraph = 0.3
                             if actType == "OK" and actCard == "OK" and actVocab == "OK":
                                 colorGraph = okColor
@@ -1344,7 +1385,9 @@ class UpdateRegistry:
                                 colorGraph = warnColor
                                 warnList.append(i)
                                 ord += 1
-                                
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
                         # else:
                         #     weightGraph = 0.2
                         #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
@@ -1361,15 +1404,14 @@ class UpdateRegistry:
                         #         colorGraph = warnColor
                         #         warnList.append(i)
                         #         ord += 1
-                                
-                        graphList.append([label, scoreGraph, weightGraph, colorGraph])
+
                         maxList.append(scoreGraph)
 
                 meanVal = max(maxList)
 
                 endfile = open("%s/chartData_%s.csv" % (website, typ), "wb")
                 w = csv.writer(endfile)
-                w.writerow(["order", "label", "score", "weight", "color", "mean"])
+                w.writerow(["label", "score", "weight", "width", "color", "mean"])
 
                 maxFile = open("%s/maxData_%s.csv" % (website, typ), "wb")
                 s = csv.writer(maxFile)
@@ -1377,13 +1419,10 @@ class UpdateRegistry:
 
                 for el in graphList:
                     el.append(meanVal)
-                    if el[0] in okList:
-                        el.insert(0, (okList.index(el[0]) + 1))
-                    elif el[0] in warnList:
-                        el.insert(0, (warnList.index(el[0]) + 1 + len(okList)))
-                    elif el[0] in noList:
-                        el.insert(0, (noList.index(el[0]) + 1 + len(okList) + len(warnList)))
-                graphList.sort(key=lambda x: x[0])
+
+                graphList.sort(key=lambda x: x[1], reverse=True)
+                graphList.sort(key=lambda x: x[2], reverse=True)
+
                 for el in graphList:
                     w.writerow(el)
                     s.writerow([meanVal, "val"])
