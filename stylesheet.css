@@ -287,7 +287,7 @@ Chart
 .aster-score {
     line-height: 1;
     font-weight: bold;
-    font-size: 400%;
+    font-size: 0.8em;
 }
 
 .d3-tip {

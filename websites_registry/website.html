@@ -2125,7 +2125,7 @@
                     var width = 350,
                             height = 350,
                             radius = Math.min(width, height) / 2,
-                            innerRadius = 0.3 * radius;
+                            innerRadius = 0.45 * radius;
 
                     var pie = d3.layout.pie()
                             .sort(null)
@@ -2141,9 +2141,9 @@
                             });
 
                     var arc = d3.svg.arc()
-                            .innerRadius(innerRadius + 10)
+                            .innerRadius(innerRadius)
                             .outerRadius(function (d) {
-                                return (radius - innerRadius) * (d.data.score != 0 ? (d.data.score / d.data.mean) : 0.08) + innerRadius;
+                                return (radius - innerRadius) * (d.data.score != 0 ? (d.data.score / d.data.mean) : 0) + innerRadius;
                             });
 
                     var maxScore = Math.max(minRate, recRate, optRate);
@@ -2196,11 +2196,33 @@
                                 .on('mouseover', tip.show)
                                 .on('mouseout', tip.hide);
 
-                        /*svg.append("svg:text")
+                        svg.append("svg:text")
                                 .attr("class", "aster-score")
-                                .attr("dy", ".35em")
-                                .attr("text-anchor", "middle") // text-align: right
-                                .text(Math.round(totRating) + "%");*/
+                                .attr("dy", "-2.50em")
+                                .attr("text-anchor", "middle")
+                                .html("<tspan style='fill: #6CC4A4'>&#9608;</tspan> &nbsp; Correct property")
+                                .style("fill", "#000000");
+
+                        svg.append("svg:text")
+                                .attr("class", "aster-score")
+                                .attr("dy", "-1.00em")
+                                .attr("text-anchor", "middle")
+                                .html("<tspan style='fill: #FEC574'>&#9608;</tspan> &nbsp; Wrong property")
+                                .style("fill", "#000000");
+
+                        svg.append("svg:text")
+                                .attr("class", "aster-score")
+                                .attr("dy", "1.00em")
+                                .attr("text-anchor", "middle")
+                                .html("<tspan style='fill: #a6a6a6'>&#9608;</tspan> &nbsp; Minimum property")
+                                .style("fill", "#000000");
+
+                        svg.append("svg:text")
+                                .attr("class", "aster-score")
+                                .attr("dy", "2.50em")
+                                .attr("text-anchor", "middle")
+                                .html("<tspan style='fill: #cccccc'>&#9608;</tspan> &nbsp; Recomm. property")
+                                .style("fill", "#000000");
 
                     });
 
@@ -2218,8 +2240,10 @@
         });
 
         function backChartColor(val) {
-            var minColor = "#bfbfbf";
-            var recColor = "#d9d9d9";
+            //var minColor = "#bfbfbf";
+            var minColor = "#a6a6a6";
+            //var recColor = "#d9d9d9";
+            var recColor = "#cccccc";
             var optColor = "#f2f2f2";
             if (val == 0.5) {
                 return minColor;
