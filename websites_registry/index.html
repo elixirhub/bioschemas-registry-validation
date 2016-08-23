@@ -154,6 +154,7 @@
                     var cellText5 = document.createTextNode(Math.round(percOpt) + "%");
                     var cellText6 = document.createElement("img");
                     cellText6.src = ratingStars(percTot);
+                    cellText6.alt = percTot + "%";
                     cellText6.className = "tooltip";
                     cellText6.title = percTot + "%";
                     cellText6.style.width = "70%";

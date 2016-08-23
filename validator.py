@@ -867,23 +867,6 @@ class UpdateRegistry:
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
-                        # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
-                                
                         maxList.append(scoreGraph)
 
                     for i in data["event_schema"][0]:
@@ -940,24 +923,7 @@ class UpdateRegistry:
                                 ord += 1
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
-                                
-                        # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
-                                
+
                         maxList.append(scoreGraph)
 
                 elif typ == "Organization":
@@ -1016,23 +982,6 @@ class UpdateRegistry:
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
                                 
-                        # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
-                                
                         maxList.append(scoreGraph)
 
                     for i in data["organization_schema"][0]:
@@ -1090,23 +1039,6 @@ class UpdateRegistry:
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
 
-                        # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
-                                
                         maxList.append(scoreGraph)
 
                 elif typ == "Person":
@@ -1164,24 +1096,7 @@ class UpdateRegistry:
                                 ord += 1
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
-                                
-                        # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
-                                
+
                         maxList.append(scoreGraph)
 
                     for i in data["person_schema"][0]:
@@ -1238,24 +1153,7 @@ class UpdateRegistry:
                                 ord += 1
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
-                                
-                        # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
-                                
+
                         maxList.append(scoreGraph)
 
                 elif typ == "Training" or typ == "CreativeWork":
@@ -1314,23 +1212,6 @@ class UpdateRegistry:
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
 
-                    # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
-                                
                         maxList.append(scoreGraph)
 
                     for i in data["training_schema"][0]:
@@ -1387,23 +1268,6 @@ class UpdateRegistry:
                                 ord += 1
 
                             graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
-
-                        # else:
-                        #     weightGraph = 0.2
-                        #     if actType == "OK" and actCard == "OK" and actVocab == "OK":
-                        #         colorGraph = okColor
-                        #         okList.append(i)
-                        #         ord += 1
-                        #
-                        #     elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
-                        #         colorGraph = noColor
-                        #         noList.append(i)
-                        #         ord += 1
-                        #
-                        #     else:
-                        #         colorGraph = warnColor
-                        #         warnList.append(i)
-                        #         ord += 1
 
                         maxList.append(scoreGraph)
 
