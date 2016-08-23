@@ -270,7 +270,8 @@ Chart
 }
 
 .solidArc:hover {
-    fill: orangered ;
+    /*fill: orangered ;*/
+    opacity: 1;
 }
 
 .solidArc {
@@ -278,6 +279,7 @@ Chart
     -o-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
+    opacity: 0.5;
 }
 
 .x.axis path {
