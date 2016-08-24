@@ -959,11 +959,18 @@ class WebsiteChildren:
                 self.foundTags[typeProp] = [prop_dict]
                 self.tagsGuide[typeProp] = [guide_dict]
 
-        endfile = open("%s_children/tagsFound.json" % sitename, "ab")
-        json.dump(self.foundTags, endfile, indent=4, sort_keys=True)
+        with open("%s_children/tagsFound.json" % sitename, "rb") as f:
+            data = json.load(f)
+        data.update(self.foundTags)
+        endfile = open("%s_children/tagsFound.json" % sitename, "wb")
+        json.dump(data, endfile, indent=4, sort_keys=True)
         endfile.close()
-        endfile2 = open("%s_children/tagsGuide.json" % sitename, "ab")
-        json.dump(self.tagsGuide, endfile2, indent=4, sort_keys=True)
+
+        with open("%s_children/tagsGuide.json" % sitename, "rb") as f:
+            data2 = json.load(f)
+        data2.update(self.tagsGuide)
+        endfile2 = open("%s_children/tagsGuide.json" % sitename, "wb")
+        json.dump(data2, endfile2, indent=4, sort_keys=True)
         endfile2.close()
 
     def validateWebsiteMicrodata(self, sitename):
@@ -1061,8 +1068,8 @@ class WebsiteChildren:
         found_types.close()
         report.close()
 
-        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
-        UpdateRegistry().createChartFile(sitename, typesToAdd)
+        UpdateChildren().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
+        UpdateChildren().createChartFile(sitename, typesToAdd)
 
     def scrapeRDFa(self, sitename, prefType):
         """Get the RDFa data from the website and save them into a JSON file."""
@@ -1191,11 +1198,30 @@ class WebsiteChildren:
                 self.foundTags[typeProp] = [prop_dict]
                 self.tagsGuide[typeProp] = [guide_dict]
 
-        endfile = open("%s_children/tagsFound.json" % sitename, "ab")
-        json.dump(self.foundTags, endfile, indent=4, sort_keys=True)
+        try:
+            with open("%s_children/tagsFound.json" % sitename, "rb") as f:
+                data = json.load(f)
+        except IOError:
+            with open("%s_children/tagsFound.json" % sitename, "wb") as f:
+                f.write("{\n\t\n}")
+            with open("%s_children/tagsFound.json" % sitename, "rb") as f:
+                data = json.load(f)
+        data.update(self.foundTags)
+        endfile = open("%s_children/tagsFound.json" % sitename, "wb")
+        json.dump(data, endfile, indent=4, sort_keys=True)
         endfile.close()
-        endfile2 = open("%s_children/tagsGuide.json" % sitename, "ab")
-        json.dump(self.tagsGuide, endfile2, indent=4, sort_keys=True)
+
+        try:
+            with open("%s_children/tagsGuide.json" % sitename, "rb") as f:
+                data2 = json.load(f)
+        except IOError:
+            with open("%s_children/tagsGuide.json" % sitename, "wb") as f:
+                f.write("{\n\t\n}")
+            with open("%s_children/tagsGuide.json" % sitename, "rb") as f:
+                data2 = json.load(f)
+        data2.update(self.tagsGuide)
+        endfile2 = open("%s_children/tagsGuide.json" % sitename, "wb")
+        json.dump(data2, endfile2, indent=4, sort_keys=True)
         endfile2.close()
 
     def validateWebsiteRDFa(self, sitename):
@@ -1293,8 +1319,554 @@ class WebsiteChildren:
         found_types.close()
         report.close()
 
-        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
-        UpdateRegistry().createChartFile(sitename, typesToAdd)
+        UpdateChildren().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
+        UpdateChildren().createChartFile(sitename, typesToAdd)
+
+
+class UpdateChildren:
+
+    def __init__(self):
+        self.properties = []
+        self.websites = []
+        self.types = []
+
+    def updateRegistryFile(self, website, type_bs, props, details):
+
+        finDict = {}
+        elDict = {}
+        if len(type_bs) > 0:
+            for i in xrange(len(type_bs)):
+                elDict[type_bs[i]] = details[i]
+                elDict[type_bs[i]] += props[i]
+            finDict[website] = [elDict]
+
+            # try:
+            #     with open("%s_children/registry.json" % website, "rb") as f:
+            #         data = json.load(f)
+            # except IOError:
+            #     with open("%s_children/registry.json" % website, "wb") as f:
+            #         f.write("{\n\t\n}")
+            #     with open("%s_children/registry.json" % website, "rb") as f:
+            #         data = json.load(f)
+            #
+            # data.update(finDict)
+            #
+            # with open("%s_children/registry.json" % website, "wb") as f:
+            #     json.dump(data, f, indent=4)
+
+            with open("registry.json", "rb") as f:
+                data = json.load(f)
+
+            data.update(finDict)
+
+            with open("registry.json", "wb") as f:
+                json.dump(data, f, indent=4)
+
+        else:
+            pass
+
+    def createChartFile(self, website, type_bs):
+        """Create the csv file needed to build the chart in the website page."""
+
+        okColor = "#6CC4A4"
+        noColor = "#E1514B"
+        warnColor = "#FEC574"
+
+        for typ in type_bs:
+            graphList = []
+            maxList = []
+            okList = []
+            warnList = []
+            noList = []
+            minList = []
+            recList = []
+            ord = 0
+
+            with open("%s_children/tagsGuide.json" % website, "rb") as f, open("%s_children/tagsFound.json" % website, "rb") as g:
+                data = json.load(f)
+                data2 = json.load(g)
+
+                if typ == "Event":
+                    for i in data["event_bioschemas"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["event_bioschemas"][0][i][3]
+                        actType = data["event_bioschemas"][0][i][5]
+                        actCard = data["event_bioschemas"][0][i][6]
+                        actVocab = data["event_bioschemas"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["event_bioschemas"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                    for i in data["event_schema"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["event_schema"][0][i][3]
+                        actType = data["event_schema"][0][i][5]
+                        actCard = data["event_schema"][0][i][6]
+                        actVocab = data["event_schema"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["event_schema"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                elif typ == "Organization":
+                    for i in data["organization_bioschemas"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["organization_bioschemas"][0][i][3]
+                        actType = data["organization_bioschemas"][0][i][5]
+                        actCard = data["organization_bioschemas"][0][i][6]
+                        actVocab = data["organization_bioschemas"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["organization_bioschemas"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                    for i in data["organization_schema"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["organization_schema"][0][i][3]
+                        actType = data["organization_schema"][0][i][5]
+                        actCard = data["organization_schema"][0][i][6]
+                        actVocab = data["organization_schema"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["organization_schema"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                elif typ == "Person":
+                    for i in data["person_bioschemas"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["person_bioschemas"][0][i][3]
+                        actType = data["person_bioschemas"][0][i][5]
+                        actCard = data["person_bioschemas"][0][i][6]
+                        actVocab = data["person_bioschemas"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["person_bioschemas"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                    for i in data["person_schema"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["person_schema"][0][i][3]
+                        actType = data["person_schema"][0][i][5]
+                        actCard = data["person_schema"][0][i][6]
+                        actVocab = data["person_schema"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["person_schema"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                elif typ == "Training" or typ == "CreativeWork":
+                    for i in data["training_bioschemas"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["training_bioschemas"][0][i][3]
+                        actType = data["training_bioschemas"][0][i][5]
+                        actCard = data["training_bioschemas"][0][i][6]
+                        actVocab = data["training_bioschemas"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["training_bioschemas"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                    for i in data["training_schema"][0]:
+                        label = i
+                        scoreGraph = 0
+                        weightGraph = 0.0
+                        colorGraph = ""
+
+                        stdGuide = data["training_schema"][0][i][3]
+                        actType = data["training_schema"][0][i][5]
+                        actCard = data["training_schema"][0][i][6]
+                        actVocab = data["training_schema"][0][i][7]
+
+                        try:
+                            scoreGraph = len(data2["training_schema"][0][i])
+                        except KeyError:
+                            scoreGraph = 0
+                        if stdGuide == "Minimum":
+                            minList.append(i)
+                            weightGraph = 0.5
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        elif stdGuide == "Recommended":
+                            recList.append(i)
+                            weightGraph = 0.3
+                            if actType == "OK" and actCard == "OK" and actVocab == "OK":
+                                colorGraph = okColor
+                                okList.append(i)
+                                ord += 1
+
+                            elif actType == "Not found" and actCard == "Not found" and actVocab == "Not found":
+                                colorGraph = noColor
+                                noList.append(i)
+                                ord += 1
+
+                            else:
+                                colorGraph = warnColor
+                                warnList.append(i)
+                                ord += 1
+
+                            graphList.append([label, scoreGraph, weightGraph, 0.5, colorGraph])
+
+                        maxList.append(scoreGraph)
+
+                meanVal = max(maxList)
+
+                endfile = open("%s_children/chartData_%s.csv" % (website, typ), "ab")
+                w = csv.writer(endfile)
+                w.writerow(["label", "score", "weight", "width", "color", "mean"])
+
+                maxFile = open("%s_children/maxData_%s.csv" % (website, typ), "ab")
+                s = csv.writer(maxFile)
+                s.writerow(["a", "b"])
+
+                for el in graphList:
+                    el.append(meanVal)
+
+                graphList.sort(key=lambda x: x[1], reverse=True)
+                graphList.sort(key=lambda x: x[2], reverse=True)
+
+                for el in graphList:
+                    w.writerow(el)
+                    s.writerow([meanVal, "val"])
+                endfile.close()
+                maxFile.close()
 
 
 
