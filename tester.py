@@ -214,12 +214,12 @@ class WebsiteTags:
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)
             self.validateWebsiteMicrodata(websiteName)
-            if self.sibs == 0:
+            if self.sibs == "0":
                 self.validateSiblings(self.scrapeType)
         else:
             self.scrapeRDFa(websiteName, self.scrapeType)
             self.validateWebsiteRDFa(websiteName)
-            if self.sibs == 0:
+            if self.sibs == "0":
                 self.validateSiblings(self.scrapeType)
 
     def scrapeMicrodata(self, sitename, prefType):
@@ -704,7 +704,7 @@ class WebsiteTags:
             elif el.get("href").startswith("/" + self.url.split("/")[-1]):
                 endurl = el.get("href").split("/")
                 targetList.append(self.url + "/" + "/".join(endurl[2:]))
-        for i in len(targetList):
+        for i in xrange(len(targetList)):
             WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1, prefType)
 
 
