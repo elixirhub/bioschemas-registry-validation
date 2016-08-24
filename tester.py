@@ -181,7 +181,6 @@ class WebsiteTags:
         self.allProps = []          # All the props found in the website
         self.validProps = []        # Valid props found in the website
 
-        self.makeTempDir()
         self.newWebsiteTags()
 
     def makeTempDir(self):
@@ -195,9 +194,13 @@ class WebsiteTags:
     def newWebsiteTags(self):
         """Create a new directory named after the domain of the scraped website."""
 
-        if self.nome == self.url:
-            websiteComps = self.url.split("/")
-            websiteName = "_".join(websiteComps[2:])
+        response = requests.get(self.url)
+        html = response.content
+        soup = BeautifulSoup(html, "lxml")
+
+        if self.nome == "_":
+            websiteComps = soup.title.string.replace("|", "").split(" ")
+            websiteName = "_".join(websiteComps)
         else:
             websiteName = self.nome
 
@@ -206,10 +209,6 @@ class WebsiteTags:
         nameDict = {websiteName: self.url}
         with open("temp/%s/name_url.json" % websiteName, "wb") as f:
             json.dump(nameDict, f, indent=4, sort_keys=True)
-
-        response = requests.get(self.url)
-        html = response.content
-        soup = BeautifulSoup(html, "lxml")
 
         if soup.findAll(itemprop=True):
             self.scrapeMicrodata(websiteName, self.scrapeType)
@@ -1241,5 +1240,5 @@ class UpdateRegistry:
                 endfile.close()
                 maxFile.close()
 
-
+WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]).makeTempDir()
 WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

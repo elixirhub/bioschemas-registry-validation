@@ -46,7 +46,7 @@
 
     <h3>Website Name: </h3>
     <input type="text" id="name_input" class="inputs"><br>
-    <h5>If you choose not to provide a name for the URL you are testing, the URL itself will be used as a name.</h5>
+    <h5>If you choose not to provide a name for the URL you are testing, the <em>title</em> field content from the tested website will be used as its name.</h5>
 
     <label>
         <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Validate children links too
@@ -109,7 +109,7 @@
         if (urlToVal == "") {
             alert("You need to provide a valid URL to validate!");
         } else if (nameToVal == "") {
-            var r = confirm("If you don't provide a name for your website, the URL will be used as its name.");
+            var r = confirm("If you don't provide a name for your website, the title field content from the tested website will be used as its name.");
             if (r == true) {
                 $.get("validate_url.php", {url : urlToVal, nome : "_", link : linkToVal, types : typeToVal});
                 $("#response").append("<p>Thanks for using this service!</p>");
