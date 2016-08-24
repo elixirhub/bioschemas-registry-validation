@@ -483,7 +483,7 @@ class WebsiteTags:
             endfile.write(el + "\n")
         endfile.close()
 
-        e = open("%s/typesCount.json" % sitename, "wb")
+        e = open("temp/%s/typesCount.json" % sitename, "wb")
         json.dump(self.countTypes, e, indent=4, sort_keys=True)
         e.close()
 
