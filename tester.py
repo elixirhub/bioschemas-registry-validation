@@ -700,8 +700,10 @@ class WebsiteTags:
 
         for el in soup.findAll(href=True):
             if el.get("href").startswith(self.url):
-                # print el.get("href")
                 targetList.append(el.get("href"))
+            elif el.get("href").startswith("/" + self.url.split("/")[-1]):
+                endurl = el.get("href").split("/")
+                targetList.append(self.url + "/" + "/".join(endurl[2:]))
         for i in len(targetList):
             WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1, prefType)
 
