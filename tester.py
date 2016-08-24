@@ -141,7 +141,7 @@ class TagsReference:
 class WebsiteTags:
     """Extract all the properties found in the scraped website."""
 
-    def __init__(self, url, nome, sibs=1, scrapeType="all"):
+    def __init__(self, url, nome, sibs="1", scrapeType="all"):
         self.url = url
         self.nome = nome
         self.sibs = sibs

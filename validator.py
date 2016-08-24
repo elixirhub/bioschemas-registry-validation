@@ -141,11 +141,12 @@ class TagsReference:
 class WebsiteTags:
     """Extract all the properties found in the scraped website."""
 
-    def __init__(self, url, nome, sibs=1, scrapeType="all"):
+    def __init__(self, url, nome, sibs="1", scrapeType="all", merge="1"):
         self.url = url
         self.nome = nome
         self.sibs = sibs
         self.scrapeType = scrapeType
+        self.merge = merge
         self.websiteTypes = set()
         self.countTypes = {}
         self.foundTags = {
@@ -233,7 +234,7 @@ class WebsiteTags:
         soup = BeautifulSoup(html, "lxml")
 
         if self.nome == "_":
-            websiteComps = soup.title.string.split(" ")
+            websiteComps = soup.title.string.replace("|", "").split(" ")
             websiteName = "_".join(websiteComps)
         else:
             websiteName = self.nome
@@ -263,7 +264,7 @@ class WebsiteTags:
         soup = BeautifulSoup(html, "lxml")
 
         if self.nome == "_":
-            websiteComps = soup.title.string.split(" ")
+            websiteComps = soup.title.string.replace("|", "").split(" ")
             websiteName = "_".join(websiteComps)
         else:
             websiteName = self.nome
@@ -761,7 +762,540 @@ class WebsiteTags:
                 targetList.append(self.url + "/" + "/".join(endurl[2:]))
         if len(targetList) > 0:
             for i in xrange(len(targetList)):
-                WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), 1, prefType)
+                if self.merge == "1":
+                    WebsiteChildren(targetList[i], self.nome, prefType)
+                else:
+                    WebsiteTags(targetList[i], "%s_%d" % (self.nome, i), "1", prefType, "0")
+
+class WebsiteChildren:
+
+    def __init__(self, url, nome, scrapeType="all"):
+        self.url = url
+        self.nome = nome
+        self.scrapeType = scrapeType
+        self.websiteTypes = set()
+        self.countTypes = {}
+        self.foundTags = {
+            "event_bioschemas": [],
+            "event_schema": [],
+            "organization_bioschemas": [],
+            "organization_schema": [],
+            "person_bioschemas": [],
+            "person_schema": [],
+            "training_bioschemas": [],
+            "training_schema": []
+        }
+        self.tagsGuide = {
+            "event_bioschemas": [],
+            "event_schema": [],
+            "organization_bioschemas": [],
+            "organization_schema": [],
+            "person_bioschemas": [],
+            "person_schema": [],
+            "training_bioschemas": [],
+            "training_schema": []
+        }
+        self.tagsData = {
+            "event_bioschemas": [],
+            "event_schema": [],
+            "organization_bioschemas": [],
+            "organization_schema": [],
+            "person_bioschemas": [],
+            "person_schema": [],
+            "training_bioschemas": [],
+            "training_schema": []
+        }
+        self.allProps = []          # All the props found in the website
+        self.validProps = []        # Valid props found in the website
+
+        self.newWebsiteTags()
+
+    def newWebsiteTags(self):
+        """Create a new directory named after the domain of the scraped website."""
+
+        response = requests.get(self.url)
+        html = response.content
+        soup = BeautifulSoup(html, "lxml")
+
+        if self.nome == "_":
+            websiteComps = soup.title.string.replace("|", "").split(" ")
+            websiteName = "_".join(websiteComps)
+        else:
+            websiteName = self.nome
+
+        os.system("mkdir %s_children" % websiteName)
+
+        nameDict = {websiteName: self.url}
+        with open("%s_children/name_url.json" % websiteName, "ab") as f:
+            json.dump(nameDict, f, indent=4, sort_keys=True)
+
+        if soup.findAll(itemprop=True):
+            self.scrapeMicrodata(websiteName, self.scrapeType)
+            self.validateWebsiteMicrodata(websiteName)
+        else:
+            self.scrapeRDFa(websiteName, self.scrapeType)
+            self.validateWebsiteRDFa(websiteName)
+
+    def scrapeMicrodata(self, sitename, prefType):
+        """Get the microdata from the website and save them into a JSON file."""
+
+        reference = TagsReference()
+        print "Connecting to %s..." % self.url
+
+        response = requests.get(self.url)
+        html = response.content
+        soup = BeautifulSoup(html, "lxml")
+
+        print "Getting the Types found in %s..." % self.url
+
+        for el in soup.findAll(itemtype=True):
+            webtype = el.get("itemtype").split("/")[3]
+            try:
+                self.countTypes[webtype] += 1
+            except KeyError:
+                self.countTypes[webtype] = 1
+            if prefType != "all":
+                if webtype == prefType:
+                    self.websiteTypes.add(webtype)
+            else:
+                self.websiteTypes.add(webtype)
+
+        endfile = open("%s_children/typesFound.txt" % sitename, "ab")
+        for el in self.websiteTypes:
+            endfile.write(el + "\n")
+        endfile.close()
+
+        e = open("%s_children/typesCount.json" % sitename, "ab")
+        json.dump(self.countTypes, e, indent=4, sort_keys=True)
+        e.close()
+
+        print "Scraping microdata from %s..." % self.url
+
+        for typeProp in reference.refTags:
+            prop_dict = {}
+            guide_dict = {}
+            for property in reference.refTags[typeProp]:
+                for el in soup.findAll(itemprop=True):
+
+                    prop = el.get("itemprop")
+
+                    if prop == "image":
+                        cont = el.get("src")
+                    elif prop == "logo":
+                        cont = el.get("content")
+                    elif prop == "sameAs" or prop == "url":
+                        cont = el.get("href")
+                    else:
+                        cont = el.text.strip().replace("\n", "").replace("\r", "").replace("\t", "").encode("utf-8")
+
+                    for key in property:
+                        if prop == key:
+                            try:
+                                prop_dict[prop] += [cont]
+                            except KeyError:
+                                prop_dict[prop] = [cont]
+
+                for key in property:
+                    if key in prop_dict:
+                        cont = prop_dict[key]
+                        if cont == None:
+                            pass
+                        else:
+                            cont = str(cont[0])
+
+                            # Type values
+                            if property[key][0] == "Integer":
+                                if cont.isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Number":
+                                if cont.replace(".", "", 1).isdigit() or cont.replace(",", "", 1).isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Boolean":
+                                if cont == "True" or cont == "False" or cont == "true" or cont == "false" or cont == "T" or cont == "F" or cont == "t" or cont == "f":
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "URL":
+                                if "/" in cont or "." in cont:
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            else:
+                                val0 = "OK"
+
+                            # Cardinality
+                            if property[key][2] == "One":
+                                if type(cont) == str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+                            else:
+                                if type(cont) != str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+
+                            # Vocabulary
+                            if property[key][4] == "Yes":
+                                if cont.capitalize() in edamList:
+                                    val2 = "OK"
+                                else:
+                                    val2 = "Wrong"
+                            else:
+                                val2 = "OK"
+
+
+                            # Guide dict
+                            guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], val0, val1, val2]
+
+                    else:
+                        guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], "Not found", "Not found", "Not found"]
+
+
+                self.foundTags[typeProp] = [prop_dict]
+                self.tagsGuide[typeProp] = [guide_dict]
+
+        endfile = open("%s_children/tagsFound.json" % sitename, "ab")
+        json.dump(self.foundTags, endfile, indent=4, sort_keys=True)
+        endfile.close()
+        endfile2 = open("%s_children/tagsGuide.json" % sitename, "ab")
+        json.dump(self.tagsGuide, endfile2, indent=4, sort_keys=True)
+        endfile2.close()
+
+    def validateWebsiteMicrodata(self, sitename):
+        """Validate the entries found in the website for Bioschemas markup using Microdata."""
+
+        found_types = open("%s_children/typesFound.txt" % sitename, "rb")    # All the types found in the website
+        f = open("%s_children/tagsFound.json" % sitename, "rb")
+        r = open("bioschemas/bioschemasTags.json", "rb")
+        found = json.load(f)
+        ref = json.load(r)
+
+        report = open("%s_children/report.csv" % sitename, "ab")
+        w_rep = csv.writer(report)
+        w_rep.writerow(["Report"])
+
+        typesToAdd = []
+        propsToAdd = []
+        details = []
+
+        for line in found_types:
+
+            miss = open("%s_children/missingMin.csv" % sitename, "ab")  # Required props missing in the website
+            w_miss = csv.writer(miss)
+
+            prov = open("%s_children/providedRec.csv" % sitename, "ab")  # Not required props provided in the website
+            w_prov = csv.writer(prov)
+
+            line = line.strip()
+            if line == "Event" or line == "Organization" or line == "Person" or line == "Training" or line == "CreativeWork":
+                subj_type = line.lower()
+                w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
+                typeProps = set()
+                this_detail = []
+                foundMin = 0
+                foundRec = 0
+                foundOpt = 0
+                # Found Bioschemas type
+
+                for ref_key in ref:
+                    if ref_key.startswith(subj_type):
+                        for i in ref[ref_key]:
+                            for ref_prop in i:
+                                guideline = i[ref_prop][3]
+
+                                # Validate Minimum props
+
+                                for k in found[ref_key]:
+                                    if guideline == "Minimum" and not ref_prop in k:
+                                        w_miss.writerow([ref_prop, ref_key])
+                                    elif guideline == "Minimum" and ref_prop in k:
+                                        self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
+                                        foundMin += 1
+                                    elif guideline == "Recommended" and ref_prop in k:
+                                        w_prov.writerow([ref_prop, ref_key])
+                                        self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
+                                        foundRec += 1
+                                    elif guideline == "Optional" and ref_prop in k:
+                                        self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
+                                        foundOpt += 1
+
+                                    if ref_prop in k:
+                                        self.allProps.append(ref_prop)
+                                        self.tagsData[ref_key].append(ref_prop)
+
+                typesToAdd.append(line)
+                propsToAdd.append(list(typeProps))
+                this_detail.append([foundMin, foundRec, foundOpt])
+                details.append(this_detail)
+
+                miss.close()
+                prov.close()
+
+                w_rep.writerow(["Found %d valid properties out of %d properties provided." % (len(self.validProps), len(self.allProps))])
+
+                miss = open("%s_children/missingMin.csv" % sitename, "rb")
+                miss_r = csv.reader(miss)
+
+                prov = open("%s_children/providedRec.csv" % sitename, "rb")
+                prov_r = csv.reader(prov)
+
+                for line in prov_r:
+                    w_rep.writerow(["Missing %s property belonging to %s type" % (line[0], termsDict[line[1]])])
+
+                for line in miss_r:
+                    w_rep.writerow(["Provided %s property belonging to %s type" % (line[0], termsDict[line[1]])])
+
+                miss.close()
+                prov.close()
+
+        f.close()
+        r.close()
+        found_types.close()
+        report.close()
+
+        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
+        UpdateRegistry().createChartFile(sitename, typesToAdd)
+
+    def scrapeRDFa(self, sitename, prefType):
+        """Get the RDFa data from the website and save them into a JSON file."""
+
+        reference = TagsReference()
+        print "Connecting to %s..." % self.url
+
+        response = requests.get(self.url)
+        html = response.content
+        soup = BeautifulSoup(html, "lxml")
+
+        print "Getting the Types found in %s..." % self.url
+
+        for el in soup.findAll(typeof=True):
+            webtype = el.get("typeof")
+            try:
+                self.countTypes[webtype] += 1
+            except KeyError:
+                self.countTypes[webtype] = 1
+            if prefType != "all":
+                if webtype == prefType:
+                    self.websiteTypes.add(webtype)
+            else:
+                self.websiteTypes.add(webtype)
+
+        endfile = open("%s_children/typesFound.txt" % sitename, "ab")
+        for el in self.websiteTypes:
+            endfile.write(el + "\n")
+        endfile.close()
+
+        e = open("%s_children/typesCount.json" % sitename, "ab")
+        json.dump(self.countTypes, e, indent=4, sort_keys=True)
+        e.close()
+
+        print "Scraping microdata from %s..." % self.url
+
+        for typeProp in reference.refTags:
+            prop_dict = {}
+            guide_dict = {}
+            for property in reference.refTags[typeProp]:
+                for el in soup.findAll(property=True):
+
+                    prop = el.get("property")
+
+                    if len(prop.split(":")) > 1:
+                        prop = prop.split(":")[-1]
+                    else:
+                        prop = prop.strip()
+
+                    if prop == "image":
+                        cont = el.get("src")
+                    elif prop == "logo":
+                        cont = el.get("content")
+                    elif prop == "sameAs" or prop == "url":
+                        cont = el.get("href")
+                    else:
+                        cont = el.text.strip().replace("\n", " ").replace("\r", " ").replace("\t", " ").encode("utf-8")
+
+                    for key in property:
+                        if prop == key:
+                            try:
+                                prop_dict[prop] += [cont]
+                            except KeyError:
+                                prop_dict[prop] = [cont]
+
+                for key in property:
+                    if key in prop_dict:
+                        cont = prop_dict[key]
+                        if cont == None:
+                            pass
+                        else:
+                            cont = str(cont[0])
+
+                            # Type values
+                            if property[key][0] == "Integer":
+                                if cont.isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Number":
+                                if cont.replace(".", "", 1).isdigit():
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "Boolean":
+                                if cont == "True" or cont == "False" or cont == "true" or cont == "false" or cont == "T" or cont == "F" or cont == "t" or cont == "f":
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            elif property[key][0] == "URL":
+                                if "/" in cont or "." in cont:
+                                    val0 = "OK"
+                                else:
+                                    val0 = "Wrong"
+                            else:
+                                val0 = "OK"
+
+                            # Cardinality
+                            if property[key][2] == "One":
+                                if type(cont) == str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+                            else:
+                                if type(cont) != str:
+                                    val1 = "OK"
+                                else:
+                                    val1 = "Wrong"
+
+                            # Vocabulary
+                            if property[key][4] == "Yes":
+                                if cont.capitalize() in edamList:
+                                    val2 = "OK"
+                                else:
+                                    val2 = "Wrong"
+                            else:
+                                val2 = "OK"
+
+                            # Guide dict
+                            guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], val0, val1, val2]
+
+                    else:
+                        guide_dict[key] = [property[key][0], property[key][1], property[key][2], property[key][3], property[key][4], "Not found", "Not found", "Not found"]
+
+
+                self.foundTags[typeProp] = [prop_dict]
+                self.tagsGuide[typeProp] = [guide_dict]
+
+        endfile = open("%s_children/tagsFound.json" % sitename, "ab")
+        json.dump(self.foundTags, endfile, indent=4, sort_keys=True)
+        endfile.close()
+        endfile2 = open("%s_children/tagsGuide.json" % sitename, "ab")
+        json.dump(self.tagsGuide, endfile2, indent=4, sort_keys=True)
+        endfile2.close()
+
+    def validateWebsiteRDFa(self, sitename):
+        """Validate the entries found in the website for Bioschemas markup using RDFa."""
+
+        found_types = open("%s_children/typesFound.txt" % sitename, "rb")    # All the types found in the website
+        f = open("%s_children/tagsFound.json" % sitename, "rb")
+        r = open("bioschemas/bioschemasTags.json", "rb")
+        found = json.load(f)
+        ref = json.load(r)
+
+        report = open("%s_children/report.csv" % sitename, "ab")
+        w_rep = csv.writer(report)
+        w_rep.writerow(["Report"])
+
+        typesToAdd = []
+        propsToAdd = []
+        details = []
+
+        for line in found_types:
+
+            miss = open("%s_children/missingMin.csv" % sitename, "ab")   # Required props missing in the website
+            w_miss = csv.writer(miss)
+
+            prov = open("%s_children/providedRec.csv" % sitename, "ab")  # Not required props provided in the website
+            w_prov = csv.writer(prov)
+
+            line = line.strip()
+            if line == "Event" or line == "Organization" or line == "Person" or line == "Training" or line == "CreativeWork":
+                subj_type = line.lower()
+                w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
+                typeProps = set()
+                this_detail = []
+                foundMin = 0
+                foundRec = 0
+                foundOpt = 0
+                # Found Bioschemas type
+
+                for ref_key in ref:
+                    if ref_key.startswith(subj_type):
+                        for i in ref[ref_key]:
+                            for ref_prop in i:
+                                guideline = i[ref_prop][3]
+
+                                # Validate Minimum props
+
+                                for k in found[ref_key]:
+                                    if guideline == "Minimum" and not ref_prop in k:
+                                        w_miss.writerow([ref_prop, ref_key])
+                                    elif guideline == "Minimum" and ref_prop in k:
+                                        self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
+                                        foundMin += 1
+                                    elif guideline == "Recommended" and ref_prop in k:
+                                        w_prov.writerow([ref_prop, ref_key])
+                                        self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
+                                        foundRec += 1
+                                    elif guideline == "Optional" and ref_prop in k:
+                                        self.validProps.append(ref_prop)
+                                        typeProps.add(ref_prop)
+                                        foundOpt += 1
+
+                                    if ref_prop in k:
+                                        self.allProps.append(ref_prop)
+                                        self.tagsData[ref_key].append(ref_prop)
+
+                typesToAdd.append(line)
+                propsToAdd.append(list(typeProps))
+                this_detail.append([foundMin, foundRec, foundOpt])
+                details.append(this_detail)
+
+                miss.close()
+                prov.close()
+
+                w_rep.writerow(["Found %d valid properties out of %d properties provided." % (len(self.validProps), len(self.allProps))])
+
+                miss = open("%s_children/missingMin.csv" % sitename, "rb")
+                miss_r = csv.reader(miss)
+
+                prov = open("%s_children/providedRec.csv" % sitename, "rb")
+                prov_r = csv.reader(prov)
+
+                for line in prov_r:
+                    w_rep.writerow(["Missing %s property belonging to %s type" % (line[0], termsDict[line[1]])])
+
+                for line in miss_r:
+                    w_rep.writerow(["Provided %s property belonging to %s type" % (line[0], termsDict[line[1]])])
+
+                miss.close()
+                prov.close()
+
+        f.close()
+        r.close()
+        found_types.close()
+        report.close()
+
+        UpdateRegistry().updateRegistryFile(sitename, typesToAdd, propsToAdd, details)
+        UpdateRegistry().createChartFile(sitename, typesToAdd)
+
 
 
 class UpdateRegistry:
