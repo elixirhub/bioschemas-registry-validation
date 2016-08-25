@@ -200,7 +200,7 @@ class WebsiteTags:
         soup = BeautifulSoup(html, "lxml")
 
         if self.nome == "_":
-            websiteComps = soup.title.string.replace("|", "").replace(">", "").replace("<", "").split(" ")
+            websiteComps = soup.title.string.replace("|", "").replace(">", "").replace("<", "").replace("(", "").replace(")", "").replace(".", "").replace("-", "").replace("'", "").split(" ")
             websiteName = "_".join(websiteComps)
         else:
             websiteName = self.nome
@@ -380,7 +380,10 @@ class WebsiteTags:
 
             line = line.strip()
             if line == "Event" or line == "Organization" or line == "Person" or line == "Training" or line == "CreativeWork":
-                subj_type = line.lower()
+                if line == "CreativeWork":
+                    subj_type = "training"
+                else:
+                    subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
                 typeProps = set()
                 this_detail = []
@@ -616,7 +619,10 @@ class WebsiteTags:
 
             line = line.strip()
             if line == "Event" or line == "Organization" or line == "Person" or line == "Training" or line == "CreativeWork":
-                subj_type = line.lower()
+                if line == "CreativeWork":
+                    subj_type = "training"
+                else:
+                    subj_type = line.lower()
                 w_rep.writerow(["Website %s belonging to the %s type." % (self.url, line)])
                 typeProps = set()
                 this_detail = []
