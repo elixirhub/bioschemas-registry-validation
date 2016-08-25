@@ -1,3 +1,0 @@
-Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
-name,Text,One,Minimum,,2,The name of the item.,"['Carla Ferro', 'GAMA']"
-sameAs,URL,One,Minimum,,1,"URL of a reference web page that unambiguously indicates the item's identity (e.g. the URL of the item's Wikipedia page, Freebase page or official website).",[None]

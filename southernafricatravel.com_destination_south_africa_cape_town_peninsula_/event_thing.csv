@@ -1,2 +1,0 @@
-Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
-url,URL,Many,Recommended,,1,"URL of the item. This property can be used on a page listing many events, to indicate each individual event's page.",['http://southernafricatravel.com/']

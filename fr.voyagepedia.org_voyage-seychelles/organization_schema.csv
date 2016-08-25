@@ -1,2 +1,0 @@
-Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
-location,Place or PostalAddress,One,Recommended,,2,"The location of the event, organization or action.","['', '']"

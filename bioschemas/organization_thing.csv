@@ -1,6 +1,0 @@
-Property,Type,Descr,Cardin,Guideline,Vocab
-description,Text,A short description of the item.,One,Minimum,
-name,Text,The name of the item.,One,Minimum,
-sameAs,URL,"URL of a reference web page that unambiguously indicates the item's identity (e.g. the URL of the item's Wikipedia page, Freebase page or official website).",One,Minimum,
-alternateName,Text,An alias for the item.,One,Recommended,
-url,URL,URL of the item.,Many,Recommended,

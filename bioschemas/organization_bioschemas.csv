@@ -1,4 +1,4 @@
-Property,Type,Descr,Cardin,Guideline,Vocab
+Property,Type,Description,Cardinality,Guideline,Vocabulary
 type,CV,"The type of the organization selected from a controlled vocabulary: single-company corporation, multinational, not-for-profit, alliance, consortium, institute, department, working party, project, etc.",Many,Minimum,Yes
 topic,CV and/or Text,"Scientific topics that describe the organization and its activities, using a scientific ontology term from EDAM topics.",Many,Minimum,Yes
 status,CV and/or Text,"To record if the organization is still active, and if it were a project or alliance, what the outcome was, or if it has closed down or merged, why and when.",One,Recommended,Yes

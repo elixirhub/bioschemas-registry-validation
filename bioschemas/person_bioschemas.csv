@@ -1,4 +1,4 @@
-Property,Type,Descr,Cardin,Guideline,Vocab
+Property,Type,Description,Cardinality,Guideline,Vocabulary
 expertise,CV,A textual description of the topic which a person has the most expertise in. This should make use of an ontology such as the EDAM ontology.,One,Recommended,Yes
 keyword,CV and/or Text,Keywords to describe the person. These should be single words or short phrases that relate to a person.,Many,Recommended,
 orcid,Text or URL,The url or ID of the person's ORCID.,One,Recommended,

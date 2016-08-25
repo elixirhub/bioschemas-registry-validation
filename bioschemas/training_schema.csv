@@ -1,4 +1,4 @@
-Property,Type,Descr,Cardin,Guideline,Vocab
+Property,Type,Description,Cardinality,Guideline,Vocabulary
 about,Thing,The subject matter of the content.,One,Minimum,
 audience,Audience,"An intended audience, i.e. a group for whom something was created.",Many,Minimum,Yes
 dateModified,Date or DateTime,The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed.,One,Minimum,
@@ -17,3 +17,7 @@ mentions,Thing,"Indicates that the CreativeWork contains a reference to, but is 
 review,Review,A review of the item.,Many,Optional,
 timeRequired,Duration,"Approximate or typical time it takes to work with or through this learning resource for the typical intended target audience (e.g. ""P30M"", ""P1H25M"").",One,Optional,Yes
 version,Number,The version of the CreativeWork embodied by a specified resource.,One,Optional,
+name,Text,The name of the item.,One,Minimum,
+description,Text,A short description of the item.,One,Recommended,
+url,URL,URL of the item.,Many,Recommended,
+sameAs,URL,"URL of a reference web page that unambiguously indicates the item's identity (e.g. the URL of the item's Wikipedia page, Freebase page or official website).",One,Optional,

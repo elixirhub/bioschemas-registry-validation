@@ -1,3 +1,0 @@
-Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
-startDate,Date,One,Minimum,,2,The start date and time of the item (in ISO 8601 date format).,"['', '']"
-location,Place or Postal Address,One,Minimum,,2,"The location of the event, organization or action.","['', '']"

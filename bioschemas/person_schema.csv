@@ -1,4 +1,8 @@
-Property,Type,Descr,Cardin,Guideline,Vocab
+Property,Type,Description,Cardinality,Guideline,Vocabulary
 email,Text,Email address.,One,Recommended,
 homeLocation,Place or ContactPoint,A contact location for a person's residence.,One,Recommended,
 memberOf,ProgramMembership or Organization,An Organization (or ProgramMembership) to which this Person belongs.,Many,Recommended,
+description,Text,A short description of the item.,Many,Minimum,
+name,Text,The name of the item.,One,Minimum,
+image,URL or ImageObject,An image of the item. This can be a URL or a fully described ImageObject.,One,Recommended,
+mainEntityOfPage,URL or CreativeWork,Indicates a page (or other CreativeWork) for which this thing is the main entity being described.,Many,Recommended,

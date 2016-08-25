@@ -1,4 +1,4 @@
-Property,Type,Descr,Cardin,Guideline,Vocab
+Property,Type,Description,Cardinality,Guideline,Vocabulary
 legalName,Text,The official name of the organization (e.g. the registered company name).,One,Minimum,
 contactPoint,ContactPoint,A contact point for a person or organization.,Many,Recommended,
 location,Place or PostalAddress,"The location of the event, organization or action.",One,Recommended,
@@ -10,3 +10,8 @@ dissolutionDate,Date,The date that this organization was dissolved.,One,Optional
 owns,OwnershipInfo or Products,Products owned by the organization or person.,Many,Optional,
 parentOrganization,Organization,"The larger organization that this organization is a branch of, if any.",One,Optional,
 subOrganization,Organization,A relationship between two organizations where the first includes the second (e.g. as a subsidiary).,Many,Optional,
+description,Text,A short description of the item.,One,Minimum,
+name,Text,The name of the item.,One,Minimum,
+sameAs,URL,"URL of a reference web page that unambiguously indicates the item's identity (e.g. the URL of the item's Wikipedia page, Freebase page or official website).",One,Minimum,
+alternateName,Text,An alias for the item.,One,Recommended,
+url,URL,URL of the item.,Many,Recommended,

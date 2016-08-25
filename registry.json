@@ -1,0 +1,128 @@
+{
+    "Carla_Ferro__doulasclub": [
+        {
+            "Person": [
+                [
+                    1, 
+                    2, 
+                    0
+                ], 
+                "image", 
+                "email", 
+                "name"
+            ]
+        }
+    ], 
+    "Perspective_Drawings": [
+        {
+            "Person": [
+                [
+                    2, 
+                    1, 
+                    0
+                ], 
+                "image", 
+                "description", 
+                "name"
+            ], 
+            "CreativeWork": [
+                [
+                    4, 
+                    3, 
+                    2
+                ], 
+                "about", 
+                "name", 
+                "url", 
+                "isPartOf", 
+                "dateCreated", 
+                "keywords", 
+                "genre", 
+                "dateModified", 
+                "description"
+            ], 
+            "Event": [
+                [
+                    3, 
+                    2, 
+                    0
+                ], 
+                "keywords", 
+                "startDate", 
+                "url", 
+                "description", 
+                "name"
+            ], 
+            "Organization": [
+                [
+                    2, 
+                    3, 
+                    0
+                ], 
+                "url", 
+                "logo", 
+                "description", 
+                "keywords", 
+                "name"
+            ]
+        }
+    ], 
+    "Ephesus_Tour_from_Kusadasi_full_day_by_Ephesus_Breeze": [
+        {
+            "Person": [
+                [
+                    2, 
+                    2, 
+                    0
+                ], 
+                "image", 
+                "email", 
+                "name", 
+                "description"
+            ]
+        }
+    ], 
+    "Roman_Capriccio:_The_Pantheon_and_Other_Monuments__Indianapolis_Museum_of_Art": [
+        {
+            "CreativeWork": [
+                [
+                    1, 
+                    2, 
+                    1
+                ], 
+                "url", 
+                "description", 
+                "name", 
+                "dateCreated"
+            ]
+        }
+    ], 
+    "Second_Annual_Danish_Bioinformatics_Conference__Events__ELIXIR": [
+        {
+            "Event": [
+                [
+                    5, 
+                    0, 
+                    0
+                ], 
+                "startDate", 
+                "endDate", 
+                "location", 
+                "name", 
+                "description"
+            ]
+        }
+    ], 
+    "Mida_News": [
+        {
+            "Person": [
+                [
+                    1, 
+                    0, 
+                    0
+                ], 
+                "name"
+            ]
+        }
+    ]
+}

@@ -253,9 +253,7 @@
                 "Optional", 
                 ""
             ]
-        }
-    ], 
-    "event_thing": [
+        }, 
         {
             "description": [
                 "Text", 
@@ -511,9 +509,7 @@
                 "Optional", 
                 ""
             ]
-        }
-    ], 
-    "organization_thing": [
+        }, 
         {
             "description": [
                 "Text", 
@@ -697,9 +693,7 @@
                 "Recommended", 
                 ""
             ]
-        }
-    ], 
-    "person_thing": [
+        }, 
         {
             "description": [
                 "Text", 
@@ -919,9 +913,7 @@
                 "Optional", 
                 ""
             ]
-        }
-    ], 
-    "training_thing": [
+        }, 
         {
             "name": [
                 "Text", 

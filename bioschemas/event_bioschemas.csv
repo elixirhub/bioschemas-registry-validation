@@ -1,4 +1,4 @@
-Property,Type,Descr,Cardin,Guideline,Vocab
+Property,Type,Description,Cardinality,Guideline,Vocabulary
 contact,Organization or Person,Main point of contact that can be contacted for general queries. This would be an event organizer or an administrator.,Many,Minimum,
 eventType,Text,Enumeration value for a type of event following one of the categories defined by SASI.,Many,Minimum,Yes
 topic,Text,"In the context of Life Science, the scientific topics that describe the content of the event (e.g. statistics), using one or more of the scientific ontology terms for class Topic from EDAM ontology.",Many,Minimum,Yes

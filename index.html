@@ -2,110 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Properties Visualization</title>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
-    <link rel="stylesheet" href="stylesheet.css">
+    <title>Bioschemas Properties Visualization</title>
+    <link rel="icon" type="icon/png" href="img/favicon.png">
+
+    <!-- d3.js framework -->
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="stylesheet.css" media="screen" title="no title" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-    <!-- Barplot and legend container -->
-    <div class="svg-container" id="barcont">
+    <div style="display: inline-block; padding: 1em 0;">
+        <a href="index.html"><img class="rotation" src="img/square_logo2.png" alt="Bioschemas" style="width: 10%; height: 10%;"></a>
+        <a href="index.html"><img src="img/name_lower.png" alt="Bioschemas" style="width: 40%; height: 40%;"></a>
+    </div>
 
-        <!-- Website dropdown -->
-        <div class="dropdown">
-            <button class="dropbtn" id="mainbtn">Websites</button>
-            <div class="dropdown-content" id="maincnt"></div>
+    <div class="navbar">
+        <div class="navbar_links">
+            <a href="index.html" class="page-link">
+                <div class="nav_buttons" id="nav_active">Home</div>
+            </a>
+            <a href="websites_registry/index.html" class="page-link">
+                <div class="nav_buttons">Registry</div>
+            </a>
+            <a href="tester.html" class="page-link">
+                <div class="nav_buttons">Test Website</div>
+            </a>
+            <a href="validate.html" class="page-link">
+                <div class="nav_buttons">Submit Website</div>
+            </a>
         </div>
+    </div>
 
-        <!-- Barplot container -->
-        <div class="svg-container" id="barchart"></div>
+    <h1>Bioschemas Properties Visualization</h1>
 
-        <!-- Legend container -->
-        <div class="svg-container" id="barlegend">
+    <h3>This webtool allows to test any website for their compliance with Bioschemas specifications, and then submit them to our registry of Bioschemas-compliant websites.</h3>
 
-            <!-- Website list button -->
-            <div class="dropdown" id="listButton">
-                <button class="dropbtn">List</button>
-            </div>
+    <div id="report_div">
+        <p>The registry currently contains <strong><span id="tot_props"></span></strong> properties, coming from <strong><span id="tot_websites"></span></strong> websites and belonging to <strong><span id="tot_types"></span></strong> different Bioschemas types.</p>
 
-            <svg class="hide" id="barlegendsvg" width="200" height="600">
-                <g>
-                    <circle cy="100" cx="100" r="20" fill="#1B62E8"></circle>
-                    <text y="140" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Event</text>
-                </g>
+        <p>Last registry update: <span id="last_update"></span>.</p>
+    </div>
 
-                <g>
-                    <circle cy="200" cx="100" r="20" fill="#2AACFF"></circle>
-                    <text y="240" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Organization</text>
-                </g>
+    <div>
 
-                <g>
-                    <circle cy="300" cx="100" r="20" fill="#81CDFE"></circle>
-                    <text y="340" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Person</text>
-                </g>
-
-                <g>
-                    <circle cy="400" cx="100" r="20" fill="#1DFFDE"></circle>
-                    <text y="440" x="100" text-anchor="middle" font-family="sans-serif" font-size="18px">Training</text>
-                </g>
-            </svg>
-        </div>
-
-        <!-- Ratings table -->
-        <div class="svg-container hide" id="websitetable"></div>
+        You can either browse the
+        <button type="button" class="buttons" name="web_btn" onclick="window.location.href='websites_registry/index.html'">Registry</button>
+        or test a website for its Bioschemas compliance with the
+        <button type="button" class="buttons" name="test_btn" onclick="window.location.href='tester.html'">Tester</button>
+        tool, or submit a website to the registry with the
+        <button type="button" class="buttons" name="val_btn" onclick="window.location.href='validate.html'">Validator</button>
+        tool.
 
     </div>
 
-    <!-- Compliance container -->
-    <div class="svg-container" id="compliance">
-
-        <div id="event_radial"></div>
-        <div id="organization_radial"></div>
-        <div id="person_radial"></div>
-        <div id="training_radial"></div>
-
-    </div>
-
-    <!-- Bubble container title -->
-    <div id="bubbletitle"></div>
-
-    <!-- Buttons to switch chart type -->
-    <div class="dropcont hide" id="changeChart">
-
-        <!-- Bubble chart button -->
-        <div class="dropdown2" id="bubbleButt">
-            <button class="dropbtn" id="buttonBubble">Bubble</button>
-        </div>
-
-        <!-- Pie chart button -->
-        <div class="dropdown2" id="pieButt">
-            <button class="dropbtn">Pie</button>
-        </div>
-
-    </div>
-
-    <!-- Bubblechart and table container -->
-    <div class="svg-container" id="bubblecont">
-
-        <!-- Bubblechart container -->
-        <div class="svg-container" id="bubblechart"></div>
-
-        <!-- Table container -->
-        <div class="svg-container" id="bubbleinfo">
-
-            <!-- Show raw data button -->
-            <div class="dropdown2 hide" id="rawButt">
-                <button class="dropbtn">Show Raw Data</button>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Raw data container -->
-    <div class="svg-container hide" id="rawinfo"></div>
-
+    <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="main_vis.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function () {
+            var tot_props = document.getElementById("tot_props");
+            var tot_web = document.getElementById("tot_websites");
+            var tot_type = document.getElementById("tot_types");
+            var last_up = document.getElementById("last_update");
+
+            var typeSet = new Set();
+            var propSet = new Set();
+
+            d3.json("registry.json", function (data) {
+                var siti = Object.keys(data);
+                tot_web.innerHTML = siti.length;
+                for (var i in siti) {
+                    var primaCella = siti[i];
+                    var typeDict = data[primaCella][0];
+                    var tipi = Object.keys(typeDict);
+                    for (var j in tipi) {
+                        var secondaCella = tipi[j];
+                        typeSet.add(secondaCella);
+                        var toPush = data[primaCella][0][secondaCella];
+                        for (var k in toPush) {
+                            propSet.add(toPush[k]);
+                        }
+                    }
+                }
+                tot_type.innerHTML = Array.from(typeSet).length;
+                tot_props.innerHTML = Array.from(propSet).length;
+            });
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) { dd = '0'+dd; }
+            if (mm < 10) { mm = '0'+mm; }
+
+            today = mm + '/' + dd + '/' + yyyy;
+            last_up.innerHTML = today;
+        };
+
+    </script>
+
 </body>
 </html>

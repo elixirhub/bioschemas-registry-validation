@@ -1,2 +1,0 @@
-Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
-keywords,CV and/or Text,Many,Recommended,,7,Keywords to describe the organization. Use term which are not available in EDAM Scientific Topic; use text keywords or ontology terms from other ontologies which could complement EDAM topics.,"['Architecture', 'Renderings (drawings)', 'Perspective views', 'Commercial buildings', 'Government buildings', 'Arcades (Architecture)', 'Historic buildings']"

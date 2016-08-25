@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bioschemas Properties Visualization</title>
+    <link rel="icon" type="icon/png" href="../img/favicon.png">
+
+    <!-- d3.js framework -->
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../stylesheet.css" media="screen" title="no title" charset="utf-8">
+    <!-- ToolTipster.css -->
+    <link rel="stylesheet" href="../tooltipster-master/dist/css/tooltipster.bundle.min.css">
+
+</head>
+<body>
+
+    <div style="display: inline-block; padding: 1em 0;">
+        <a href="../index.html"><img class="rotation" src="../img/square_logo2.png" alt="Bioschemas" style="width: 10%; height: 10%;"></a>
+        <a href="../index.html"><img src="../img/name_lower.png" alt="Bioschemas" style="width: 40%; height: 40%;"></a>
+    </div>
+
+    <div class="navbar">
+        <div class="navbar_links">
+            <a href="../index.html" class="page-link">
+                <div class="nav_buttons">Home</div>
+            </a>
+            <a href="../websites_registry/index.html" class="page-link">
+                <div class="nav_buttons">Registry</div>
+            </a>
+            <a href="../tester.html" class="page-link">
+                <div class="nav_buttons" id="nav_active">Test Website</div>
+            </a>
+            <a href="../validate.html" class="page-link">
+                <div class="nav_buttons">Submit Website</div>
+            </a>
+        </div>
+    </div>
+
+    <br><br>
+
+    <!-- Summary Section -->
+    <button class="accordion">Summary</button>
+    <div class="panel">
+
+        <div style="float: left; width: 50%; margin-left: 2%">
+
+            <h1>Entry Name: <span id="title"></span></h1>
+            <h3>Entry URL: <a id="siteUrl"></a></h3>
+
+            <h2>Bioschemas type: <span id="type_header"></span> (<span id="type_count"></span>)</h2>
+
+            <div id="ratingDiv"></div>
+
+        </div>
+
+        <div id="testchart" style="margin-left: 55%;"></div>
+    </div>
+
+    <!-- Min and Rec Props Section -->
+    <button class="accordion">Minimum and Recommended Properties</button>
+    <div class="panel">
+
+        <label>
+            <input type="checkbox" name="showMinDescr" id="showMinDescr" onclick="minDescr()">&nbsp; Show properties description
+        </label>
+
+        <table id="minTable" class="tablesorter">
+            <thead>
+            <tr>
+                <th style="width: 2em;">&nbsp;</th>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Guideline</th>
+                <th>CV</th>
+                <th>Cardinality</th>
+                <th class="hide descriptionMin">Description</th>
+
+            </tr>
+            </thead>
+            <tbody id="minimum_table">
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Optional Props Section -->
+    <button class="accordion">Optional Properties</button>
+    <div class="panel">
+
+        <label>
+            <input type="checkbox" name="showOptDescr" id="showOptDescr" onclick="optDescr()">&nbsp; Show properties description
+        </label>
+
+        <table class="tablesorter" id="optTable">
+            <thead>
+            <tr>
+                <th style="width: 2em;">&nbsp;</th>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Guideline</th>
+                <th>CV</th>
+                <th>Cardinality</th>
+                <th class="hide descriptionOpt">Description</th>
+            </tr>
+            </thead>
+            <tbody id="optional_table">
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Report Section -->
+    <button class="accordion">Report</button>
+    <div class="panel">
+        <ul id="missingMin"></ul>
+        <ul id="missingRec"></ul>
+    </div>
+
+    <br>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <!-- TableSorter.js -->
+    <script type="text/javascript" src="../tablesorter-master/jquery.tablesorter.js"></script>
+    <!-- ToolTipster.js -->
+    <script type="text/javascript" src="../tooltipster-master/dist/js/tooltipster.bundle.min.js"></script>
+    <!-- Tip for the chart -->
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <script type="text/javascript">
+
+        var acc = document.getElementsByClassName("accordion");
+        for (var dd = 0; dd < acc.length; dd++) {
+            acc[dd].onclick = function () {
+                this.classList.toggle("active");
+                this.nextElementSibling.classList.toggle("show");
+            }
+        }
+
+        var siteName = (window.location.hash).split("#")[1];
+        var type = (window.location.hash).split("#")[2];
+
+        document.getElementById("title").innerHTML = siteName.replace(/_/g, " ");
+        document.getElementById("type_header").innerHTML = type;
+
+        d3.json(siteName + "/name_url.json", function (data3) {
+
+            var siteURL = data3[siteName];
+            document.getElementById("siteUrl").innerHTML = siteURL;
+            document.getElementById("siteUrl").setAttribute("href", siteURL);
+
+        });
+
+        d3.json(siteName + "/typesCount.json", function (data4) {
+            var typeEl = data4[type];
+            if (typeEl == 1) {
+                document.getElementById("type_count").innerHTML = typeEl + " entry";
+            } else {
+                document.getElementById("type_count").innerHTML = typeEl + " entries";
+            }
+        });
+
+        var minBody = document.getElementById("minimum_table");
+        var optBody = document.getElementById("optional_table");
+
+        var minRate = 0;
+        var recRate = 0;
+        var optRate = 0;
+        var minTot = 0;
+        var recTot = 0;
+        var optTot = 0;
+
+        var okColor = "#6CC4A4";
+        var noColor = "#E1514B";
+        var warnColor = "#FEC574";
+
+        var minColor = "#a6a6a6";
+        var recColor = "#cccccc";
+        var optColor = "#e6e6e6";
+
+        var graphList = [];
+
+        d3.json(siteName + "/tagsGuide.json", function (data) {
+            d3.json(siteName + "/tagsFound.json", function(data2) {
+                d3.csv(siteName + "/chartData_" + type + ".csv", function (data3) {
+
+                    data3.forEach(function (d) {
+                        d.color  =  d.color;
+                        d.weight = +d.weight;
+                        d.score  = +d.score;
+                        d.width  = +d.width;
+                        d.label  =  d.label;
+                        d.mean   = +d.mean;
+                    });
+
+                    if (type == "Event") {
+                        for (var i in data["event_bioschemas"]) {
+                            for (var j in data["event_bioschemas"][i]) {
+                                var property = document.createTextNode(j);
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["event_bioschemas"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["event_bioschemas"][0][j].length;
+                                }
+
+                                var stdType = data["event_bioschemas"][i][j][0];
+                                var stdDescr = data["event_bioschemas"][i][j][1];
+                                var stdCard = data["event_bioschemas"][i][j][2];
+                                var stdGuide = data["event_bioschemas"][i][j][3];
+                                var stdVocab;
+                                if (data["event_bioschemas"][i][j][4] == "Yes") {
+                                    stdVocab = data["event_bioschemas"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["event_bioschemas"][i][j][5];
+                                var actCard = data["event_bioschemas"][i][j][6];
+                                var actVocab = data["event_bioschemas"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+
+                        for (var i in data["event_schema"]) {
+                            for (var j in data["event_schema"][i]) {
+                                var property = document.createElement("a");
+                                property.setAttribute("href", "https://schema.org/" + j);
+                                property.innerHTML = j;
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["event_schema"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["event_schema"][0][j].length;
+                                }
+
+                                var stdType = data["event_schema"][i][j][0];
+                                var stdDescr = data["event_schema"][i][j][1];
+                                var stdCard = data["event_schema"][i][j][2];
+                                var stdGuide = data["event_schema"][i][j][3];
+                                var stdVocab;
+                                if (data["event_schema"][i][j][4] == "Yes") {
+                                    stdVocab = data["event_schema"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["event_schema"][i][j][5];
+                                var actCard = data["event_schema"][i][j][6];
+                                var actVocab = data["event_schema"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+                    } else if (type == "Organization") {
+                        for (var i in data["organization_bioschemas"]) {
+                            for (var j in data["organization_bioschemas"][i]) {
+                                var property = document.createTextNode(j);
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["organization_bioschemas"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["organization_bioschemas"][0][j].length;
+                                }
+
+                                var stdType = data["organization_bioschemas"][i][j][0];
+                                var stdDescr = data["organization_bioschemas"][i][j][1];
+                                var stdCard = data["organization_bioschemas"][i][j][2];
+                                var stdGuide = data["organization_bioschemas"][i][j][3];
+                                var stdVocab;
+                                if (data["organization_bioschemas"][i][j][4] == "Yes") {
+                                    stdVocab = data["organization_bioschemas"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["organization_bioschemas"][i][j][5];
+                                var actCard = data["organization_bioschemas"][i][j][6];
+                                var actVocab = data["organization_bioschemas"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.appendChild(contFirst);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+
+                        for (var i in data["organization_schema"]) {
+                            for (var j in data["organization_schema"][i]) {
+                                var property = document.createElement("a");
+                                property.setAttribute("href", "https://schema.org/" + j);
+                                property.innerHTML = j;
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["organization_schema"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["organization_schema"][0][j].length;
+                                }
+
+                                var stdType = data["organization_schema"][i][j][0];
+                                var stdDescr = data["organization_schema"][i][j][1];
+                                var stdCard = data["organization_schema"][i][j][2];
+                                var stdGuide = data["organization_schema"][i][j][3];
+                                var stdVocab;
+                                if (data["organization_schema"][i][j][4] == "Yes") {
+                                    stdVocab = data["organization_schema"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["organization_schema"][i][j][5];
+                                var actCard = data["organization_schema"][i][j][6];
+                                var actVocab = data["organization_schema"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+                    } else if (type == "Person") {
+                        for (var i in data["person_bioschemas"]) {
+                            for (var j in data["person_bioschemas"][i]) {
+                                var property = document.createTextNode(j);
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["person_bioschemas"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["person_bioschemas"][0][j].length;
+                                }
+
+                                var stdType = data["person_bioschemas"][i][j][0];
+                                var stdDescr = data["person_bioschemas"][i][j][1];
+                                var stdCard = data["person_bioschemas"][i][j][2];
+                                var stdGuide = data["person_bioschemas"][i][j][3];
+                                var stdVocab;
+                                if (data["person_bioschemas"][i][j][4] == "Yes") {
+                                    stdVocab = data["person_bioschemas"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["person_bioschemas"][i][j][5];
+                                var actCard = data["person_bioschemas"][i][j][6];
+                                var actVocab = data["person_bioschemas"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+
+                        for (var i in data["person_schema"]) {
+                            for (var j in data["person_schema"][i]) {
+                                var property = document.createElement("a");
+                                property.setAttribute("href", "https://schema.org/" + j);
+                                property.innerHTML = j;
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["person_schema"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["person_schema"][0][j].length;
+                                }
+
+                                var stdType = data["person_schema"][i][j][0];
+                                var stdDescr = data["person_schema"][i][j][1];
+                                var stdCard = data["person_schema"][i][j][2];
+                                var stdGuide = data["person_schema"][i][j][3];
+                                var stdVocab;
+                                if (data["person_schema"][i][j][4] == "Yes") {
+                                    stdVocab = data["person_schema"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["person_schema"][i][j][5];
+                                var actCard = data["person_schema"][i][j][6];
+                                var actVocab = data["person_schema"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+                    } else if (type == "Training" || type == "CreativeWork") {
+                        for (var i in data["training_bioschemas"]) {
+                            for (var j in data["training_bioschemas"][i]) {
+                                var property = document.createTextNode(j);
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["training_bioschemas"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["training_bioschemas"][0][j].length;
+                                }
+
+                                var stdType = data["training_bioschemas"][i][j][0];
+                                var stdDescr = data["training_bioschemas"][i][j][1];
+                                var stdCard = data["training_bioschemas"][i][j][2];
+                                var stdGuide = data["training_bioschemas"][i][j][3];
+                                var stdVocab;
+                                if (data["training_bioschemas"][i][j][4] == "Yes") {
+                                    stdVocab = data["training_bioschemas"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["training_bioschemas"][i][j][5];
+                                var actCard = data["training_bioschemas"][i][j][6];
+                                var actVocab = data["training_bioschemas"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+
+                        for (var i in data["training_schema"]) {
+                            for (var j in data["training_schema"][i]) {
+                                var property = document.createElement("a");
+                                property.setAttribute("href", "https://schema.org/" + j);
+                                property.innerHTML = j;
+
+                                var entrPerc = "";
+                                for (var ll = 0; ll < data3.length; ll++) {
+                                    if (data3[ll].label == j) {
+                                        entrPerc = (data3[ll].score / data3[ll].mean) * 100;
+                                    }
+                                }
+                                var contFirst = document.createTextNode(Math.round(entrPerc) + "%");
+
+                                var scoreGraph = 0,
+                                        weightGraph = 0.0,
+                                        colorGraph = "";
+                                if (data2["training_schema"][0][j] == undefined) {
+                                    scoreGraph = 0;
+                                } else {
+                                    scoreGraph = data2["training_schema"][0][j].length;
+                                }
+
+                                var stdType = data["training_schema"][i][j][0];
+                                var stdDescr = data["training_schema"][i][j][1];
+                                var stdCard = data["training_schema"][i][j][2];
+                                var stdGuide = data["training_schema"][i][j][3];
+                                var stdVocab;
+                                if (data["training_schema"][i][j][4] == "Yes") {
+                                    stdVocab = data["training_schema"][i][j][4];
+                                } else {
+                                    stdVocab = "No";
+                                }
+                                var actType = data["training_schema"][i][j][5];
+                                var actCard = data["training_schema"][i][j][6];
+                                var actVocab = data["training_schema"][i][j][7];
+
+                                if (stdGuide == "Minimum") {
+
+                                    weightGraph = 0.6;
+
+                                    var row = minBody.insertRow(0);
+                                    minTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        minRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingMin");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing minimum property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        minRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = minColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else if (stdGuide == "Recommended") {
+
+                                    weightGraph = 0.35;
+
+                                    var row = minBody.insertRow(0);
+                                    recTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        first.appendChild(contFirst);
+                                        recRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                        first.appendChild(contFirst);
+                                        var missDiv = document.getElementById("missingRec");
+                                        var newp = document.createElement("li");
+                                        newp.innerHTML = "Missing recommended property " + "<em>" + j + "</em>";
+                                        missDiv.appendChild(newp);
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+                                        warn.appendChild(contFirst);
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        recRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = recColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionMin";
+                                    descrCell.appendChild(tabDescr);
+
+                                } else {
+
+                                    weightGraph = 0.05;
+
+                                    var row = optBody.insertRow(0);
+                                    optTot++;
+                                    if (actType == "OK" && actCard == "OK" && actVocab == "OK") {
+                                        colorGraph = okColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = okColor;
+                                        optRate++;
+                                    } else if (actType == "Not found" && actCard == "Not found" && actVocab == "Not found") {
+                                        colorGraph = noColor;
+
+                                        var first = row.insertCell(0);
+                                        first.style.backgroundColor = noColor;
+                                    } else {
+
+                                        colorGraph = warnColor;
+                                        var warn = row.insertCell(0);
+                                        warn.style.backgroundColor = warnColor;
+
+                                        if (actType == "OK" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "OK") {
+                                            warn.title = "Wrong type";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "OK" && actCard == "Wrong" && actVocab == "Wrong") {
+                                            warn.title = "Wrong cardinality and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "Wrong" && actVocab == "OK") {
+                                            warn.title = "Wrong type and cardinality";
+                                            warn.className = "tooltip";
+                                        } else if (actType == "Wrong" && actCard == "OK" && actVocab == "Wrong") {
+                                            warn.title = "Wrong type and controlled vocabulary";
+                                            warn.className = "tooltip";
+                                        }
+
+                                        optRate++;
+                                    }
+                                    row.insertCell(1).appendChild(property);
+                                    var tabType = document.createTextNode(stdType);
+                                    var tabGuide = document.createTextNode(stdGuide);
+                                    var tabVocab = document.createTextNode(stdVocab);
+                                    var tabCard = document.createTextNode(stdCard);
+                                    var tabDescr = document.createTextNode(stdDescr);
+                                    row.insertCell(2).appendChild(tabType);
+                                    var guideCell = row.insertCell(3);
+                                    guideCell.style.backgroundColor = optColor;
+                                    guideCell.appendChild(tabGuide);
+                                    row.insertCell(4).appendChild(tabVocab);
+                                    row.insertCell(5).appendChild(tabCard);
+                                    var descrCell = row.insertCell(6);
+                                    descrCell.className = "hide descriptionOpt";
+                                    descrCell.appendChild(tabDescr);
+                                }
+                                graphList.push({"label": j, "score": scoreGraph, "weight": weightGraph, "color": colorGraph});
+                            }
+                        }
+                    }
+
+                    var minRating = (minRate / minTot) * 100;
+                    var recRating = (recRate / recTot) * 100;
+                    var optRating = (optRate / optTot) * 100;
+
+                    var minStars = (minRating * 60) / 100;
+                    var recStars = (recRating * 35) / 100;
+                    var optStars = (optRating * 5) / 100;
+
+                    var totRating = minStars + recStars + optStars;
+
+                    var rateDiv = document.getElementById("ratingDiv");
+                    var rateImg = document.createElement("img");
+                    if (totRating <= 20) {
+                        rateImg.src = "../img/1star.png";
+                    } else if (totRating > 20 && totRating <= 30) {
+                        rateImg.src = "../img/15star.png";
+                    } else if (totRating > 30 && totRating <= 40) {
+                        rateImg.src = "../img/2stars.png";
+                    } else if (totRating > 40 && totRating <= 50) {
+                        rateImg.src = "../img/25stars.png";
+                    } else if (totRating > 50 && totRating <= 60) {
+                        rateImg.src = "../img/3stars.png";
+                    } else if (totRating > 60 && totRating <= 70) {
+                        rateImg.src = "../img/35stars.png";
+                    } else if (totRating > 70 && totRating <= 80) {
+                        rateImg.src = "../img/4stars.png";
+                    } else if (totRating > 80 && totRating <= 90) {
+                        rateImg.src = "../img/45stars.png";
+                    } else {
+                        rateImg.src = "../img/5stars.png";
+                    }
+
+                    rateImg.style.width = "50%";
+                    rateImg.className = "tooltip";
+                    rateImg.title = "Compliance rating: " + Math.round(totRating) + "%";
+                    rateDiv.appendChild(rateImg);
+
+                    setTimeout(function () {
+
+                        var width = 350,
+                                height = 350,
+                                radius = Math.min(width, height) / 2,
+                                innerRadius = 0.45 * radius;
+
+                        var pie = d3.layout.pie()
+                                .sort(null)
+                                .value(function(d) { return d.width; });
+
+                        var tip = d3.tip()
+                                .attr("class", "d3-tip")
+                                .offset(function() {
+                                    return [this.getBBox().height / 4, 0]
+                                })
+                                .html(function(d) {
+                                    return d.data.label + ": <span style='color: orangered'>" + d.data.score + "</span><br>" + (d.data.weight == 0.5 ? "Minimum Property" : (d.data.weight == 0.3 ? "Recommended Property" : "Optional Property"));
+                                });
+
+                        var arc = d3.svg.arc()
+                                .innerRadius(innerRadius)
+                                .outerRadius(function (d) {
+                                    return (radius - innerRadius) * (d.data.score != 0 ? (d.data.score / d.data.mean) : 0) + innerRadius;
+                                });
+
+                        var maxScore = Math.max(minRate, recRate, optRate);
+
+                        var outlineArc = d3.svg.arc()
+                                .innerRadius(innerRadius)
+                                .outerRadius(radius);
+
+                        var svg = d3.select("#testchart").append("svg")
+                                .attr("width", width)
+                                .attr("height", height)
+                                .append("g")
+                                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+                        svg.call(tip);
+
+                        d3.csv(siteName + '/chartData_' + type + '.csv', function(error, data) {
+
+                            data.forEach(function(d) {
+                                //d.id     =  d.id;
+                                d.color  =  d.color;
+                                d.weight = +d.weight;
+                                d.score  = +d.score;
+                                d.width  = +d.width;
+                                d.label  =  d.label;
+                                d.mean   = +d.mean;
+                            });
+
+                            var outerPath = svg.selectAll(".outlineArc")
+                                    .data(pie(data))
+                                    .enter().append("path")
+                                    .attr("fill", function (d) {
+                                        return backChartColor(d.data.weight);
+                                    })
+                                    .attr("stroke", "gray")
+                                    .attr("class", "outlineArc")
+                                    .attr("d", outlineArc)
+                                    .on('mouseover', tip.show)
+                                    .on('mouseout', tip.hide);
+
+                            var path = svg.selectAll(".solidArc")
+                                    .data(pie(data))
+                                    .enter().append("path")
+                                    .attr("fill", function(d) { return d.data.color; })
+                                    .attr("class", "solidArc")
+                                    .attr("stroke", "gray")
+                                    .attr("d", arc)
+                                    .on('mouseover', tip.show)
+                                    .on('mouseout', tip.hide);
+
+                            svg.append("svg:text")
+                                    .attr("class", "aster-score")
+                                    .attr("dy", "-2.50em")
+                                    .attr("text-anchor", "middle")
+                                    .html("<tspan style='fill: #6CC4A4'>&#9608;</tspan> &nbsp; Correct property")
+                                    .style("fill", "#000000");
+
+                            svg.append("svg:text")
+                                    .attr("class", "aster-score")
+                                    .attr("dy", "-1.00em")
+                                    .attr("text-anchor", "middle")
+                                    .html("<tspan style='fill: #FEC574'>&#9608;</tspan> &nbsp; Wrong property")
+                                    .style("fill", "#000000");
+
+                            svg.append("svg:text")
+                                    .attr("class", "aster-score")
+                                    .attr("dy", "1.00em")
+                                    .attr("text-anchor", "middle")
+                                    .html("<tspan style='fill: #a6a6a6'>&#9608;</tspan> &nbsp; Minimum property")
+                                    .style("fill", "#000000");
+
+                            svg.append("svg:text")
+                                    .attr("class", "aster-score")
+                                    .attr("dy", "2.50em")
+                                    .attr("text-anchor", "middle")
+                                    .html("<tspan style='fill: #cccccc'>&#9608;</tspan> &nbsp; Recomm. property")
+                                    .style("fill", "#000000");
+
+                        });
+
+                        var el = document.getElementsByClassName("accordion");
+                        el[0].classList.toggle("active");
+                        el[0].nextElementSibling.classList.toggle("show");
+
+                        el[1].classList.toggle("active");
+                        el[1].nextElementSibling.classList.toggle("show");
+
+                    }, 500);
+
+                });
+
+            });
+
+        });
+
+        function backChartColor(val) {
+            var minColor = "#a6a6a6";
+            var recColor = "#cccccc";
+            var optColor = "#f2f2f2";
+            if (val == 0.5) {
+                return minColor;
+            } else if (val == 0.3) {
+                return recColor;
+            } else {
+                return optColor;
+            }
+        }
+
+        function minDescr() {
+            var el = document.getElementById("showMinDescr");
+            var targ = document.getElementsByClassName("descriptionMin");
+
+            if (el.checked) {
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.remove("hide");
+                }
+            } else {
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.add("hide");
+                }
+            }
+        }
+
+        function optDescr() {
+            var el = document.getElementById("showOptDescr");
+            var targ = document.getElementsByClassName("descriptionOpt");
+
+            if (el.checked) {
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.remove("hide");
+                }
+            } else {
+                for (var i = 0; i < targ.length; i++) {
+                    targ[i].classList.add("hide");
+                }
+            }
+        }
+
+        setTimeout(function(){ $("#minTable").tablesorter({
+            textExtraction:function (s) {
+                if ($(s).find("img").length == 0) return $(s).text();
+                return $(s).find("img").attr("alt");
+            }
+        }); }, 1000);
+
+        setTimeout(function(){ $("#optTable").tablesorter({
+            textExtraction:function (s) {
+                if ($(s).find("img").length == 0) return $(s).text();
+                return $(s).find("img").attr("alt");
+            }
+        }); }, 1000);
+
+        setTimeout(function(){ $(".tooltip").tooltipster(); }, 1000);
+
+
+    </script>
+
+</body>
+</html>

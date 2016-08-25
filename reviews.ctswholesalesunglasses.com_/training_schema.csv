@@ -1,2 +1,0 @@
-Property,Type,Cardinality,Guideline,Vocab,Count,Descr,Data
-aggregateRating,AggregateRating,One,Optional,,1,"The overall rating, based on a collection of reviews or ratings, of the item.",['Average rating  4.9 / 5 \t\t  from 2270  Customer reviews']
