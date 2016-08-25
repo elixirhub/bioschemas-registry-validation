@@ -35,12 +35,12 @@
         </div>
     </div>
 
-<div>
 
     <h2>Test And Submit A Website</h2>
 
     <p>With the Submit tool you can test a specific URL for its compliance with the Bioschemas specifications and submit it to the Registry for public consultation. You can also choose to test all the children links for that page (links with the same root URL) as well as scraping your URL for one specific Bioschemas type (Event, Organization, Person, Training Material).</p>
 
+<div id="mainDiv">
     <h3>Website URL: </h3>
     <input type="text" id="url_input" class="inputs"><br>
 
@@ -51,14 +51,14 @@
     <label>
         <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Validate children links too
     </label>
-    and save the results
+    <!--and save the results
     <label>
         <input type="radio" name="arrangeChild" value="single" disabled>&nbsp;individually
     </label>
     or
     <label>
         <input type="radio" name="arrangeChild" value="altogether" disabled>&nbsp;altogether
-    </label>
+    </label>-->
 
     <br>
 
@@ -81,7 +81,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script type="text/javascript">
 
-    document.getElementById("link_input").onclick = function () {
+    /*document.getElementById("link_input").onclick = function () {
         var el = document.getElementsByName("arrangeChild");
         if (this.checked) {
             for (var i = 0; i < el.length; i++) {
@@ -93,7 +93,7 @@
                 el[i].disabled = true;
             }
         }
-    };
+    };*/
 
     $("#submitBtn").on("click", function () {
         var urlToVal = $("#url_input").val();
@@ -111,11 +111,13 @@
         } else if (nameToVal == "") {
             var r = confirm("If you don't provide a name for your website, the title field content from the tested website will be used as its name.");
             if (r == true) {
+                $("#mainDiv").fadeOut(1000);
                 $.get("validate_url.php", {url : urlToVal, nome : "_", link : linkToVal, types : typeToVal});
                 $("#response").append("<p>Thanks for using this service!</p>");
                 $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Registry'>Registry</a> page.</p>");
             }
         } else {
+            $("#mainDiv").fadeOut(1000);
             $.get("validate_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal, types : typeToVal});
             $("#response").append("<p>Thanks for using this service!</p>");
             $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Registry'>Registry</a> page.</p>");

@@ -37,12 +37,13 @@
         </div>
     </div>
 
-<div>
+
 
     <h2>Test A Website</h2>
 
     <p>With the Testing tool you can test a specific URL for its compliance with the Bioschemas specifications. You can also choose to test all the children links for that page (links with the same root URL) as well as scraping your URL for one specific Bioschemas type (Event, Organization, Person, Training Material).</p>
 
+<div id="mainDiv">
     <h3>Website URL: </h3>
     <input type="text" id="url_input" class="inputs"><br>
 
@@ -50,11 +51,10 @@
     <input type="text" id="name_input" class="inputs"><br>
     <h5>If you choose not to provide a name for the URL you are testing, the <em>title</em> field content from the tested website will be used as its name.</h5>
 
-    <!--
     <label>
         <input type="checkbox" id="link_input" style="display: inline;">&nbsp;Validate children links too
     </label>
-    and save the results
+    <!--and save the results
     <label>
         <input type="radio" name="arrangeChild" value="single" disabled>&nbsp;individually
     </label>
@@ -128,11 +128,11 @@
         var nameToVal = $("#name_input").val();
         var linkToVal;
         linkToVal = 1;
-//        if ($("#link_input").is(":checked")) {
-//            linkToVal = 0;
-//        } else {
-//            linkToVal = 1;
-//        }
+        if ($("#link_input").is(":checked")) {
+            linkToVal = 0;
+        } else {
+            linkToVal = 1;
+        }
         var typeToVal = $("#types_menu").val();
 
         if (urlToVal == "") {
@@ -140,13 +140,15 @@
         } else if (nameToVal == "") {
             var r = confirm("If you don't provide a name for your website, the title field content from the tested website will be used as its name.");
             if (r == true) {
+                $("#mainDiv").fadeOut(1000);
                 $.get("test_url.php", {url : urlToVal, nome : "_", link : linkToVal, types : typeToVal});
-                $("#response").append("<p>Thanks for using this service!</p>");
+                $("#response").append("<h3>Thanks for using this service!</h3>");
                 $("#response").append("<p>The results will appear below in a moment...</p>");
             }
         } else {
+            $("#mainDiv").fadeOut(1000);
             $.get("test_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal, types : typeToVal});
-            $("#response").append("<p>Thanks for using this service!</p>");
+            $("#response").append("<h3>Thanks for using this service!</h3>");
             $("#response").append("<p>The results will appear below in a moment...</p>");
         }
 
@@ -294,7 +296,7 @@
                 }
             }
 
-            document.getElementById("web_table").classList.remove("hide");
+            $("#web_table").fadeIn();
 
         }, 10000)
 

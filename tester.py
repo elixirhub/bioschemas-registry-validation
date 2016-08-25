@@ -181,6 +181,7 @@ class WebsiteTags:
         self.allProps = []          # All the props found in the website
         self.validProps = []        # Valid props found in the website
 
+        self.makeTempDir()
         self.newWebsiteTags()
 
     def makeTempDir(self):
@@ -199,11 +200,12 @@ class WebsiteTags:
         soup = BeautifulSoup(html, "lxml")
 
         if self.nome == "_":
-            websiteComps = soup.title.string.replace("|", "").split(" ")
+            websiteComps = soup.title.string.replace("|", "").replace(">", "").replace("<", "").split(" ")
             websiteName = "_".join(websiteComps)
         else:
             websiteName = self.nome
 
+        print websiteName
         os.system("mkdir temp/%s" % websiteName)
 
         nameDict = {websiteName: self.url}
@@ -1240,5 +1242,5 @@ class UpdateRegistry:
                 endfile.close()
                 maxFile.close()
 
-WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]).makeTempDir()
+
 WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
