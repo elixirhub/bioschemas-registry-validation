@@ -1,0 +1,61 @@
+{
+    "event_bioschemas": [
+        {}
+    ], 
+    "event_schema": [
+        {
+            "name": [
+                "Carla Ferro", 
+                "GAMA"
+            ], 
+            "sameAs": [
+                null
+            ]
+        }
+    ], 
+    "organization_bioschemas": [
+        {}
+    ], 
+    "organization_schema": [
+        {
+            "name": [
+                "Carla Ferro", 
+                "GAMA"
+            ], 
+            "sameAs": [
+                null
+            ]
+        }
+    ], 
+    "person_bioschemas": [
+        {}
+    ], 
+    "person_schema": [
+        {
+            "email": [
+                "ferro.carlacristine@gmail.com"
+            ], 
+            "image": [
+                "http://doulas.club/carla-ferro/foto.jpg"
+            ], 
+            "name": [
+                "Carla Ferro", 
+                "GAMA"
+            ]
+        }
+    ], 
+    "training_bioschemas": [
+        {}
+    ], 
+    "training_schema": [
+        {
+            "name": [
+                "Carla Ferro", 
+                "GAMA"
+            ], 
+            "sameAs": [
+                null
+            ]
+        }
+    ]
+}

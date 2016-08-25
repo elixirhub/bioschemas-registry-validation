@@ -1,0 +1,15 @@
+Rating
+Product
+TouristAttraction
+Service
+Offer
+LandmarksOrHistoricalBuildings
+Review
+TravelAgency
+TravelAction
+Breadcrumb
+Person
+AggregateRating
+PostalAddress
+Map
+GeoCoordinates

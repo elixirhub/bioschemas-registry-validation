@@ -1,0 +1,66 @@
+{
+    "event_bioschemas": [
+        {}
+    ], 
+    "event_schema": [
+        {
+            "description": [
+                "ELIXIR Denmark is inviting bioinformatics community to join the second Annual Danish Bioinformatics conference to be held in Odense from 25-26 August 2015.The aim of the conference is to provide bioinformaticians in Denmark, or those with ties to the community, to learn about the latest on Danish bioinformatics research and tools development. Registration and further information about the event can be found via the ELIXIR-Denmark website."
+            ], 
+            "endDate": [
+                "to 26 August 2016"
+            ], 
+            "location": [
+                "OdenseDenmark"
+            ], 
+            "name": [
+                ""
+            ], 
+            "startDate": [
+                "25 August 2016"
+            ]
+        }
+    ], 
+    "organization_bioschemas": [
+        {}
+    ], 
+    "organization_schema": [
+        {
+            "description": [
+                "ELIXIR Denmark is inviting bioinformatics community to join the second Annual Danish Bioinformatics conference to be held in Odense from 25-26 August 2015.The aim of the conference is to provide bioinformaticians in Denmark, or those with ties to the community, to learn about the latest on Danish bioinformatics research and tools development. Registration and further information about the event can be found via the ELIXIR-Denmark website."
+            ], 
+            "location": [
+                "OdenseDenmark"
+            ], 
+            "name": [
+                ""
+            ]
+        }
+    ], 
+    "person_bioschemas": [
+        {}
+    ], 
+    "person_schema": [
+        {
+            "description": [
+                "ELIXIR Denmark is inviting bioinformatics community to join the second Annual Danish Bioinformatics conference to be held in Odense from 25-26 August 2015.The aim of the conference is to provide bioinformaticians in Denmark, or those with ties to the community, to learn about the latest on Danish bioinformatics research and tools development. Registration and further information about the event can be found via the ELIXIR-Denmark website."
+            ], 
+            "name": [
+                ""
+            ]
+        }
+    ], 
+    "training_bioschemas": [
+        {}
+    ], 
+    "training_schema": [
+        {
+            "description": [
+                "ELIXIR Denmark is inviting bioinformatics community to join the second Annual Danish Bioinformatics conference to be held in Odense from 25-26 August 2015.The aim of the conference is to provide bioinformaticians in Denmark, or those with ties to the community, to learn about the latest on Danish bioinformatics research and tools development. Registration and further information about the event can be found via the ELIXIR-Denmark website."
+            ], 
+            "name": [
+                ""
+            ]
+        }
+    ]
+}

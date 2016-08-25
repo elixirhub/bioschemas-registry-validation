@@ -1,0 +1,11 @@
+label,score,weight,width,color,mean
+name,17,0.5,0.5,#6CC4A4,17
+description,6,0.5,0.5,#FEC574,17
+image,6,0.3,0.5,#6CC4A4,17
+email,1,0.3,0.5,#6CC4A4,17
+keyword,0,0.3,0.5,#E1514B,17
+expertise,0,0.3,0.5,#E1514B,17
+orcid,0,0.3,0.5,#E1514B,17
+memberOf,0,0.3,0.5,#E1514B,17
+mainEntityOfPage,0,0.3,0.5,#E1514B,17
+homeLocation,0,0.3,0.5,#E1514B,17

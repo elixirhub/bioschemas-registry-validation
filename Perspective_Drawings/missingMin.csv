@@ -1,0 +1,11 @@
+legalName,organization_schema
+sameAs,organization_schema
+type,organization_bioschemas
+topic,organization_bioschemas
+audience,training_schema
+contact,event_bioschemas
+eventType,event_bioschemas
+topic,event_bioschemas
+hostInstitution,event_bioschemas
+endDate,event_schema
+location,event_schema

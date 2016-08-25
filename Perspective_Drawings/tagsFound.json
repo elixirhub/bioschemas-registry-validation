@@ -1,0 +1,232 @@
+{
+    "event_bioschemas": [
+        {
+            "keywords": [
+                "Architecture", 
+                "Renderings (drawings)", 
+                "Perspective views", 
+                "Commercial buildings", 
+                "Government buildings", 
+                "Arcades (Architecture)", 
+                "Historic buildings"
+            ]
+        }
+    ], 
+    "event_schema": [
+        {
+            "description": [
+                "Tracings; 570mm x 725mm", 
+                "", 
+                "E. W. Grove, first owner; Walter Taylor and Associates, second owner.", 
+                "The structure was initially intended as a skyscraper, and the use of ivory-glazed terra-cotta and decorative griffins lend the structure a unique appearance. The structure's molded panels include an image of the architect, Charles N. Parker.", 
+                "The arcade is listed on the National Register of Historic Places. It was occupied by the federal government in 1942.", 
+                ""
+            ], 
+            "name": [
+                "Perspective drawing          Grove Arcade (Asheville, N.C.)", 
+                "Special Collections Research Center at NCSU Libraries", 
+                "Grove Arcade (Asheville, Buncombe County, North Carolina)", 
+                "Parker, Charles N., 1885-1961", 
+                "", 
+                "", 
+                "Travertine details              Grove Arcade (Asheville, N.C.)", 
+                "Elevations, sections, and room finish schedules              Ocean Motor Sales (Wilmington, N.C.)", 
+                "Tower fa\u00e7ade elevations and details              Needham B. Broughton High School (Raleigh, N.C.)", 
+                "Diagram of interior signs              Grove Arcade (Asheville, N.C.)", 
+                "Location map and rendering, Pleasant Grove Camp Meeting Ground, Union County, North Carolina              Pleasant Grove Camp Meeting Ground (Mineral Springs, N.C.)", 
+                "Longitudinal section              D. H. Blair Theatre (Forsyth County, N.C.)", 
+                "Porch details, Ambassador Walter Hines Page Birthplace, Cary, North Carolina              Walter Hines Page Birthplace (Cary, N.C.)", 
+                "Roof Details              Dorton Arena (Raleigh, N.C.)", 
+                "D. H. Hill Library"
+            ], 
+            "startDate": [
+                "1924"
+            ], 
+            "url": [
+                "http://www.lib.ncsu.edu/specialcollections/", 
+                "/collections/catalog?f%5Bwork_facet%5D%5B%5D=Grove+Arcade+%28Asheville%2C+N.C.%29", 
+                "/collections/catalog?f%5Bnames_facet%5D%5B%5D=Parker%2C+Charles+N.%2C+1885-1961", 
+                "/collections/names/5682-parker-charles-n-1885-1961", 
+                "/collections/catalog?f%5Bispartof_facet%5D%5B%5D=Beaux+Arts+to+Modernism", 
+                "/collections/catalog/mc00383-001-ff0006-001-001_0044", 
+                "/collections/catalog/mc00096-001-ff0261-000-001_0005", 
+                "/collections/catalog/mc00227-003-ff0005-000-001_0003", 
+                "/collections/catalog/mc00383-001-ff0006-001-001_0067", 
+                "/collections/catalog/bh016101701", 
+                "/collections/catalog/mc00240-001-ff0434-001-001_0005", 
+                "/collections/catalog/bh035913502", 
+                "/collections/catalog/mc00227-003-ff0065-000-001_0002", 
+                "//www.lib.ncsu.edu/"
+            ]
+        }
+    ], 
+    "organization_bioschemas": [
+        {
+            "keywords": [
+                "Architecture", 
+                "Renderings (drawings)", 
+                "Perspective views", 
+                "Commercial buildings", 
+                "Government buildings", 
+                "Arcades (Architecture)", 
+                "Historic buildings"
+            ]
+        }
+    ], 
+    "organization_schema": [
+        {
+            "description": [
+                "Tracings; 570mm x 725mm", 
+                "", 
+                "E. W. Grove, first owner; Walter Taylor and Associates, second owner.", 
+                "The structure was initially intended as a skyscraper, and the use of ivory-glazed terra-cotta and decorative griffins lend the structure a unique appearance. The structure's molded panels include an image of the architect, Charles N. Parker.", 
+                "The arcade is listed on the National Register of Historic Places. It was occupied by the federal government in 1942.", 
+                ""
+            ], 
+            "logo": [
+                null
+            ], 
+            "name": [
+                "Perspective drawing          Grove Arcade (Asheville, N.C.)", 
+                "Special Collections Research Center at NCSU Libraries", 
+                "Grove Arcade (Asheville, Buncombe County, North Carolina)", 
+                "Parker, Charles N., 1885-1961", 
+                "", 
+                "", 
+                "Travertine details              Grove Arcade (Asheville, N.C.)", 
+                "Elevations, sections, and room finish schedules              Ocean Motor Sales (Wilmington, N.C.)", 
+                "Tower fa\u00e7ade elevations and details              Needham B. Broughton High School (Raleigh, N.C.)", 
+                "Diagram of interior signs              Grove Arcade (Asheville, N.C.)", 
+                "Location map and rendering, Pleasant Grove Camp Meeting Ground, Union County, North Carolina              Pleasant Grove Camp Meeting Ground (Mineral Springs, N.C.)", 
+                "Longitudinal section              D. H. Blair Theatre (Forsyth County, N.C.)", 
+                "Porch details, Ambassador Walter Hines Page Birthplace, Cary, North Carolina              Walter Hines Page Birthplace (Cary, N.C.)", 
+                "Roof Details              Dorton Arena (Raleigh, N.C.)", 
+                "D. H. Hill Library"
+            ], 
+            "url": [
+                "http://www.lib.ncsu.edu/specialcollections/", 
+                "/collections/catalog?f%5Bwork_facet%5D%5B%5D=Grove+Arcade+%28Asheville%2C+N.C.%29", 
+                "/collections/catalog?f%5Bnames_facet%5D%5B%5D=Parker%2C+Charles+N.%2C+1885-1961", 
+                "/collections/names/5682-parker-charles-n-1885-1961", 
+                "/collections/catalog?f%5Bispartof_facet%5D%5B%5D=Beaux+Arts+to+Modernism", 
+                "/collections/catalog/mc00383-001-ff0006-001-001_0044", 
+                "/collections/catalog/mc00096-001-ff0261-000-001_0005", 
+                "/collections/catalog/mc00227-003-ff0005-000-001_0003", 
+                "/collections/catalog/mc00383-001-ff0006-001-001_0067", 
+                "/collections/catalog/bh016101701", 
+                "/collections/catalog/mc00240-001-ff0434-001-001_0005", 
+                "/collections/catalog/bh035913502", 
+                "/collections/catalog/mc00227-003-ff0065-000-001_0002", 
+                "//www.lib.ncsu.edu/"
+            ]
+        }
+    ], 
+    "person_bioschemas": [
+        {}
+    ], 
+    "person_schema": [
+        {
+            "description": [
+                "Tracings; 570mm x 725mm", 
+                "", 
+                "E. W. Grove, first owner; Walter Taylor and Associates, second owner.", 
+                "The structure was initially intended as a skyscraper, and the use of ivory-glazed terra-cotta and decorative griffins lend the structure a unique appearance. The structure's molded panels include an image of the architect, Charles N. Parker.", 
+                "The arcade is listed on the National Register of Historic Places. It was occupied by the federal government in 1942.", 
+                ""
+            ], 
+            "image": [
+                "//d.lib.ncsu.edu/adore-djatoka/resolver?rft_id=mc00383-001-ff0004-001-001_0004&svc.level=5&svc_id=info%3Alanl-repo%2Fsvc%2FgetRegion&svc_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajpeg2000&url_ver=Z39.88-2004"
+            ], 
+            "name": [
+                "Perspective drawing          Grove Arcade (Asheville, N.C.)", 
+                "Special Collections Research Center at NCSU Libraries", 
+                "Grove Arcade (Asheville, Buncombe County, North Carolina)", 
+                "Parker, Charles N., 1885-1961", 
+                "", 
+                "", 
+                "Travertine details              Grove Arcade (Asheville, N.C.)", 
+                "Elevations, sections, and room finish schedules              Ocean Motor Sales (Wilmington, N.C.)", 
+                "Tower fa\u00e7ade elevations and details              Needham B. Broughton High School (Raleigh, N.C.)", 
+                "Diagram of interior signs              Grove Arcade (Asheville, N.C.)", 
+                "Location map and rendering, Pleasant Grove Camp Meeting Ground, Union County, North Carolina              Pleasant Grove Camp Meeting Ground (Mineral Springs, N.C.)", 
+                "Longitudinal section              D. H. Blair Theatre (Forsyth County, N.C.)", 
+                "Porch details, Ambassador Walter Hines Page Birthplace, Cary, North Carolina              Walter Hines Page Birthplace (Cary, N.C.)", 
+                "Roof Details              Dorton Arena (Raleigh, N.C.)", 
+                "D. H. Hill Library"
+            ]
+        }
+    ], 
+    "training_bioschemas": [
+        {}
+    ], 
+    "training_schema": [
+        {
+            "about": [
+                "Building:          Grove Arcade (Asheville, Buncombe County, North Carolina)Architect:Parker, Charles N., 1885-1961more info on Parker, Charles N., 1885-1961\u00a0Built:              1924            Street:1 Page AvenueCommunity:AshevilleState:North CarolinaZip:28801Provenance note:E. W. Grove, first owner; Walter Taylor and Associates, second owner.Architectural note:The structure was initially intended as a skyscraper, and the use of ivory-glazed terra-cotta and decorative griffins lend the structure a unique appearance. The structure's molded panels include an image of the architect, Charles N. Parker.Historical note:The arcade is listed on the National Register of Historic Places. It was occupied by the federal government in 1942.Location:Asheville (N.C.)Subjects:Commercial buildingsGovernment buildingsArcades (Architecture)Historic buildingsLatitude, Longitude:35.595203,            -82.555895 \u00d7Map: Grove Arcade (Asheville, N.C.)CloseExternal Resources:              Grove Arcade: History"
+            ], 
+            "dateCreated": [
+                "1926-07-15"
+            ], 
+            "dateModified": [
+                ""
+            ], 
+            "description": [
+                "Tracings; 570mm x 725mm", 
+                "", 
+                "E. W. Grove, first owner; Walter Taylor and Associates, second owner.", 
+                "The structure was initially intended as a skyscraper, and the use of ivory-glazed terra-cotta and decorative griffins lend the structure a unique appearance. The structure's molded panels include an image of the architect, Charles N. Parker.", 
+                "The arcade is listed on the National Register of Historic Places. It was occupied by the federal government in 1942.", 
+                ""
+            ], 
+            "genre": [
+                "Design and construction documents", 
+                "Architectural drawings"
+            ], 
+            "isPartOf": [
+                ""
+            ], 
+            "keywords": [
+                "Architecture", 
+                "Renderings (drawings)", 
+                "Perspective views", 
+                "Commercial buildings", 
+                "Government buildings", 
+                "Arcades (Architecture)", 
+                "Historic buildings"
+            ], 
+            "name": [
+                "Perspective drawing          Grove Arcade (Asheville, N.C.)", 
+                "Special Collections Research Center at NCSU Libraries", 
+                "Grove Arcade (Asheville, Buncombe County, North Carolina)", 
+                "Parker, Charles N., 1885-1961", 
+                "", 
+                "", 
+                "Travertine details              Grove Arcade (Asheville, N.C.)", 
+                "Elevations, sections, and room finish schedules              Ocean Motor Sales (Wilmington, N.C.)", 
+                "Tower fa\u00e7ade elevations and details              Needham B. Broughton High School (Raleigh, N.C.)", 
+                "Diagram of interior signs              Grove Arcade (Asheville, N.C.)", 
+                "Location map and rendering, Pleasant Grove Camp Meeting Ground, Union County, North Carolina              Pleasant Grove Camp Meeting Ground (Mineral Springs, N.C.)", 
+                "Longitudinal section              D. H. Blair Theatre (Forsyth County, N.C.)", 
+                "Porch details, Ambassador Walter Hines Page Birthplace, Cary, North Carolina              Walter Hines Page Birthplace (Cary, N.C.)", 
+                "Roof Details              Dorton Arena (Raleigh, N.C.)", 
+                "D. H. Hill Library"
+            ], 
+            "url": [
+                "http://www.lib.ncsu.edu/specialcollections/", 
+                "/collections/catalog?f%5Bwork_facet%5D%5B%5D=Grove+Arcade+%28Asheville%2C+N.C.%29", 
+                "/collections/catalog?f%5Bnames_facet%5D%5B%5D=Parker%2C+Charles+N.%2C+1885-1961", 
+                "/collections/names/5682-parker-charles-n-1885-1961", 
+                "/collections/catalog?f%5Bispartof_facet%5D%5B%5D=Beaux+Arts+to+Modernism", 
+                "/collections/catalog/mc00383-001-ff0006-001-001_0044", 
+                "/collections/catalog/mc00096-001-ff0261-000-001_0005", 
+                "/collections/catalog/mc00227-003-ff0005-000-001_0003", 
+                "/collections/catalog/mc00383-001-ff0006-001-001_0067", 
+                "/collections/catalog/bh016101701", 
+                "/collections/catalog/mc00240-001-ff0434-001-001_0005", 
+                "/collections/catalog/bh035913502", 
+                "/collections/catalog/mc00227-003-ff0065-000-001_0002", 
+                "//www.lib.ncsu.edu/"
+            ]
+        }
+    ]
+}
