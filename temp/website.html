@@ -44,18 +44,34 @@
     <button class="accordion">Summary</button>
     <div class="panel">
 
-        <div style="float: left; width: 50%; margin-left: 2%">
+        <div style="display: flex;">
 
-            <h1>Entry Name: <span id="title"></span></h1>
-            <h3>Entry URL: <a id="siteUrl"></a></h3>
+            <div style="flex: 3;">
 
-            <h2>Bioschemas type: <span id="type_header"></span> (<span id="type_count"></span>)</h2>
+                <h1>Entry Name: <span id="title"></span></h1>
+                <h3>Entry URL: <a id="siteUrl"></a></h3>
 
-            <div id="ratingDiv"></div>
+                <h2>Bioschemas type: <span id="type_header"></span> (<span id="type_count"></span>)</h2>
+
+                <div id="ratingDiv"></div>
+
+            </div>
+
+            <div id="testchart" style="padding: 1.2em; flex: 1;"></div>
+
+            <div id="chartLeg" style="flex: 1; padding-left: 3em; vertical-align: middle">
+                <h3>Compliance</h3>
+                <h4><span style='color: #6CC4A4;'>&#9608;</span> &nbsp; Correct property</h4>
+                <h4><span style='color: #FEC574'>&#9608;</span> &nbsp; Wrong property</h4>
+                <h4><span style="color: #E1514B">&#9608;</span> &nbsp; Not provided</h4>
+                <br>
+                <h3>Guideline</h3>
+                <h4><span style='color: #a6a6a6'>&#9608;</span> &nbsp; Minimum property</h4>
+                <h4><span style='color: #cccccc'>&#9608;</span> &nbsp; Recomm. property</h4>
+            </div>
 
         </div>
 
-        <div id="testchart" style="margin-left: 55%;"></div>
     </div>
 
     <!-- Min and Rec Props Section -->
@@ -2151,7 +2167,7 @@
                                 });
 
                         var arc = d3.svg.arc()
-                                .innerRadius(innerRadius)
+                                .innerRadius(innerRadius + 15)
                                 .outerRadius(function (d) {
                                     return (radius - innerRadius) * (d.data.score != 0 ? (d.data.score / d.data.mean) : 0) + innerRadius;
                                 });
@@ -2204,7 +2220,7 @@
                                     .on('mouseover', tip.show)
                                     .on('mouseout', tip.hide);
 
-                            svg.append("svg:text")
+                            /*svg.append("svg:text")
                                     .attr("class", "aster-score")
                                     .attr("dy", "-2.50em")
                                     .attr("text-anchor", "middle")
@@ -2230,7 +2246,7 @@
                                     .attr("dy", "2.50em")
                                     .attr("text-anchor", "middle")
                                     .html("<tspan style='fill: #cccccc'>&#9608;</tspan> &nbsp; Recomm. property")
-                                    .style("fill", "#000000");
+                                    .style("fill", "#000000");*/
 
                         });
 
