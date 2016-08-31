@@ -10,7 +10,7 @@ body {
 table {
     border-collapse: collapse;
     margin: 10px auto;
-    min-width: 33em;
+    width: 100%;
 }
 
 thead {
@@ -22,6 +22,10 @@ thead {
 td, th {
     padding: 5px 10px;
     border: 2px solid #0B794B;
+}
+
+td:first-child {
+    text-align: center;
 }
 
 .hide {

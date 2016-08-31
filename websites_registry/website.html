@@ -85,13 +85,13 @@
         <table id="minTable" class="tablesorter">
             <thead>
             <tr>
-                <th style="width: 5em;">&nbsp;</th>
-                <th style="width: 10em;">Property</th>
-                <th style="width: 10em;">Type</th>
-                <th style="width: 10em;">Guideline</th>
-                <th style="width: 10em;">CV</th>
-                <th style="width: 10em;">Cardinality</th>
-                <th class="hide descriptionMin">Description</th>
+                <th style="width: 4em;">Compliance <span>&#9662;</span></th>
+                <th style="width: 10em;">Property <span>&#9662;</span></th>
+                <th style="width: 10em;">Type <span>&#9662;</span></th>
+                <th style="width: 10em;">Guideline <span>&#9662;</span></th>
+                <th style="width: 4em;">CV <span>&#9662;</span></th>
+                <th style="width: 10em;">Cardinality <span>&#9662;</span></th>
+                <th class="hide descriptionMin">Description <span>&#9662;</span></th>
 
             </tr>
             </thead>
@@ -112,13 +112,13 @@
         <table class="tablesorter" id="optTable">
             <thead>
             <tr>
-                <th style="width: 7em;">&nbsp;</th>
-                <th style="width: 10em;">Property</th>
-                <th style="width: 10em;">Type</th>
-                <th style="width: 10em;">Guideline</th>
-                <th style="width: 10em;">CV</th>
-                <th style="width: 10em;">Cardinality</th>
-                <th class="hide descriptionOpt">Description</th>
+                <th style="width: 4em;">Compliance <span>&#9662;</span></th>
+                <th style="width: 10em;">Property <span>&#9662;</span></th>
+                <th style="width: 10em;">Type <span>&#9662;</span></th>
+                <th style="width: 10em;">Guideline <span>&#9662;</span></th>
+                <th style="width: 4em;">CV <span>&#9662;</span></th>
+                <th style="width: 10em;">Cardinality <span>&#9662;</span></th>
+                <th class="hide descriptionOpt">Description <span>&#9662;</span></th>
             </tr>
             </thead>
             <tbody id="optional_table">
@@ -2220,34 +2220,6 @@
                                     .attr("d", arc)
                                     .on('mouseover', tip.show)
                                     .on('mouseout', tip.hide);
-
-                            /*svg.append("svg:text")
-                                    .attr("class", "aster-score")
-                                    .attr("dy", "-2.50em")
-                                    .attr("text-anchor", "middle")
-                                    .html("<tspan style='fill: #6CC4A4'>&#9608;</tspan> &nbsp; Correct property")
-                                    .style("fill", "#000000");
-
-                            svg.append("svg:text")
-                                    .attr("class", "aster-score")
-                                    .attr("dy", "-1.00em")
-                                    .attr("text-anchor", "middle")
-                                    .html("<tspan style='fill: #FEC574'>&#9608;</tspan> &nbsp; Wrong property")
-                                    .style("fill", "#000000");
-
-                            svg.append("svg:text")
-                                    .attr("class", "aster-score")
-                                    .attr("dy", "1.00em")
-                                    .attr("text-anchor", "middle")
-                                    .html("<tspan style='fill: #a6a6a6'>&#9608;</tspan> &nbsp; Minimum property")
-                                    .style("fill", "#000000");
-
-                            svg.append("svg:text")
-                                    .attr("class", "aster-score")
-                                    .attr("dy", "2.50em")
-                                    .attr("text-anchor", "middle")
-                                    .html("<tspan style='fill: #cccccc'>&#9608;</tspan> &nbsp; Recomm. property")
-                                    .style("fill", "#000000");*/
 
                         });
 
