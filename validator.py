@@ -1330,8 +1330,13 @@ class NotifMail:
         except SMTPException:
             print "Error: unable to send email"
 
-
-WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-dest = sys.argv[5]
-if dest != "_":
-    NotifMail(sys.argv[5])
+try:
+    WebsiteTags(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+except:
+    WebsiteTags(sys.argv[1], sys.argv[2])
+try:
+    dest = sys.argv[5]
+    if dest != "_":
+        NotifMail(dest)
+except:
+    pass
