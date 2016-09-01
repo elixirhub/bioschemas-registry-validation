@@ -1,0 +1,1074 @@
+{
+    "event_bioschemas": [
+        {
+            "acceptanceNotificationDate": [
+                "Date", 
+                "Date for the host to confirm accaptance to applicants.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "accreditation": [
+                "Organization or Text", 
+                "Type of accreditation or organization that accredits the event.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "attachment": [
+                "URL", 
+                "Any files or related websites which give more information about this event (e.g. flyers, third party sites handling tickets).", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "capacity": [
+                "Integer", 
+                "Available number of spaces.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "contact": [
+                "Organization or Person", 
+                "Main point of contact that can be contacted for general queries. This would be an event organizer or an administrator.", 
+                "Many", 
+                "Minimum", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "deadline": [
+                "Text", 
+                "Deadlines dates for this event (e.g. application deadline, poster submission, paper submission, early registration).", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "eligibility": [
+                "Text", 
+                "Defines the type of eligibility to attend this event (e.g. first-come first-served).", 
+                "Many", 
+                "Recommended", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "eventType": [
+                "Text", 
+                "Enumeration value for a type of event following one of the categories defined by SASI.", 
+                "Many", 
+                "Minimum", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "hostInstitution": [
+                "Organization", 
+                "The organization or institution responsible for hosting the event (not necessarily responsible for organizing).", 
+                "Many", 
+                "Minimum", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "keywords": [
+                "CV and/or Text", 
+                "Keywords to describe the event. In Life Science, use terms that are not available in topic or targetAudience. Use text keywords or ontology terms from other ontologies that could complement EDAM topics.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "lastUpdate": [
+                "Date", 
+                "Date when the event was last modified.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "prerequisite": [
+                "Text", 
+                "A list of prerequisites to be able to attend the event.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "programme": [
+                "Text or URL", 
+                "A plan or schedule of activities or procedures to be followed.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "registrationStatus": [
+                "Registration Status", 
+                "Enumerative type displaying the status of registration for an event.", 
+                "One", 
+                "Optional", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "socialMedia": [
+                "URL", 
+                "Link to social media websites like Twitter or Facebook.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "sponsor": [
+                "Organization", 
+                "The organization or institutions providing sponsorship for the event.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "spotlight": [
+                "Boolean", 
+                "Event highlighted by the event provider. Whether or not the event provider wishes to highlight this event as very important/significant.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "targetAudience": [
+                "Audience", 
+                "In Life Science, use Scientific topics that describe the research field of audience members (e.g. computer scientists). Use one of the scientific ontology terms for class Topic from EDAM ontology.", 
+                "Many", 
+                "Recommended", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "topic": [
+                "Text", 
+                "In the context of Life Science, the scientific topics that describe the content of the event (e.g. statistics), using one or more of the scientific ontology terms for class Topic from EDAM ontology.", 
+                "Many", 
+                "Minimum", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ]
+        }
+    ], 
+    "event_schema": [
+        {
+            "alternateName": [
+                "Text", 
+                "An alias for the item. Can be used for the subtitle of the event.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "description": [
+                "Text", 
+                "A short description of the item.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "endDate": [
+                "Date", 
+                "The end date and time of the item (in ISO 8601 date format).", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "location": [
+                "Place or Postal Address", 
+                "The location of the event, organization or action.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "name": [
+                "Text", 
+                "The name of the item.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "offers": [
+                "Offer", 
+                "An offer to provide this item (e.g. an offer to sell a product, rent the DVD of a movie, or give away tickets to an event). Can use eligibleCustomerType and eligibleDuration properties to express any special offers.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "organizer": [
+                "Organization or Person", 
+                "An organizer of an Event.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "performer": [
+                "Organization or Person", 
+                "A performer at the event (e.g. a presenter, musician, musical group or actor).", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "review": [
+                "Review", 
+                "A review of the item.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "sameAs": [
+                "URL", 
+                "URL of a reference web page that unambiguously indicates the item's identity (e.g. the URL of the item's Wikipedia page, Freebase page, or official website.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "startDate": [
+                "Date", 
+                "The start date and time of the item (in ISO 8601 date format).", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "subEvent": [
+                "Event", 
+                "An Event that is part of this event (e.g. a conference event includes many presentations, each of which is a subEvent of the conference).", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "superEvent": [
+                "Event", 
+                "An Event that this event is a part of (e.g. a collection of individual music performances might each have a music festival as their superEvent).", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "url": [
+                "URL", 
+                "URL of the item. This property can be used on a page listing many events, to indicate each individual event's page.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ]
+        }
+    ], 
+    "organization_bioschemas": [
+        {
+            "attachment": [
+                "URL", 
+                "Any files or related websites which give more information about this organization (e.g. flyers, third party sites, etc).", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "budget": [
+                "PriceSpecification", 
+                "The annual (or total - for a project) budget for the organization.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "dateFounded": [
+                "Date", 
+                "The date the organization was originally founded. If created through a merger, this should be the foundation date of the purchasing organization.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "founderMember": [
+                "Person or Organization", 
+                "For an alliance or collaboration or project, the founding members.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "fundingModel": [
+                "CV and/or Text", 
+                "A description of how the organization is funded.", 
+                "One", 
+                "Recommended", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "keywords": [
+                "CV and/or Text", 
+                "Keywords to describe the organization. Use term which are not available in EDAM Scientific Topic; use text keywords or ontology terms from other ontologies which could complement EDAM topics.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "lastUpdate": [
+                "Date", 
+                "Date when the organization information was last modified.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "membershipCategory": [
+                "Offer", 
+                "Defines a membership category and associated fees (for projects and alliances, etc).", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "socialMedia": [
+                "URL", 
+                "Link to social media websites like Twitter or Facebook.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "status": [
+                "CV and/or Text", 
+                "To record if the organization is still active, and if it were a project or alliance, what the outcome was, or if it has closed down or merged, why and when.", 
+                "One", 
+                "Recommended", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "topic": [
+                "CV and/or Text", 
+                "Scientific topics that describe the organization and its activities, using a scientific ontology term from EDAM topics.", 
+                "Many", 
+                "Minimum", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "type": [
+                "CV", 
+                "The type of the organization selected from a controlled vocabulary: single-company corporation, multinational, not-for-profit, alliance, consortium, institute, department, working party, project, etc.", 
+                "Many", 
+                "Minimum", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ]
+        }
+    ], 
+    "organization_schema": [
+        {
+            "alternateName": [
+                "Text", 
+                "An alias for the item.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "contactPoint": [
+                "ContactPoint", 
+                "A contact point for a person or organization.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "department": [
+                "Organization", 
+                "A relationship between an organization and a department of that organization, also described as an organization.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "description": [
+                "Text", 
+                "A short description of the item.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "dissolutionDate": [
+                "Date", 
+                "The date that this organization was dissolved.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "legalName": [
+                "Text", 
+                "The official name of the organization (e.g. the registered company name).", 
+                "One", 
+                "Minimum", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "location": [
+                "Place or PostalAddress", 
+                "The location of the event, organization or action.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "logo": [
+                "URL or ImageObject", 
+                "An associated logo.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "member": [
+                "Person or Organization", 
+                "A member of an Organization or a ProgramMembership. Organizations can be members of organizations; ProgramMembership is typically for individuals.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "memberOf": [
+                "ProgramMembership or Organization", 
+                "An Organization (or ProgramMembership) to which this Person or Organization belongs.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "name": [
+                "Text", 
+                "The name of the item.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "owns": [
+                "OwnershipInfo or Products", 
+                "Products owned by the organization or person.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "parentOrganization": [
+                "Organization", 
+                "The larger organization that this organization is a branch of, if any.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "sameAs": [
+                "URL", 
+                "URL of a reference web page that unambiguously indicates the item's identity (e.g. the URL of the item's Wikipedia page, Freebase page or official website).", 
+                "One", 
+                "Minimum", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "subOrganization": [
+                "Organization", 
+                "A relationship between two organizations where the first includes the second (e.g. as a subsidiary).", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "url": [
+                "URL", 
+                "URL of the item.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ]
+        }
+    ], 
+    "person_bioschemas": [
+        {
+            "advisor": [
+                "Person", 
+                "A person who has been an educational, professional or personal advisor to the person.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "curriculumVitae": [
+                "Text or URL", 
+                "A link or body of text describing the person's notable achievements, employment history and contact details.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "experience": [
+                "Text", 
+                "A textual description of the professional experiences a person has acquired.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "expertise": [
+                "CV", 
+                "A textual description of the topic which a person has the most expertise in. This should make use of an ontology such as the EDAM ontology.", 
+                "One", 
+                "Recommended", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "funding": [
+                "Text", 
+                "Textual description of current or past funding this person has acquired.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "interest": [
+                "CV and/or Text", 
+                "Any interests held by the person. These should be single words or short phrases that relate to a person.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "internationalActivity": [
+                "Text", 
+                "Global connections related to teaching and scholarly work in the past 3 years.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "journalReferee": [
+                "CreativeWork", 
+                "Which journals this person is a referee of.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "keyword": [
+                "CV and/or Text", 
+                "Keywords to describe the person. These should be single words or short phrases that relate to a person.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "language": [
+                "Language", 
+                "A list of languages spoken by the person.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "orcid": [
+                "Text or URL", 
+                "The url or ID of the person's ORCID.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "works": [
+                "CreativeWork or Text", 
+                "All or notable publications, presentations, training materials, research outputs or any other body of work attributed to this person.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ]
+        }
+    ], 
+    "person_schema": [
+        {
+            "description": [
+                "Text", 
+                "A short description of the item.", 
+                "Many", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "Wrong", 
+                "OK"
+            ], 
+            "email": [
+                "Text", 
+                "Email address.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "homeLocation": [
+                "Place or ContactPoint", 
+                "A contact location for a person's residence.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "image": [
+                "URL or ImageObject", 
+                "An image of the item. This can be a URL or a fully described ImageObject.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "mainEntityOfPage": [
+                "URL or CreativeWork", 
+                "Indicates a page (or other CreativeWork) for which this thing is the main entity being described.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "memberOf": [
+                "ProgramMembership or Organization", 
+                "An Organization (or ProgramMembership) to which this Person belongs.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "name": [
+                "Text", 
+                "The name of the item.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ]
+        }
+    ], 
+    "training_bioschemas": [
+        {
+            "level": [
+                "Text", 
+                "Difficulty level; level of experience of users in the subject.", 
+                "One", 
+                "Recommended", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "pid": [
+                "Text", 
+                "Permanent identifier, such as DOIs.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ]
+        }
+    ], 
+    "training_schema": [
+        {
+            "about": [
+                "Thing", 
+                "The subject matter of the content.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "aggregateRating": [
+                "AggregateRating", 
+                "The overall rating, based on a collection of reviews or ratings, of the item.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "audience": [
+                "Audience", 
+                "An intended audience, i.e. a group for whom something was created.", 
+                "Many", 
+                "Minimum", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "author": [
+                "Person or Organization", 
+                "The author of this content.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "contributor": [
+                "Person or Organization", 
+                "A secondary contributor to the CreativeWork.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "dateCreated": [
+                "Date or DateTime", 
+                "The date on which the CreativeWork was created or the item was added to a DataFeed.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "dateModified": [
+                "Date or DateTime", 
+                "The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "description": [
+                "Text", 
+                "A short description of the item.", 
+                "One", 
+                "Recommended", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "genre": [
+                "Text or URL", 
+                "Genre of the creative work or group.", 
+                "Many", 
+                "Minimum", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "hasPart": [
+                "CreativeWork", 
+                "Indicates a CreativeWork that is (in some sense) a part of this CreativeWork.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "inLanguage": [
+                "Text or Language", 
+                "The language of the content or performance or used in an action, using one of the language codes from the IETF BCP 47 standard.", 
+                "One", 
+                "Optional", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "isPartOf": [
+                "CreativeWork", 
+                "Indicates a CreativeWork that this CreativeWork is (in some sense) part of.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "keywords": [
+                "Text", 
+                "Keywords or tags used to describe this content. Multiple entries in a keywords list are typically delimited by commas.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "learningResourceType": [
+                "Text", 
+                "The predominant type or kind characterizing the learning resource (e.g. presentation, handout).", 
+                "Many", 
+                "Optional", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "license": [
+                "URL or CreativeWork", 
+                "A license document that applies to this content, typically indicated by URL.", 
+                "One", 
+                "Recommended", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "mentions": [
+                "Thing", 
+                "Indicates that the CreativeWork contains a reference to, but is not necessarily about a concept.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "name": [
+                "Text", 
+                "The name of the item.", 
+                "One", 
+                "Minimum", 
+                "", 
+                "OK", 
+                "OK", 
+                "OK"
+            ], 
+            "review": [
+                "Review", 
+                "A review of the item.", 
+                "Many", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "sameAs": [
+                "URL", 
+                "URL of a reference web page that unambiguously indicates the item's identity (e.g. the URL of the item's Wikipedia page, Freebase page or official website).", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "timeRequired": [
+                "Duration", 
+                "Approximate or typical time it takes to work with or through this learning resource for the typical intended target audience (e.g. \"P30M\", \"P1H25M\").", 
+                "One", 
+                "Optional", 
+                "Yes", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "url": [
+                "URL", 
+                "URL of the item.", 
+                "Many", 
+                "Recommended", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ], 
+            "version": [
+                "Number", 
+                "The version of the CreativeWork embodied by a specified resource.", 
+                "One", 
+                "Optional", 
+                "", 
+                "Not found", 
+                "Not found", 
+                "Not found"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+Report
+Website http://d.lib.ncsu.edu/collections/catalog/mc00383-001-ff0004-001-001_0004 belonging to the Person type.
+Found 3 valid properties out of 3 properties provided.
+Missing image property belonging to Person (schema.org) type
+Website http://d.lib.ncsu.edu/collections/catalog/mc00383-001-ff0004-001-001_0004 belonging to the Organization type.
+Found 8 valid properties out of 8 properties provided.
+Missing image property belonging to Person (schema.org) type
+Missing logo property belonging to Organization (schema.org) type
+Missing url property belonging to Organization (schema.org) type
+Missing keywords property belonging to Organization (Bioschemas) type
+Provided legalName property belonging to Organization (schema.org) type
+Provided sameAs property belonging to Organization (schema.org) type
+Provided type property belonging to Organization (Bioschemas) type
+Provided topic property belonging to Organization (Bioschemas) type
+Website http://d.lib.ncsu.edu/collections/catalog/mc00383-001-ff0004-001-001_0004 belonging to the CreativeWork type.
+Found 17 valid properties out of 17 properties provided.
+Missing image property belonging to Person (schema.org) type
+Missing logo property belonging to Organization (schema.org) type
+Missing url property belonging to Organization (schema.org) type
+Missing keywords property belonging to Organization (Bioschemas) type
+Missing keywords property belonging to Training (schema.org) type
+Missing description property belonging to Training (schema.org) type
+Missing url property belonging to Training (schema.org) type
+Provided legalName property belonging to Organization (schema.org) type
+Provided sameAs property belonging to Organization (schema.org) type
+Provided type property belonging to Organization (Bioschemas) type
+Provided topic property belonging to Organization (Bioschemas) type
+Provided audience property belonging to Training (schema.org) type
+Website http://d.lib.ncsu.edu/collections/catalog/mc00383-001-ff0004-001-001_0004 belonging to the Event type.
+Found 22 valid properties out of 22 properties provided.
+Missing image property belonging to Person (schema.org) type
+Missing logo property belonging to Organization (schema.org) type
+Missing url property belonging to Organization (schema.org) type
+Missing keywords property belonging to Organization (Bioschemas) type
+Missing keywords property belonging to Training (schema.org) type
+Missing description property belonging to Training (schema.org) type
+Missing url property belonging to Training (schema.org) type
+Missing keywords property belonging to Event (Bioschemas) type
+Missing url property belonging to Event (schema.org) type
+Provided legalName property belonging to Organization (schema.org) type
+Provided sameAs property belonging to Organization (schema.org) type
+Provided type property belonging to Organization (Bioschemas) type
+Provided topic property belonging to Organization (Bioschemas) type
+Provided audience property belonging to Training (schema.org) type
+Provided contact property belonging to Event (Bioschemas) type
+Provided eventType property belonging to Event (Bioschemas) type
+Provided topic property belonging to Event (Bioschemas) type
+Provided hostInstitution property belonging to Event (Bioschemas) type
+Provided endDate property belonging to Event (schema.org) type
+Provided location property belonging to Event (schema.org) type

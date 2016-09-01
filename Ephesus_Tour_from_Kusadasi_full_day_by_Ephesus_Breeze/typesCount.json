@@ -1,0 +1,17 @@
+{
+    "AggregateRating": 1, 
+    "Breadcrumb": 3, 
+    "GeoCoordinates": 1, 
+    "LandmarksOrHistoricalBuildings": 4, 
+    "Map": 1, 
+    "Offer": 1, 
+    "Person": 2, 
+    "PostalAddress": 7, 
+    "Product": 1, 
+    "Rating": 2, 
+    "Review": 2, 
+    "Service": 1, 
+    "TouristAttraction": 6, 
+    "TravelAction": 1, 
+    "TravelAgency": 1
+}

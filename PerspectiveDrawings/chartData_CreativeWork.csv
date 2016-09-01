@@ -1,0 +1,13 @@
+label,score,weight,width,color,mean
+name,15,0.5,0.5,#6CC4A4,15
+genre,2,0.5,0.5,#FEC574,15
+dateModified,1,0.5,0.5,#6CC4A4,15
+about,1,0.5,0.5,#6CC4A4,15
+audience,0,0.5,0.5,#E1514B,15
+url,14,0.3,0.5,#FEC574,15
+keywords,7,0.3,0.5,#FEC574,15
+description,6,0.3,0.5,#6CC4A4,15
+level,0,0.3,0.5,#E1514B,15
+contributor,0,0.3,0.5,#E1514B,15
+author,0,0.3,0.5,#E1514B,15
+license,0,0.3,0.5,#E1514B,15

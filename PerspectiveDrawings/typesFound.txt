@@ -1,0 +1,10 @@
+CollectionPage
+ItemPage
+LandmarksOrHistoricalBuildings
+Library
+Person
+Organization
+PostalAddress
+CreativeWork
+Event
+GeoCoordinates

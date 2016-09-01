@@ -1,5 +1,19 @@
 {
-    "Portolan_Atlas_of_the_Mediterranean_Sea,_Western_Europe,_and_the_Northwest_Coast_of_Africa_-_World_Digital_Library": [
+    "Carla_Ferro__doulasclub": [
+        {
+            "Person": [
+                [
+                    1, 
+                    2, 
+                    0
+                ], 
+                "image", 
+                "email", 
+                "name"
+            ]
+        }
+    ], 
+    "PerspectiveDrawings": [
         {
             "Person": [
                 [
@@ -11,96 +25,31 @@
                 "description", 
                 "name"
             ], 
-            "Organization": [
+            "CreativeWork": [
                 [
-                    2, 
+                    4, 
                     3, 
-                    0
+                    2
                 ], 
+                "about", 
+                "name", 
                 "url", 
-                "logo", 
-                "description", 
+                "isPartOf", 
+                "dateCreated", 
                 "keywords", 
-                "name"
-            ]
-        }
-    ], 
-    "ferro_test": [
-        {
-            "Person": [
+                "genre", 
+                "dateModified", 
+                "description"
+            ], 
+            "Event": [
                 [
-                    1, 
+                    3, 
                     2, 
                     0
                 ], 
-                "image", 
-                "email", 
-                "name"
-            ]
-        }
-    ], 
-    "borg_test": [
-        {
-            "Person": [
-                [
-                    1, 
-                    1, 
-                    0
-                ], 
-                "email", 
-                "name"
-            ]
-        }
-    ], 
-    "wdl_just_person": [
-        {
-            "Person": [
-                [
-                    2, 
-                    1, 
-                    0
-                ], 
-                "image", 
-                "description", 
-                "name"
-            ]
-        }
-    ], 
-    "borgost1": [
-        {
-            "Person": [
-                [
-                    1, 
-                    1, 
-                    0
-                ], 
-                "email", 
-                "name"
-            ]
-        }
-    ], 
-    "testcount": [
-        {
-            "Person": [
-                [
-                    1, 
-                    1, 
-                    0
-                ], 
-                "email", 
-                "name"
-            ]
-        }
-    ], 
-    "wdl_Test": [
-        {
-            "Person": [
-                [
-                    2, 
-                    1, 
-                    0
-                ], 
-                "image", 
+                "keywords", 
+                "startDate", 
+                "url", 
                 "description", 
                 "name"
             ], 
@@ -130,6 +79,49 @@
                 "email", 
                 "name", 
                 "description"
+            ]
+        }
+    ], 
+    "Heads_of_Nodes_meeting_at_ECCB_2016__Events__ELIXIR": [
+        {
+            "Event": [
+                [
+                    5, 
+                    0, 
+                    0
+                ], 
+                "startDate", 
+                "endDate", 
+                "location", 
+                "name", 
+                "description"
+            ]
+        }
+    ], 
+    "Roman_Capriccio:_The_Pantheon_and_Other_Monuments__Indianapolis_Museum_of_Art": [
+        {
+            "CreativeWork": [
+                [
+                    1, 
+                    2, 
+                    1
+                ], 
+                "url", 
+                "description", 
+                "name", 
+                "dateCreated"
+            ]
+        }
+    ], 
+    "Mida_News": [
+        {
+            "Person": [
+                [
+                    1, 
+                    0, 
+                    0
+                ], 
+                "name"
             ]
         }
     ]

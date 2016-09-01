@@ -1,0 +1,66 @@
+{
+    "event_bioschemas": [
+        {}
+    ], 
+    "event_schema": [
+        {
+            "description": [
+                "ELIXIR's Heads of Nodes\u00a0committee is meeting at ECCB 2016 in The Hague. Attendance is by invitation only for the Heads of Nodes committee members.ELIXIR unites Europe\u2019s leading life science organisations in managing and safeguarding the massive amounts of data being generated every day by publicly funded research. It is the pan-European research infrastructure for biological information. ELIXIR is based upon an agreement among European countries, that have together established an international consortium to jointly run the ELIXIR life science data infrastructure and services."
+            ], 
+            "endDate": [
+                "to 4 September 2016"
+            ], 
+            "location": [
+                "Churchillplein 10The Hague2517 JWNetherlands"
+            ], 
+            "name": [
+                ""
+            ], 
+            "startDate": [
+                "4 September 2016"
+            ]
+        }
+    ], 
+    "organization_bioschemas": [
+        {}
+    ], 
+    "organization_schema": [
+        {
+            "description": [
+                "ELIXIR's Heads of Nodes\u00a0committee is meeting at ECCB 2016 in The Hague. Attendance is by invitation only for the Heads of Nodes committee members.ELIXIR unites Europe\u2019s leading life science organisations in managing and safeguarding the massive amounts of data being generated every day by publicly funded research. It is the pan-European research infrastructure for biological information. ELIXIR is based upon an agreement among European countries, that have together established an international consortium to jointly run the ELIXIR life science data infrastructure and services."
+            ], 
+            "location": [
+                "Churchillplein 10The Hague2517 JWNetherlands"
+            ], 
+            "name": [
+                ""
+            ]
+        }
+    ], 
+    "person_bioschemas": [
+        {}
+    ], 
+    "person_schema": [
+        {
+            "description": [
+                "ELIXIR's Heads of Nodes\u00a0committee is meeting at ECCB 2016 in The Hague. Attendance is by invitation only for the Heads of Nodes committee members.ELIXIR unites Europe\u2019s leading life science organisations in managing and safeguarding the massive amounts of data being generated every day by publicly funded research. It is the pan-European research infrastructure for biological information. ELIXIR is based upon an agreement among European countries, that have together established an international consortium to jointly run the ELIXIR life science data infrastructure and services."
+            ], 
+            "name": [
+                ""
+            ]
+        }
+    ], 
+    "training_bioschemas": [
+        {}
+    ], 
+    "training_schema": [
+        {
+            "description": [
+                "ELIXIR's Heads of Nodes\u00a0committee is meeting at ECCB 2016 in The Hague. Attendance is by invitation only for the Heads of Nodes committee members.ELIXIR unites Europe\u2019s leading life science organisations in managing and safeguarding the massive amounts of data being generated every day by publicly funded research. It is the pan-European research infrastructure for biological information. ELIXIR is based upon an agreement among European countries, that have together established an international consortium to jointly run the ELIXIR life science data infrastructure and services."
+            ], 
+            "name": [
+                ""
+            ]
+        }
+    ]
+}
