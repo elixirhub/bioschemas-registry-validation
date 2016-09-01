@@ -72,6 +72,13 @@
         </select>
     </p>
 
+    <label>
+        <input type="checkbox" id="checkMail">Mail notification when the process is done &nbsp;
+        <input type="text" id="textMail" class="inputs" placeholder="example@domain.com" disabled>
+    </label>
+
+    <br>
+
     <button type="submit" id="submitBtn" class="buttons">Validate!</button>
 </div>
 
@@ -94,11 +101,21 @@
             }
         }
     };*/
+    $("#checkMail").on("click", function () {
+        var target = document.getElementById("textMail");
+        if (target.hasAttribute("disabled")) {
+            target.removeAttribute("disabled");
+        } else {
+            target.setAttribute("disabled", true);
+        }
+    });
 
     $("#submitBtn").on("click", function () {
         var urlToVal = $("#url_input").val();
         var nameToVal = $("#name_input").val();
         var linkToVal;
+        var mailText;
+
         if ($("#link_input").is(":checked")) {
             linkToVal = 0;
         } else {
@@ -106,19 +123,25 @@
         }
         var typeToVal = $("#types_menu").val();
 
+        if ($("#checkMail").is(":checked")) {
+            mailText = $("#textMail").val();
+        } else {
+            mailText = "_";
+        }
+
         if (urlToVal == "") {
             alert("You need to provide a valid URL to validate!");
         } else if (nameToVal == "") {
             var r = confirm("If you don't provide a name for your website, the title field content from the tested website will be used as its name.");
             if (r == true) {
                 $("#mainDiv").fadeOut(1000);
-                $.get("validate_url.php", {url : urlToVal, nome : "_", link : linkToVal, types : typeToVal});
+                $.get("validate_url.php", {url : urlToVal, nome : "_", link : linkToVal, types : typeToVal, mail : mailText});
                 $("#response").append("<p>Thanks for using this service!</p>");
                 $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Registry'>Registry</a> page.</p>");
             }
         } else {
             $("#mainDiv").fadeOut(1000);
-            $.get("validate_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal, types : typeToVal});
+            $.get("validate_url.php", {url : urlToVal, nome : nameToVal, link : linkToVal, types : typeToVal, mail : mailText});
             $("#response").append("<p>Thanks for using this service!</p>");
             $("#response").append("<p>You can view the validation results on the <a href='websites_registry/index.html' title='Registry'>Registry</a> page.</p>");
         }
