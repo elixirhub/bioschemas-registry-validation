@@ -17,6 +17,13 @@ The repository provides some examples of already validated entries, but you can 
 Results will be stored in the registry, accessible from the **Registry** link: each validated web page is shown as a single entry that can be clicked in order to view more details. The entry page will show a summary with the basic information about the scraped URL and its compliance, as well as a simple chart showing the number of correct, incorrect and not provided properties found. The 2 sections below the summary will show all properties details, and the last section, called "Report", will show which minimum and recommended properties are missing.  
 If you just want to test a website without submitting it to the registry, you can use the **Test Website** link, which works exactly like the Submit Website, with the only exception being that the results will be shown in the very same page after the process is done.  
   
+If you want to delete previously validated web pages and start from scratch, you can delete all entries' folders and remove everything from the `registry.json` file, but be sure to leave a couple of curly braces with a new line between them, like this:  
+```
+{
+  
+}
+```
+  
 If you want to debug the application you can launch the Submit Website function from the command line. From the home folder of the repository, type  
 `python validator.py <URL> <name> [<children> <type> <email>]`  
 The `URL` and `name` parameters are mandatory and relate to the URL you want to scrape and the name you want to give to its entry; the `children` parameter can be 0 or 1: 0 will scrape for children links too, while 1 doesn't; the default is 1. The `type` parameter determines which Bioschemas types will be searched for: possible options are Event, Organization, Person, Training or all; default is all. If provided, the `email` parameter allows you to receive and email once the scraping process is complete (please read the (\*) if you want to use this function); by default this option is deactivated.  
