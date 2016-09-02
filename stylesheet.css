@@ -32,6 +32,35 @@ td:first-child {
     display: none;
 }
 
+/*.footerBar {
+    background-color: #0B794B;
+    border-top-left-radius: 0.625em;
+    border-top-right-radius: 0.625em;
+    width: 96.8%;
+    bottom: 0;
+    position: fixed;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-right: 1.625em;
+    text-align: right;
+
+}
+
+.footerBar a {
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-bottom: -20px;
+}
+
+.img_bottom {
+    float: right;
+    width: 3%;
+    height: 3%;
+    background-color: #FFFFFF;
+    border-radius: 1.875em;
+    margin-left: 0.625em;
+}*/
+
 /*****
 Entries Sections
 *****/
@@ -161,7 +190,7 @@ Navbar
 
 .navbar {
     background-color: #0B794B;
-    width: auto;
+    width: 100%;
     height: 2.5em;
     padding-top: 0.625em;
     position: relative;
